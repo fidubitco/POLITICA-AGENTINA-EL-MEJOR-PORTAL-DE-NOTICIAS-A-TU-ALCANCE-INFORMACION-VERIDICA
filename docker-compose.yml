@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  politica-argentina:
+    build: .
+    ports:
+      - "3000:3000"
+      - "9050:9050"  # Tor SOCKS5
+      - "8118:8118"  # Privoxy HTTP
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - CRON_SECRET=${CRON_SECRET}
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+      # Tor configuration
+      - USE_TOR=true
+      - TOR_SOCKS_PORT=9050
+      - HTTP_PROXY=http://127.0.0.1:8118
+      - HTTPS_PROXY=http://127.0.0.1:8118
+    volumes:
+      - tor-data:/var/lib/tor
+    restart: unless-stopped
+    networks:
+      - politica-network
+
+  # n8n for automation
+  n8n:
+    image: n8nio/n8n:latest
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD}
+      - WEBHOOK_URL=https://politica-argentina.vercel.app
+    volumes:
+      - n8n-data:/home/node/.n8n
+      - ./n8n-workflows:/workflows
+    restart: unless-stopped
+    networks:
+      - politica-network
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      - politica-network
+
+volumes:
+  tor-data:
+  n8n-data:
+  redis-data:
+
+networks:
+  politica-network:
+    driver: bridge

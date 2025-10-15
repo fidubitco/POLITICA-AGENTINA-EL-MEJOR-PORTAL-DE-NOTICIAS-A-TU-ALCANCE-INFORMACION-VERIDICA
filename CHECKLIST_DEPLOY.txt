@@ -1,0 +1,70 @@
+╔════════════════════════════════════════════════════════════════╗
+║           📋 CHECKLIST DE DEPLOY - MARCA CADA PASO             ║
+╚════════════════════════════════════════════════════════════════╝
+
+ANTES DE EMPEZAR:
+☐ Tengo cuenta en OpenAI con método de pago
+☐ Tengo cuenta en Vercel (o GitHub para crear una)
+☐ Tengo mi OPENAI_API_KEY guardada
+
+───────────────────────────────────────────────────────────────
+
+FASE 1: SUBIR A GITHUB
+☐ Código commiteado localmente
+☐ Repositorio creado en GitHub
+☐ Código subido (git push)
+
+───────────────────────────────────────────────────────────────
+
+FASE 2: VERCEL
+☐ Proyecto importado en Vercel
+☐ Variables de entorno configuradas (8 obligatorias)
+  ☐ DATABASE_URL
+  ☐ DIRECT_DATABASE_URL  
+  ☐ OPENAI_API_KEY (CON MI KEY REAL)
+  ☐ AUTH_SECRET
+  ☐ AUTH_TRUST_HOST
+  ☐ CRON_SECRET
+  ☐ NEXT_PUBLIC_SITE_URL
+  ☐ NEXT_PUBLIC_SITE_NAME
+
+☐ Deploy iniciado
+☐ Deploy completado exitosamente
+☐ URL de Vercel copiada
+
+───────────────────────────────────────────────────────────────
+
+FASE 3: VERIFICACIÓN
+☐ Página principal carga correctamente
+☐ Puedo hacer login con admin@politica-argentina.com / admin123
+☐ Dashboard admin es accesible
+☐ Actualicé NEXT_PUBLIC_SITE_URL con URL real
+☐ Redeploy después de actualizar URL
+
+───────────────────────────────────────────────────────────────
+
+FASE 4: PRIMERA PUBLICACIÓN
+☐ Entré a /admin/ingest
+☐ Inicié ingesta manual
+☐ Se generaron artículos exitosamente
+☐ Puedo ver artículos en la página principal
+
+───────────────────────────────────────────────────────────────
+
+OPCIONAL - TELEGRAM:
+☐ Bot creado con @BotFather
+☐ Token copiado
+☐ Canal público creado
+☐ Bot añadido como admin del canal
+☐ Variables TELEGRAM_* configuradas en Vercel
+☐ Redeploy realizado
+☐ Publicación automática funcionando
+
+───────────────────────────────────────────────────────────────
+
+✅ SI MARCASTE TODO: ¡FELICIDADES! 🎉
+Tu portal está 100% operativo y listo para conquistar Argentina.
+
+❌ SI FALTA ALGO: Revisa HAZLO_TU_MISMO_FACIL.md paso a paso
+
+───────────────────────────────────────────────────────────────

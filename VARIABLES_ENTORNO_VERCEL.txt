@@ -1,0 +1,155 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║  📋 VARIABLES DE ENTORNO PARA VERCEL - POLÍTICA ARGENTINA            ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+Ir a: https://vercel.com/dashboard → Tu Proyecto → Settings → Environment Variables
+
+═══════════════════════════════════════════════════════════════════════
+
+🔴 CRÍTICAS (OBLIGATORIAS) - Sin estas el sitio NO funcionará:
+
+1. DATABASE_URL
+   Valor: prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza181TjJEZzFDQ0l6RHlCRWJveDlGMkYiLCJhcGlfa2V5IjoiMDFLN00yUlkyVlZRM1czM0pXUlJRRkRBV1EiLCJ0ZW5hbnRfaWQiOiI4ZjZlZTIwZTcwNjljZDY4NWE1NTdlOGI1Y2EwY2U1ZmJlYzcwNGY1MzRmNGMzMWM5ZTFiZjY2NjQ3MzI1ODAwIiwiaW50ZXJuYWxfc2VjcmV0IjoiMGQ2NjFmZGYtMTc1NS00NjNhLTk5YjktMTU3NGRjYTU1N2M2In0.jfUPw05azcb_kPJLxd6E0oexoL7Zmw38t-La8gekQcg
+   Environments: Production, Preview, Development
+
+2. DIRECT_DATABASE_URL
+   Valor: postgres://8f6ee20e7069cd685a557e8b5ca0ce5fbec704f534f4c31c9e1bf66647325800:sk_5N2Dg1CCIzDyBEbox9F2F@db.prisma.io:5432/postgres?sslmode=require
+   Environments: Production, Preview, Development
+
+3. OPENAI_API_KEY
+   Valor: TU_OPENAI_API_KEY_AQUI
+   Environments: Production, Preview, Development
+   ⚠️  IMPORTANTE: Necesitas conseguir tu API key en https://platform.openai.com/api-keys
+
+4. AUTH_SECRET
+   Valor: 0lMY3tEucxaM3wSb0HAgsGEDYhgkFYkhaABFoutPyTY=
+   Environments: Production, Preview, Development
+
+5. AUTH_TRUST_HOST
+   Valor: true
+   Environments: Production, Preview, Development
+
+6. CRON_SECRET
+   Valor: dev-secret-ultra-secure-2024
+   Environments: Production, Preview, Development
+
+7. NEXT_PUBLIC_SITE_URL
+   Valor: https://TU-PROYECTO.vercel.app
+   Environments: Production, Preview, Development
+   ⚠️  CAMBIAR por tu URL real de Vercel después del primer deploy
+
+8. NEXT_PUBLIC_SITE_NAME
+   Valor: POLITICA ARGENTINA
+   Environments: Production, Preview, Development
+
+═══════════════════════════════════════════════════════════════════════
+
+🟡 OPCIONALES (Para redes sociales) - El sitio funciona sin estas:
+
+9. TELEGRAM_BOT_TOKEN
+   Valor: TU_TELEGRAM_BOT_TOKEN
+   Environments: Production
+   Cómo obtener: Hablar con @BotFather en Telegram
+
+10. TELEGRAM_CHANNEL_ID
+    Valor: @politica_argentina
+    Environments: Production
+    Cómo obtener: Crear canal público en Telegram
+
+11. DISCORD_WEBHOOK_URL
+    Valor: TU_DISCORD_WEBHOOK_URL
+    Environments: Production
+    Cómo obtener: Discord Server → Settings → Integrations → Webhooks
+
+12. REDDIT_CLIENT_ID
+    Valor: TU_REDDIT_CLIENT_ID
+    Environments: Production
+    Cómo obtener: https://www.reddit.com/prefs/apps
+
+13. REDDIT_CLIENT_SECRET
+    Valor: TU_REDDIT_CLIENT_SECRET
+    Environments: Production
+
+14. REDDIT_USERNAME
+    Valor: TU_REDDIT_USERNAME
+    Environments: Production
+
+15. REDDIT_PASSWORD
+    Valor: TU_REDDIT_PASSWORD
+    Environments: Production
+
+16. LINKEDIN_ACCESS_TOKEN
+    Valor: TU_LINKEDIN_TOKEN
+    Environments: Production
+    Cómo obtener: https://www.linkedin.com/developers
+
+17. TWITTER_API_KEY
+    Valor: TU_TWITTER_API_KEY
+    Environments: Production
+    Cómo obtener: https://developer.twitter.com
+
+18. TWITTER_API_SECRET
+    Valor: TU_TWITTER_API_SECRET
+    Environments: Production
+
+19. TWITTER_ACCESS_TOKEN
+    Valor: TU_TWITTER_ACCESS_TOKEN
+    Environments: Production
+
+20. TWITTER_ACCESS_SECRET
+    Valor: TU_TWITTER_ACCESS_SECRET
+    Environments: Production
+
+═══════════════════════════════════════════════════════════════════════
+
+📝 NOTAS IMPORTANTES:
+
+1. Las variables 1-8 son OBLIGATORIAS. Sin ellas el sitio no funcionará.
+
+2. La variable #3 (OPENAI_API_KEY) ES LA MÁS IMPORTANTE:
+   - Sin ella no habrá generación automática de contenido
+   - Crear cuenta en https://platform.openai.com
+   - Añadir método de pago
+   - Generar API key
+
+3. Las variables 9-20 son opcionales. Sin ellas:
+   - El sitio funcionará perfectamente
+   - Solo no publicará automáticamente en redes sociales
+   - Puedes configurarlas después cuando quieras
+
+4. Después del primer deploy, ACTUALIZAR variable #7 (NEXT_PUBLIC_SITE_URL)
+   con tu URL real de Vercel
+
+5. Para cambiar una variable en Vercel:
+   - Dashboard → Settings → Environment Variables
+   - Click en los 3 puntos → Edit
+   - Guardar cambios
+   - Redeploy el proyecto
+
+═══════════════════════════════════════════════════════════════════════
+
+🎯 ORDEN RECOMENDADO DE CONFIGURACIÓN:
+
+FASE 1 - Básico (5 min):
+✓ Variables 1-8 (obligatorias)
+✓ Hacer deploy
+✓ Verificar que funciona
+
+FASE 2 - Telegram (10 min):
+✓ Variables 9-10
+✓ Probar autopublicación
+
+FASE 3 - Más redes (según necesidad):
+✓ Variables 11-20
+✓ Una por una, ir probando
+
+═══════════════════════════════════════════════════════════════════════
+
+¿NECESITAS AYUDA?
+
+Ver documentación completa:
+- GUIA_COMPLETA_CONFIGURACION.md
+- QUICK_START.md
+- RESUMEN_FINAL_COMPLETO.md
+
+═══════════════════════════════════════════════════════════════════════

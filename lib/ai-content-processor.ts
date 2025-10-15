@@ -1,151 +1,84 @@
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || "",
-});
-
 /**
- * Reescribe el contenido usando IA para hacerlo único
+ * Procesador de contenido con IA usando Gemini
  */
-export async function rewriteContent(originalContent: string, title: string): Promise<string> {
-  if (!process.env.OPENAI_API_KEY) {
-    console.warn("OpenAI API key not configured, returning original content");
-    return originalContent;
-  }
 
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: `Eres un periodista profesional argentino. Reescribe la siguiente noticia manteniendo los hechos exactos pero usando tus propias palabras. 
-          
-Reglas:
-- Mantén todos los hechos, fechas, nombres y datos exactos
-- Usa un estilo periodístico profesional argentino
-- Cambia la estructura de las oraciones
-- Usa sinónimos apropiados
-- Mantén la longitud similar
-- No agregues opiniones personales
-- Escribe en español argentino
-- Usa párrafos HTML (<p>)`,
-        },
-        {
-          role: "user",
-          content: `Título: ${title}\n\nContenido original:\n${originalContent}`,
-        },
-      ],
-      temperature: 0.7,
-      max_tokens: 2000,
-    });
+import { rewriteArticle, generateKeywords, summarizeArticle } from "./gemini-client";
 
-    return response.choices[0]?.message?.content || originalContent;
-  } catch (error) {
-    console.error("Error rewriting content with AI:", error);
-    return originalContent;
-  }
+export interface ProcessedContent {
+  title: string;
+  content: string;
+  excerpt: string;
+  keywords: string[];
 }
 
 /**
- * Genera un extracto mejorado usando IA
+ * Procesar artículo completo con Gemini
  */
-export async function generateExcerpt(content: string, title: string): Promise<string> {
-  if (!process.env.OPENAI_API_KEY) {
-    // Fallback: tomar primeros 200 caracteres
-    return content.replace(/<[^>]*>/g, "").substring(0, 200) + "...";
-  }
-
+export async function processArticleWithAI(
+  originalTitle: string,
+  originalContent: string,
+  category: string = "General"
+): Promise<ProcessedContent> {
   try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: "Eres un editor de noticias. Crea un extracto conciso y atractivo de máximo 150 caracteres que capte la esencia de la noticia.",
-        },
-        {
-          role: "user",
-          content: `Título: ${title}\n\nContenido: ${content.substring(0, 1000)}`,
-        },
-      ],
-      temperature: 0.7,
-      max_tokens: 100,
-    });
+    // 1. Reescribir artículo
+    console.log("Reescribiendo artículo con Gemini...");
+    const rewritten = await rewriteArticle(originalTitle, originalContent, category);
 
-    return response.choices[0]?.message?.content || content.substring(0, 150);
+    // 2. Generar keywords
+    console.log("Generando keywords SEO...");
+    const keywords = await generateKeywords(rewritten.title, category, rewritten.content);
+
+    // 3. Generar excerpt si no existe
+    let excerpt = rewritten.excerpt;
+    if (!excerpt || excerpt.length < 50) {
+      console.log("Generando excerpt...");
+      excerpt = await summarizeArticle(rewritten.content, 200);
+    }
+
+    return {
+      title: rewritten.title,
+      content: rewritten.content,
+      excerpt,
+      keywords: keywords.slice(0, 30),
+    };
   } catch (error) {
-    console.error("Error generating excerpt:", error);
-    return content.replace(/<[^>]*>/g, "").substring(0, 150) + "...";
-  }
-}
-
-/**
- * Categoriza automáticamente la noticia
- */
-export async function categorizeArticle(title: string, content: string): Promise<string> {
-  if (!process.env.OPENAI_API_KEY) {
-    return "politica"; // Categoría por defecto
-  }
-
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: `Clasifica esta noticia en UNA de estas categorías: politica, economia, sociedad, internacional, deportes, tecnologia.
-          
-Responde SOLO con el nombre de la categoría en minúsculas, sin puntuación.`,
-        },
-        {
-          role: "user",
-          content: `Título: ${title}\n\nContenido: ${content.substring(0, 500)}`,
-        },
-      ],
-      temperature: 0.3,
-      max_tokens: 20,
-    });
-
-    const category = response.choices[0]?.message?.content?.trim().toLowerCase();
-    const validCategories = ["politica", "economia", "sociedad", "internacional", "deportes", "tecnologia"];
+    console.error("Error procesando con Gemini:", error);
     
-    return validCategories.includes(category || "") ? category! : "politica";
-  } catch (error) {
-    console.error("Error categorizing article:", error);
-    return "politica";
+    // Fallback: devolver contenido original con mínimas modificaciones
+    return {
+      title: originalTitle,
+      content: originalContent,
+      excerpt: originalContent.substring(0, 200),
+      keywords: [category.toLowerCase(), "argentina", "noticias"],
+    };
   }
 }
 
 /**
- * Genera tags relevantes para el artículo
+ * Expandir artículo (hacer más largo)
  */
-export async function generateTags(title: string, content: string): Promise<string[]> {
-  if (!process.env.OPENAI_API_KEY) {
-    return [];
-  }
+export async function expandArticle(
+  title: string,
+  content: string,
+  targetWordCount: number = 2000
+): Promise<string> {
+  const { generateContent } = await import("./gemini-client");
+  
+  const prompt = `Expande este artículo a aproximadamente ${targetWordCount} palabras.
 
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: "Genera 3-5 tags relevantes para esta noticia. Responde con una lista separada por comas, en minúsculas.",
-        },
-        {
-          role: "user",
-          content: `Título: ${title}\n\nContenido: ${content.substring(0, 500)}`,
-        },
-      ],
-      temperature: 0.5,
-      max_tokens: 50,
-    });
+TÍTULO: ${title}
 
-    const tagsString = response.choices[0]?.message?.content || "";
-    return tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag.length > 0);
-  } catch (error) {
-    console.error("Error generating tags:", error);
-    return [];
-  }
+CONTENIDO ACTUAL:
+${content}
+
+INSTRUCCIONES:
+- Mantener el mensaje principal
+- Añadir más detalles, contexto y análisis
+- Incluir datos y estadísticas relevantes
+- Mantener estilo periodístico argentino
+- Formato HTML con <p>, <h2>, <h3>
+
+Responde SOLO con el contenido expandido:`;
+
+  return await generateContent(prompt);
 }
