@@ -126,6 +126,7 @@ model Post {
   categoryId    String?
   
   tags          Tag[]      @relation("PostsOnTags")
+  translations  PostTranslation[]
   
   publishedAt   DateTime?
   scheduledFor  DateTime?
@@ -139,6 +140,9 @@ model Post {
   featured      Boolean    @default(false)
   breaking      Boolean    @default(false)
   
+  // Idioma original
+  originalLang  String     @default("es")
+  
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
@@ -148,6 +152,7 @@ model Post {
   @@index([slug])
   @@index([updatedAt])
   @@index([featured, breaking])
+  @@index([originalLang])
 }
 
 enum PostStatus {
@@ -228,5 +233,47 @@ model Job {
 
   @@index([status, createdAt])
   @@index([type])
+}
+
+
+// ==================== TRADUCCIONES ====================
+
+model PostTranslation {
+  id              String   @id @default(cuid())
+  
+  post            Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId          String
+  
+  languageCode    String   // código ISO 639-1
+  
+  title           String
+  slug            String   @unique
+  excerpt         String?  @db.Text
+  content         Json     @db.JsonB
+  
+  keywords        String[] // Array de keywords SEO
+  
+  // SEO específico del idioma
+  metaTitle       String?
+  metaDesc        String?
+  
+  // Estado de traducción
+  status          TranslationStatus @default(PENDING)
+  quality         Int      @default(0) // 0-100, calidad de traducción
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([postId, languageCode])
+  @@index([languageCode, status])
+  @@index([slug])
+}
+
+enum TranslationStatus {
+  PENDING
+  TRANSLATING
+  COMPLETED
+  REVIEW
+  PUBLISHED
 }
 

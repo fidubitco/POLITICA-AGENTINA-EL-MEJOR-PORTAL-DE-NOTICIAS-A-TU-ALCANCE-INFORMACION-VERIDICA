@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Save, Eye } from "lucide-react";
+import { ArrowLeft, Save } from "lucide-react";
 
 export default function NewPostPage() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function NewPostPage() {
       });
 
       if (response.ok) {
-        const post = await response.json();
+        await response.json();
         router.push(`/admin/posts`);
         router.refresh();
       } else {

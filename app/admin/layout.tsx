@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { LayoutDashboard, FileText, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, LogOut, Download } from "lucide-react";
 
 export default async function AdminLayout({
   children,
@@ -46,6 +46,15 @@ export default async function AdminLayout({
               >
                 <FileText className="w-5 h-5" />
                 <span>Posts</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/admin/ingest"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-zinc-900 transition-colors"
+              >
+                <Download className="w-5 h-5" />
+                <span>Ingestar Noticias</span>
               </Link>
             </li>
           </ul>
