@@ -17,7 +17,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = await db.post.findUnique({
+  const post = await (db.post as any).findUnique({
     where: { slug, status: "PUBLISHED" },
     include: { 
       category: { select: { name: true, slug: true } },
@@ -42,8 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-  
-  const post = await db.post.findUnique({
+
+  const post = await (db.post as any).findUnique({
     where: { slug, status: "PUBLISHED" },
     include: {
       author: { select: { name: true, email: true, image: true } },

@@ -2,7 +2,8 @@ import PostCard from "@/components/post-card";
 import { db } from "@/lib/db";
 import { TrendingUp, Clock } from "lucide-react";
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function HomePage() {
   // Hero post
