@@ -1,0 +1,272 @@
+// EXTENSIÓN DE SCHEMA PARA CRM Y PAGE BUILDER
+// Añadir estos modelos al schema.prisma principal
+
+// ==================== CRM ====================
+
+model Lead {
+  id            String      @id @default(cuid())
+  email         String      @unique
+  name          String?
+  phone         String?
+  company       String?
+  source        LeadSource  @default(WEBSITE)
+  status        LeadStatus  @default(NEW)
+  score         Int         @default(0) // Lead scoring 0-100
+  notes         String?     @db.Text
+  assignedTo    String?
+  assignedUser  User?       @relation(fields: [assignedTo], references: [id])
+  
+  // Actividades
+  activities    Activity[]
+  
+  // Metadata
+  metadata      Json?       @db.JsonB
+  tags          String[]
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  lastContactAt DateTime?
+  convertedAt   DateTime?
+  
+  @@index([email])
+  @@index([status])
+  @@index([assignedTo])
+  @@index([createdAt])
+}
+
+enum LeadSource {
+  WEBSITE
+  SOCIAL_MEDIA
+  REFERRAL
+  NEWSLETTER
+  CAMPAIGN
+  MANUAL
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL
+  NEGOTIATION
+  CONVERTED
+  LOST
+}
+
+model Activity {
+  id          String       @id @default(cuid())
+  type        ActivityType
+  title       String
+  description String?      @db.Text
+  
+  leadId      String?
+  lead        Lead?        @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  user        User         @relation(fields: [userId], references: [id])
+  
+  dueDate     DateTime?
+  completedAt DateTime?
+  
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  
+  @@index([leadId])
+  @@index([userId])
+  @@index([dueDate])
+}
+
+enum ActivityType {
+  NOTE
+  CALL
+  EMAIL
+  MEETING
+  TASK
+  FOLLOW_UP
+}
+
+// ==================== PAGE BUILDER ====================
+
+model Page {
+  id              String      @id @default(cuid())
+  title           String
+  slug            String      @unique
+  description     String?     @db.Text
+  
+  // Contenido del page builder
+  blocks          Json        @db.JsonB // Array de bloques editables
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String[]
+  ogImage         String?
+  
+  // Estado
+  status          PageStatus  @default(DRAFT)
+  publishedAt     DateTime?
+  
+  // Permisos
+  authorId        String
+  author          User        @relation(fields: [authorId], references: [id])
+  
+  // Analytics
+  views           Int         @default(0)
+  
+  // Template
+  templateId      String?
+  template        PageTemplate? @relation(fields: [templateId], references: [id])
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  @@index([slug])
+  @@index([status])
+  @@index([authorId])
+}
+
+enum PageStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model PageTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  description String?  @db.Text
+  thumbnail   String?
+  
+  // Estructura de bloques predefinida
+  blocks      Json     @db.JsonB
+  
+  // Categoría
+  category    String?
+  tags        String[]
+  
+  // Uso
+  pages       Page[]
+  usageCount  Int      @default(0)
+  
+  isPublic    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([category])
+}
+
+model Block {
+  id          String   @id @default(cuid())
+  name        String
+  type        String   // hero, features, cta, gallery, etc.
+  description String?  @db.Text
+  thumbnail   String?
+  
+  // Configuración del bloque
+  config      Json     @db.JsonB
+  
+  // Contenido HTML/JSX
+  content     String   @db.Text
+  
+  // Estilos
+  styles      Json?    @db.JsonB
+  
+  category    String?
+  tags        String[]
+  
+  isPublic    Boolean  @default(true)
+  usageCount  Int      @default(0)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([type])
+  @@index([category])
+}
+
+// ==================== ANALYTICS ====================
+
+model PageView {
+  id          String   @id @default(cuid())
+  
+  pageId      String?
+  page        Page?    @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  
+  postId      String?
+  post        Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  // Visitor info
+  visitorId   String   // Cookie/fingerprint
+  userAgent   String?
+  ipAddress   String?
+  country     String?
+  city        String?
+  
+  // Referrer
+  referrer    String?
+  source      String?  // google, facebook, direct, etc.
+  
+  // Device
+  device      String?  // mobile, desktop, tablet
+  browser     String?
+  os          String?
+  
+  // Engagement
+  timeOnPage  Int?     // seconds
+  scrollDepth Int?     // percentage
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([pageId])
+  @@index([postId])
+  @@index([visitorId])
+  @@index([createdAt])
+}
+
+// ==================== AI GENERATIONS ====================
+
+model AIGeneration {
+  id          String         @id @default(cuid())
+  type        GenerationType
+  
+  // Input
+  prompt      String         @db.Text
+  context     Json?          @db.JsonB
+  
+  // Output
+  result      String         @db.Text
+  metadata    Json?          @db.JsonB
+  
+  // Model usado
+  model       String         // gemini-2.0-flash, etc.
+  tokensUsed  Int?
+  cost        Float?
+  
+  // Usuario
+  userId      String
+  user        User           @relation(fields: [userId], references: [id])
+  
+  // Uso
+  usedInPostId String?
+  usedInPost   Post?         @relation(fields: [usedInPostId], references: [id])
+  
+  quality     Int?           // 0-100
+  
+  createdAt   DateTime       @default(now())
+  
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+enum GenerationType {
+  ARTICLE
+  HEADLINE
+  SUMMARY
+  KEYWORDS
+  IMAGE_PROMPT
+  TRANSLATION
+  REWRITE
+}
+
