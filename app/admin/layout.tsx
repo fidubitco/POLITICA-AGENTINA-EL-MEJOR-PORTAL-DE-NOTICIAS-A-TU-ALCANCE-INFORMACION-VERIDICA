@@ -54,7 +54,7 @@ export default async function AdminLayout({
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium">{session.user.name || session.user.email}</p>
-              <p className="text-xs text-zinc-500">{(session.user as any).role}</p>
+              <p className="text-xs text-zinc-500">{(session.user as { role?: string }).role}</p>
             </div>
             <Link href="/api/auth/signout" className="p-2 hover:bg-zinc-900 rounded-lg">
               <LogOut className="w-5 h-5" />

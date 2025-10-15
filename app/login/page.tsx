@@ -3,6 +3,7 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function LoginPage() {
         router.push("/admin");
         router.refresh();
       }
-    } catch (err) {
+    } catch {
       setError("Error al iniciar sesión");
     } finally {
       setLoading(false);
@@ -101,9 +102,9 @@ export default function LoginPage() {
         </div>
 
         <div className="text-center mt-6">
-          <a href="/" className="text-sm text-zinc-400 hover:text-white transition-colors">
+          <Link href="/" className="text-sm text-zinc-400 hover:text-white transition-colors">
             ← Volver al sitio
-          </a>
+          </Link>
         </div>
       </div>
     </div>
