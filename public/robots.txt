@@ -1,0 +1,14 @@
+# POLITICA ARGENTINA - Robots.txt
+
+User-agent: *
+Allow: /
+
+# Disallow admin and API
+Disallow: /admin
+Disallow: /api
+Disallow: /login
+
+# Sitemaps
+Sitemap: https://politica-argentina-8v3u5weqt-theweb3brothers-gmailcoms-projects.vercel.app/sitemap.xml
+Sitemap: https://politica-argentina-8v3u5weqt-theweb3brothers-gmailcoms-projects.vercel.app/news-sitemap.xml
+Sitemap: https://politica-argentina-8v3u5weqt-theweb3brothers-gmailcoms-projects.vercel.app/image-sitemap.xml
