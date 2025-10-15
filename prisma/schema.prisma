@@ -1,0 +1,232 @@
+// Prisma Schema para POLITICA ARGENTINA
+// Database: PostgreSQL (Neon)
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ==================== USUARIOS Y ROLES ====================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  image         String?
+  password      String?
+  role          Role      @default(REPORTER)
+  bio           String?   @db.Text
+  twitter       String?
+  
+  posts         Post[]
+  sessions      Session[]
+  accounts      Account[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([email])
+  @@index([role])
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  REPORTER
+  CONTRIBUTOR
+  READER
+}
+
+// NextAuth tables
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ==================== CONTENIDO ====================
+
+model Category {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String   @unique
+  description String?  @db.Text
+  color       String?  @default("#4f46e5")
+  order       Int      @default(0)
+  
+  posts       Post[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([order])
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String   @unique
+  
+  posts     Post[]   @relation("PostsOnTags")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+model Post {
+  id            String     @id @default(cuid())
+  slug          String     @unique
+  title         String
+  excerpt       String?    @db.Text
+  content       Json       @db.JsonB
+  coverImage    String?
+  
+  author        User       @relation(fields: [authorId], references: [id])
+  authorId      String
+  
+  status        PostStatus @default(DRAFT)
+  
+  category      Category?  @relation(fields: [categoryId], references: [id])
+  categoryId    String?
+  
+  tags          Tag[]      @relation("PostsOnTags")
+  
+  publishedAt   DateTime?
+  scheduledFor  DateTime?
+  
+  canonicalUrl  String?
+  metaTitle     String?
+  metaDesc      String?
+  
+  // SEO y Analytics
+  views         Int        @default(0)
+  featured      Boolean    @default(false)
+  breaking      Boolean    @default(false)
+  
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([categoryId, publishedAt])
+  @@index([authorId])
+  @@index([slug])
+  @@index([updatedAt])
+  @@index([featured, breaking])
+}
+
+enum PostStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  SCHEDULED
+}
+
+// ==================== SEO Y ANALYTICS ====================
+
+model SeoAudit {
+  id              String   @id @default(cuid())
+  date            DateTime @default(now())
+  
+  duplicates      Int      @default(0)
+  thinContent     Int      @default(0)
+  missingImages   Int      @default(0)
+  orphanPosts     Int      @default(0)
+  brokenLinks     Int      @default(0)
+  stalePosts      Int      @default(0)
+  
+  report          Json?    @db.JsonB
+  
+  createdAt       DateTime @default(now())
+
+  @@index([date])
+}
+
+model WebVital {
+  id        String   @id @default(cuid())
+  name      String
+  value     Float
+  path      String
+  
+  createdAt DateTime @default(now())
+
+  @@index([name, createdAt])
+  @@index([path])
+}
+
+// ==================== EXPERIMENTOS A/B ====================
+
+model Experiment {
+  id              String   @id @default(cuid())
+  postId          String
+  
+  titleA          String
+  titleB          String
+  
+  impressionsA    Int      @default(0)
+  clicksA         Int      @default(0)
+  
+  impressionsB    Int      @default(0)
+  clicksB         Int      @default(0)
+  
+  active          Boolean  @default(true)
+  winner          String?
+  
+  createdAt       DateTime @default(now())
+  completedAt     DateTime?
+
+  @@index([postId, active])
+}
+
+// ==================== COLA DE TRABAJOS ====================
+
+model Job {
+  id        String   @id @default(cuid())
+  type      String
+  payload   Json     @db.JsonB
+  status    String   @default("pending")
+  attempts  Int      @default(0)
+  error     String?  @db.Text
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([type])
+}
+
