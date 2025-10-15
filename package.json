@@ -28,6 +28,7 @@
     "nanoid": "^5.1.6",
     "next": "15.5.5",
     "next-auth": "5.0.0-beta.29",
+    "next-intl": "^4.3.12",
     "next-sitemap": "^4.2.3",
     "openai": "^6.3.0",
     "react": "19.1.0",

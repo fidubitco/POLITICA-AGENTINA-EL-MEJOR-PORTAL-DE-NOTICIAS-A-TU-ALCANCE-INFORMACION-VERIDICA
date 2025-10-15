@@ -1,0 +1,46 @@
+{
+  "site": {
+    "name": "ARGENTINA POLITICS",
+    "tagline": "Real-time news",
+    "description": "The most complete news portal in Argentina"
+  },
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "search": "Search",
+    "login": "Sign In"
+  },
+  "categories": {
+    "politica": "Politics",
+    "economia": "Economy",
+    "sociedad": "Society",
+    "internacional": "International",
+    "deportes": "Sports",
+    "tecnologia": "Technology"
+  },
+  "sections": {
+    "featured": "Featured",
+    "latest": "Latest News",
+    "breaking": "Breaking News",
+    "related": "Related Articles"
+  },
+  "post": {
+    "by": "By",
+    "share": "Share",
+    "tags": "Tags",
+    "author": "About the Author",
+    "journalist": "Journalist"
+  },
+  "footer": {
+    "about": "About Us",
+    "legal": "Legal",
+    "terms": "Terms and Conditions",
+    "privacy": "Privacy Policy",
+    "contact": "Contact",
+    "newsletter": "Newsletter",
+    "newsletterDesc": "Receive the most important news in your email",
+    "emailPlaceholder": "Your email",
+    "submit": "Submit",
+    "copyright": "All rights reserved"
+  }
+}

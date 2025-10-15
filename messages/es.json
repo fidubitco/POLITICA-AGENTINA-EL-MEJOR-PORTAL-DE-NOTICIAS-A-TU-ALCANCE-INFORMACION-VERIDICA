@@ -1,0 +1,46 @@
+{
+  "site": {
+    "name": "POLÍTICA ARGENTINA",
+    "tagline": "Noticias en tiempo real",
+    "description": "El portal de noticias más completo de Argentina"
+  },
+  "nav": {
+    "home": "Inicio",
+    "categories": "Categorías",
+    "search": "Buscar",
+    "login": "Iniciar Sesión"
+  },
+  "categories": {
+    "politica": "Política",
+    "economia": "Economía",
+    "sociedad": "Sociedad",
+    "internacional": "Internacional",
+    "deportes": "Deportes",
+    "tecnologia": "Tecnología"
+  },
+  "sections": {
+    "featured": "Destacadas",
+    "latest": "Últimas Noticias",
+    "breaking": "Último Momento",
+    "related": "Artículos Relacionados"
+  },
+  "post": {
+    "by": "Por",
+    "share": "Compartir",
+    "tags": "Etiquetas",
+    "author": "Sobre el Autor",
+    "journalist": "Periodista"
+  },
+  "footer": {
+    "about": "Sobre Nosotros",
+    "legal": "Legal",
+    "terms": "Términos y Condiciones",
+    "privacy": "Política de Privacidad",
+    "contact": "Contacto",
+    "newsletter": "Newsletter",
+    "newsletterDesc": "Recibe las noticias más importantes en tu email",
+    "emailPlaceholder": "Tu email",
+    "submit": "Enviar",
+    "copyright": "Todos los derechos reservados"
+  }
+}

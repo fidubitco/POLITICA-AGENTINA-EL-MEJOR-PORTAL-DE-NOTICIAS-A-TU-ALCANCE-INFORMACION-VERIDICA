@@ -7,6 +7,7 @@ import { es } from "date-fns/locale";
 import { Calendar, User, Tag, Share2 } from "lucide-react";
 import PostCard from "@/components/post-card";
 import type { Metadata } from "next";
+import { NewsArticleLD, BreadcrumbLD } from "@/components/seo/json-ld";
 
 export const revalidate = 60;
 
@@ -208,6 +209,30 @@ export default async function ArticlePage({ params }: Props) {
           </aside>
         </div>
       </article>
+
+      {/* SEO Structured Data */}
+      <NewsArticleLD
+        headline={post.title}
+        description={post.excerpt || post.title}
+        image={post.coverImage || undefined}
+        datePublished={post.publishedAt?.toISOString() || post.createdAt.toISOString()}
+        dateModified={post.updatedAt.toISOString()}
+        author={{
+          name: post.author.name || post.author.email,
+          url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://politica-argentina.vercel.app"}/autor/${post.authorId}`,
+        }}
+        publisher={{
+          name: "POLÍTICA ARGENTINA",
+          logo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://politica-argentina.vercel.app"}/logo.svg`,
+        }}
+      />
+      <BreadcrumbLD
+        items={[
+          { name: "Inicio", url: process.env.NEXT_PUBLIC_SITE_URL || "https://politica-argentina.vercel.app" },
+          ...(post.category ? [{ name: post.category.name, url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://politica-argentina.vercel.app"}/categoria/${post.category.slug}` }] : []),
+          { name: post.title, url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://politica-argentina.vercel.app"}/noticia/${post.slug}` },
+        ]}
+      />
     </div>
   );
 }
