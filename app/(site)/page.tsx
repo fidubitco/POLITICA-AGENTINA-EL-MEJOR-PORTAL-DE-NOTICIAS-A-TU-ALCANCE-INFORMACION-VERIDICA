@@ -12,6 +12,8 @@ import LiveMetricsTicker from "@/components/LiveMetricsTicker";
 import MetricaHumana from "@/components/MetricaHumana";
 import DolarHistoryChart from "@/components/DolarHistoryChart";
 import NewsletterForm from "@/components/newsletter/newsletter-form";
+import FadeIn from "@/components/animations/fade-in";
+import StaggerChildren, { StaggerItem } from "@/components/animations/stagger-children";
 import type { Metadata } from "next";
 
 export const dynamic = 'force-dynamic';
@@ -214,8 +216,9 @@ export default async function HomePage() {
               🏆 HERO SECTION - Featured Post
               ======================================== */}
           {featuredPost && (
-            <section className="relative">
-              <Link href={`/noticia/${featuredPost.slug}`}>
+            <FadeIn direction="up" duration={0.8}>
+              <section className="relative">
+                <Link href={`/noticia/${featuredPost.slug}`}>
                 <div className="relative rounded-3xl overflow-hidden group min-h-[650px] flex items-end shadow-2xl shadow-zinc-950/50">
                   {featuredPost.coverImage && (
                     <>
@@ -279,47 +282,56 @@ export default async function HomePage() {
                 </div>
               </Link>
             </section>
+            </FadeIn>
           )}
 
           {/* ========================================
               💹 ECONOMIC METRICS SECTION - Live Data
               ======================================== */}
           {dolarData && (
-            <section className="space-y-8">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-black tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent flex items-center gap-3">
-                    <BarChart3 className="w-8 h-8 md:w-10 md:h-10 text-blue-500" />
-                    Economía en Tiempo Real
-                  </h2>
-                  <p className="text-zinc-500 mt-2 text-sm md:text-base">
-                    Datos actualizados al instante • Impacto en tu vida cotidiana
-                  </p>
+            <FadeIn direction="up" delay={0.2}>
+              <section className="space-y-8">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-3xl md:text-4xl font-black tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent flex items-center gap-3">
+                      <BarChart3 className="w-8 h-8 md:w-10 md:h-10 text-blue-500" />
+                      Economía en Tiempo Real
+                    </h2>
+                    <p className="text-zinc-500 mt-2 text-sm md:text-base">
+                      Datos actualizados al instante • Impacto en tu vida cotidiana
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Dolar Cards - Mobile First Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <MetricaHumana
-                  tipo="blue"
-                  dolarData={dolarData?.blue}
-                  variacionDiaria={dolarData?.variaciones?.blue || 0}
-                />
-                <MetricaHumana
-                  tipo="oficial"
-                  dolarData={dolarData?.oficial}
-                  variacionDiaria={dolarData?.variaciones?.oficial || 0}
-                />
-                <MetricaHumana
-                  tipo="mep"
-                  dolarData={dolarData?.mep}
-                  variacionDiaria={dolarData?.variaciones?.mep || 0}
-                />
-              </div>
+                {/* Dolar Cards - Mobile First Grid */}
+                <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <StaggerItem>
+                    <MetricaHumana
+                      tipo="blue"
+                      dolarData={dolarData?.blue}
+                      variacionDiaria={dolarData?.variaciones?.blue || 0}
+                    />
+                  </StaggerItem>
+                  <StaggerItem>
+                    <MetricaHumana
+                      tipo="oficial"
+                      dolarData={dolarData?.oficial}
+                      variacionDiaria={dolarData?.variaciones?.oficial || 0}
+                    />
+                  </StaggerItem>
+                  <StaggerItem>
+                    <MetricaHumana
+                      tipo="mep"
+                      dolarData={dolarData?.mep}
+                      variacionDiaria={dolarData?.variaciones?.mep || 0}
+                    />
+                  </StaggerItem>
+                </StaggerChildren>
 
-              {/* Dolar History Chart */}
-              <DolarHistoryChart />
-            </section>
+                {/* Dolar History Chart */}
+                <DolarHistoryChart />
+              </section>
+            </FadeIn>
           )}
 
           {/* ========================================
@@ -345,10 +357,11 @@ export default async function HomePage() {
               </div>
 
               {/* News Grid - Responsive */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {latestPosts.map((post) => (
-                  <Link key={post.id} href={`/noticia/${post.slug}`}>
-                    <Card className="overflow-hidden bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 border-zinc-800 hover:border-red-600/50 hover:shadow-2xl hover:shadow-red-600/10 transition-all duration-500 group h-full">
+                  <StaggerItem key={post.id}>
+                    <Link href={`/noticia/${post.slug}`}>
+                      <Card className="overflow-hidden bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 border-zinc-800 hover:border-red-600/50 hover:shadow-2xl hover:shadow-red-600/10 transition-all duration-500 group h-full">
                       {post.coverImage && (
                         <div className="relative aspect-[16/9] overflow-hidden">
                           <Image
@@ -397,9 +410,10 @@ export default async function HomePage() {
                         </div>
                       </CardContent>
                     </Card>
-                  </Link>
+                    </Link>
+                  </StaggerItem>
                 ))}
-              </div>
+              </StaggerChildren>
             </div>
 
             {/* ========================================
@@ -458,27 +472,31 @@ export default async function HomePage() {
           {/* ========================================
               🗂️ CATEGORIES SECTION
               ======================================== */}
-          <section className="space-y-8 border-t border-zinc-800 pt-12">
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight">
-              Explora por Categoría
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {allCategories.slice(0, 10).map((category) => (
-                <Link key={category.id} href={`/categoria/${category.slug}`}>
-                  <Card className="bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 border-zinc-800 hover:border-red-600 hover:shadow-xl hover:shadow-red-600/10 transition-all duration-500 group">
+          <FadeIn direction="up" delay={0.3}>
+            <section className="space-y-8 border-t border-zinc-800 pt-12">
+              <h2 className="text-3xl md:text-4xl font-black tracking-tight">
+                Explora por Categoría
+              </h2>
+              <StaggerChildren className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {allCategories.slice(0, 10).map((category) => (
+                  <StaggerItem key={category.id}>
+                    <Link href={`/categoria/${category.slug}`}>
+                      <Card className="bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 border-zinc-800 hover:border-red-600 hover:shadow-xl hover:shadow-red-600/10 transition-all duration-500 group">
                     <CardContent className="p-6 text-center space-y-3">
                       <div className="w-14 h-14 mx-auto bg-gradient-to-br from-red-600 to-red-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
                         <Newspaper className="w-7 h-7" />
                       </div>
-                      <h3 className="font-bold group-hover:text-red-400 transition-colors">
-                        {category.name}
-                      </h3>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          </section>
+                        <h3 className="font-bold group-hover:text-red-400 transition-colors">
+                          {category.name}
+                        </h3>
+                      </CardContent>
+                    </Card>
+                    </Link>
+                  </StaggerItem>
+                ))}
+              </StaggerChildren>
+            </section>
+          </FadeIn>
         </div>
       </div>
     </>
