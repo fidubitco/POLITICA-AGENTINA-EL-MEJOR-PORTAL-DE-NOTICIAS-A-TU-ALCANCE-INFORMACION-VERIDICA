@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
+// Removed edge runtime - Prisma works better with Node.js runtime
 
 /**
  * Cron Job: Publish Scheduled Posts
