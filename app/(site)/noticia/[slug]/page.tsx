@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import CommentsSection from "@/components/comments/comments-section";
+import SocialShareButtons from "@/components/social-share-buttons";
 
 export const revalidate = 60;
 
@@ -178,55 +180,13 @@ export default async function ArticlePage({ params }: Props) {
                   </div>
                 </div>
 
-                {/* Share Buttons */}
-                <div className="flex items-center gap-3 mb-8">
-                  <span className="text-sm font-semibold text-zinc-400 flex items-center gap-2">
-                    <Share2 className="w-4 h-4" />
-                    Compartir:
-                  </span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="hover:bg-blue-950/30 hover:text-blue-400"
-                    asChild
-                  >
-                    <a 
-                      href={`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(articleUrl)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Facebook className="w-4 h-4" />
-                    </a>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="hover:bg-sky-950/30 hover:text-sky-400"
-                    asChild
-                  >
-                    <a 
-                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(post.title)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Twitter className="w-4 h-4" />
-                    </a>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="hover:bg-blue-950/30 hover:text-blue-400"
-                    asChild
-                  >
-                    <a 
-                      href={`https://linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </a>
-                  </Button>
-                  {/* Botón copiar deshabilitado en Server Component */}
+                {/* Share Buttons - FUNCTIONAL */}
+                <div className="mb-8">
+                  <SocialShareButtons
+                    url={articleUrl}
+                    title={post.title}
+                    postId={post.id}
+                  />
                 </div>
 
                 {/* Featured Image */}
@@ -281,6 +241,11 @@ export default async function ArticlePage({ params }: Props) {
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* Comments Section */}
+            <div className="mt-12">
+              <CommentsSection postId={post.id} />
             </div>
 
             {/* Related Posts */}

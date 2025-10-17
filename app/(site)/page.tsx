@@ -11,6 +11,7 @@ import Image from "next/image";
 import LiveMetricsTicker from "@/components/LiveMetricsTicker";
 import MetricaHumana from "@/components/MetricaHumana";
 import DolarHistoryChart from "@/components/DolarHistoryChart";
+import NewsletterForm from "@/components/newsletter/newsletter-form";
 import type { Metadata } from "next";
 
 export const dynamic = 'force-dynamic';
@@ -449,35 +450,8 @@ export default async function HomePage() {
                 </CardContent>
               </Card>
 
-              {/* Newsletter Card */}
-              <Card className="bg-gradient-to-br from-red-950/40 via-red-900/30 to-blue-950/40 border-zinc-800 shadow-2xl shadow-red-600/10">
-                <CardContent className="p-8 text-center space-y-6">
-                  <div className="w-20 h-20 bg-gradient-to-br from-red-600 to-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-red-600/30">
-                    <Newspaper className="w-10 h-10" />
-                  </div>
-                  <div>
-                    <h3 className="font-black text-2xl mb-2">Newsletter Diario</h3>
-                    <p className="text-sm text-zinc-400 leading-relaxed">
-                      Las noticias más importantes en tu email cada mañana.
-                    </p>
-                  </div>
-                  <form className="space-y-3">
-                    <Input
-                      type="email"
-                      placeholder="tu@email.com"
-                      className="bg-zinc-900/50 border-zinc-800 focus:border-red-600 h-12 text-base"
-                    />
-                    <Button className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 h-12 text-base font-bold shadow-lg shadow-red-600/30">
-                      <Send className="w-5 h-5 mr-2" />
-                      Suscribirme Gratis
-                    </Button>
-                  </form>
-                  <div className="flex items-center justify-center gap-2 text-xs text-zinc-500">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="font-semibold">+50.000 lectores suscritos</span>
-                  </div>
-                </CardContent>
-              </Card>
+              {/* Newsletter Card - FUNCTIONAL */}
+              <NewsletterForm />
             </aside>
           </section>
 
