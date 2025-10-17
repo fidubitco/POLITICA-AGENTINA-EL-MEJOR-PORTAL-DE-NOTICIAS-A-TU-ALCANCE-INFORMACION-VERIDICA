@@ -1,0 +1,403 @@
+// Additional Schema Extensions for Hybrid Solution
+// Merge this with your main schema.prisma
+
+// ==================== COMMENTS SYSTEM ====================
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+
+  author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId  String?
+
+  // Guest comments
+  guestName  String?
+  guestEmail String?
+
+  // Moderation
+  status     CommentStatus @default(PENDING)
+  moderatedBy String?
+  moderatedAt DateTime?
+
+  // AI Moderation
+  toxicityScore Float? // 0-1
+  spam Boolean @default(false)
+
+  // Threading
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId  String?
+  replies   Comment[] @relation("CommentReplies")
+
+  // Engagement
+  likes     Int      @default(0)
+  dislikes  Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([postId, status, createdAt])
+  @@index([authorId])
+  @@index([parentId])
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SPAM
+}
+
+// ==================== NEWSLETTER SYSTEM ====================
+
+model Subscriber {
+  id            String            @id @default(cuid())
+  email         String            @unique
+  name          String?
+
+  status        SubscriberStatus  @default(ACTIVE)
+
+  // Preferences
+  frequency     NewsletterFrequency @default(WEEKLY)
+  categories    String[]          // Array of category IDs
+  tags          String[]
+
+  // Metadata
+  source        String?           // Where they subscribed from
+  ip            String?
+  userAgent     String?
+
+  // Engagement
+  openRate      Float            @default(0)
+  clickRate     Float            @default(0)
+  lastOpened    DateTime?
+  lastClicked   DateTime?
+
+  subscribedAt  DateTime         @default(now())
+  unsubscribedAt DateTime?
+
+  campaigns     CampaignSend[]
+
+  @@index([email, status])
+}
+
+enum SubscriberStatus {
+  ACTIVE
+  UNSUBSCRIBED
+  BOUNCED
+  COMPLAINED
+}
+
+enum NewsletterFrequency {
+  DAILY
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+model Campaign {
+  id            String         @id @default(cuid())
+  name          String
+  subject       String
+  preheader     String?
+  content       Json           @db.JsonB
+
+  // Targeting
+  segmentId     String?
+  testEmails    String[]
+
+  // Scheduling
+  status        CampaignStatus @default(DRAFT)
+  scheduledFor  DateTime?
+  sentAt        DateTime?
+
+  // Analytics
+  totalSent     Int            @default(0)
+  totalOpened   Int            @default(0)
+  totalClicked  Int            @default(0)
+  totalBounced  Int            @default(0)
+
+  sends         CampaignSend[]
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([status, scheduledFor])
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENDING
+  SENT
+  CANCELLED
+}
+
+model CampaignSend {
+  id           String      @id @default(cuid())
+
+  campaign     Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  campaignId   String
+
+  subscriber   Subscriber  @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+  subscriberId String
+
+  // Tracking
+  sent         Boolean     @default(false)
+  opened       Boolean     @default(false)
+  clicked      Boolean     @default(false)
+  bounced      Boolean     @default(false)
+
+  sentAt       DateTime?
+  openedAt     DateTime?
+  clickedAt    DateTime?
+
+  @@unique([campaignId, subscriberId])
+  @@index([campaignId, sent])
+}
+
+// ==================== SUBSCRIPTION & PAYWALL ====================
+
+model Subscription {
+  id              String             @id @default(cuid())
+
+  user            User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String
+
+  plan            SubscriptionPlan   @relation(fields: [planId], references: [id])
+  planId          String
+
+  // Stripe
+  stripeCustomerId       String?  @unique
+  stripeSubscriptionId   String?  @unique
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
+
+  status          SubscriptionStatus @default(ACTIVE)
+
+  // Billing
+  billingCycle    BillingCycle      @default(MONTHLY)
+  amount          Float
+  currency        String            @default("USD")
+
+  // Usage
+  articlesRead    Int               @default(0)
+  articlesLimit   Int?              // null = unlimited
+
+  // Dates
+  startDate       DateTime          @default(now())
+  endDate         DateTime?
+  canceledAt      DateTime?
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([userId, status])
+  @@index([stripeCustomerId])
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+  INCOMPLETE
+}
+
+enum BillingCycle {
+  MONTHLY
+  YEARLY
+}
+
+model SubscriptionPlan {
+  id            String         @id @default(cuid())
+  name          String
+  description   String?
+
+  // Pricing
+  monthlyPrice  Float
+  yearlyPrice   Float
+
+  stripePriceIdMonthly String?
+  stripePriceIdYearly  String?
+
+  // Features
+  articlesPerMonth Int?  // null = unlimited
+  features      Json   @db.JsonB
+
+  // Settings
+  active        Boolean @default(true)
+  sortOrder     Int     @default(0)
+
+  subscriptions Subscription[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ==================== RECOMMENDATIONS ENGINE ====================
+
+model UserInteraction {
+  id         String   @id @default(cuid())
+
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String?
+
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId     String
+
+  // Interaction type
+  type       InteractionType
+
+  // Context
+  duration   Int?     // seconds spent on page
+  scrollDepth Float?  // 0-1
+  source     String?  // referrer
+
+  createdAt  DateTime @default(now())
+
+  @@index([userId, type, createdAt])
+  @@index([postId, type, createdAt])
+}
+
+enum InteractionType {
+  VIEW
+  CLICK
+  SHARE
+  BOOKMARK
+  LIKE
+  COMMENT
+}
+
+model Recommendation {
+  id        String   @id @default(cuid())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+
+  score     Float    // relevance score 0-1
+  reason    String?  // why recommended
+
+  shown     Boolean  @default(false)
+  clicked   Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([userId, score])
+}
+
+// ==================== SOCIAL MEDIA AUTOMATION ====================
+
+model SocialPost {
+  id          String         @id @default(cuid())
+
+  post        Post           @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId      String
+
+  platform    SocialPlatform
+
+  // Content
+  content     String         @db.Text
+  image       String?
+  link        String
+
+  // Scheduling
+  status      SocialStatus   @default(SCHEDULED)
+  scheduledFor DateTime
+  publishedAt DateTime?
+
+  // Platform-specific IDs
+  platformId  String?        // Tweet ID, FB Post ID, etc.
+
+  // Engagement
+  likes       Int           @default(0)
+  shares      Int           @default(0)
+  comments    Int           @default(0)
+
+  error       String?
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([postId, platform])
+  @@index([status, scheduledFor])
+}
+
+enum SocialPlatform {
+  TWITTER
+  FACEBOOK
+  INSTAGRAM
+  LINKEDIN
+  TELEGRAM
+  WHATSAPP
+}
+
+enum SocialStatus {
+  SCHEDULED
+  PUBLISHED
+  FAILED
+  CANCELLED
+}
+
+// ==================== VIDEO CONTENT ====================
+
+model Video {
+  id          String      @id @default(cuid())
+
+  post        Post?       @relation(fields: [postId], references: [id], onDelete: SetNull)
+  postId      String?
+
+  title       String
+  description String?     @db.Text
+
+  // File info
+  url         String
+  thumbnail   String?
+  duration    Int?        // seconds
+  size        Int?        // bytes
+  format      String?     // mp4, webm, etc.
+
+  // Video processing
+  status      VideoStatus @default(PROCESSING)
+
+  // Platform integration
+  youtubeId   String?
+  vimeoId     String?
+
+  // Analytics
+  views       Int         @default(0)
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([postId])
+  @@index([status])
+}
+
+enum VideoStatus {
+  UPLOADING
+  PROCESSING
+  READY
+  FAILED
+}
+
+// ==================== EXTEND EXISTING MODELS ====================
+
+// Add these fields to existing Post model
+// comments      Comment[]
+// interactions  UserInteraction[]
+// recommendations Recommendation[]
+// socialPosts   SocialPost[]
+// videos        Video[]
+
+// Add these to existing User model
+// comments      Comment[]
+// subscriptions Subscription[]
+// interactions  UserInteraction[]
+// recommendations Recommendation[]

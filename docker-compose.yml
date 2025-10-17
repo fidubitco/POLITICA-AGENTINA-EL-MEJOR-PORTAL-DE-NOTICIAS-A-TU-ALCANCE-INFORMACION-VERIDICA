@@ -1,62 +1,210 @@
-version: '3.8'
+# ============================================================================
+# POLÍTICA ARGENTINA - Professional Docker Compose Configuration
+# Multi-service setup: App + PostgreSQL + Redis + n8n + Monitoring
+# For Railway + Vercel hybrid deployment
+# ============================================================================
+
+version: '3.9'
 
 services:
-  politica-argentina:
-    build: .
-    ports:
-      - "3000:3000"
-      - "9050:9050"  # Tor SOCKS5
-      - "8118:8118"  # Privoxy HTTP
+  # ==================== PostgreSQL Database ====================
+  postgres:
+    image: postgres:16-alpine
+    container_name: politica-db
+    restart: unless-stopped
+    shm_size: 128mb
     environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - AUTH_SECRET=${AUTH_SECRET}
+      POSTGRES_USER: ${POSTGRES_USER:-politica}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-politica_secure_pass_2024}
+      POSTGRES_DB: ${POSTGRES_DB:-politica_argentina}
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_INITDB_ARGS: "-E UTF8 --locale=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./prisma/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - politica-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-politica} -d ${POSTGRES_DB:-politica_argentina}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    command: >
+      postgres
+      -c shared_buffers=256MB
+      -c max_connections=200
+      -c work_mem=16MB
+      -c maintenance_work_mem=64MB
+      -c effective_cache_size=1GB
+      -c wal_buffers=16MB
+      -c checkpoint_completion_target=0.9
+      -c random_page_cost=1.1
+
+  # ==================== Redis Cache ====================
+  redis:
+    image: redis:7-alpine
+    container_name: politica-redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --requirepass ${REDIS_PASSWORD:-redis_secure_pass_2024}
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      --save 60 1000
+      --appendonly yes
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - politica-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # ==================== Main Application ====================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+      args:
+        DATABASE_URL: postgresql://${POSTGRES_USER:-politica}:${POSTGRES_PASSWORD:-politica_secure_pass_2024}@postgres:5432/${POSTGRES_DB:-politica_argentina}?schema=public&pgbouncer=true&connection_limit=10
+        DIRECT_URL: postgresql://${POSTGRES_USER:-politica}:${POSTGRES_PASSWORD:-politica_secure_pass_2024}@postgres:5432/${POSTGRES_DB:-politica_argentina}?schema=public
+        NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+        NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+        GEMINI_API_KEY: ${GEMINI_API_KEY}
+        CRON_SECRET: ${CRON_SECRET}
+      cache_from:
+        - type=registry,ref=politica-argentina:cache
+    container_name: politica-app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-politica}:${POSTGRES_PASSWORD:-politica_secure_pass_2024}@postgres:5432/${POSTGRES_DB:-politica_argentina}?schema=public&pgbouncer=true&connection_limit=10
+      - DIRECT_URL=postgresql://${POSTGRES_USER:-politica}:${POSTGRES_PASSWORD:-politica_secure_pass_2024}@postgres:5432/${POSTGRES_DB:-politica_argentina}?schema=public
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3000}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
       - CRON_SECRET=${CRON_SECRET}
-      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-redis_secure_pass_2024}@redis:6379
       # Tor configuration
       - USE_TOR=true
       - TOR_SOCKS_PORT=9050
       - HTTP_PROXY=http://127.0.0.1:8118
       - HTTPS_PROXY=http://127.0.0.1:8118
-    volumes:
-      - tor-data:/var/lib/tor
-    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3000}:3000"
+      - "9050:9050"  # Tor SOCKS5
+      - "8118:8118"  # Privoxy HTTP
     networks:
       - politica-network
+    volumes:
+      - ./public:/app/public:ro
+      - app_cache:/app/.next/cache
+      - tor_data:/var/lib/tor
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
 
-  # n8n for automation
+  # ==================== n8n Automation Platform ====================
   n8n:
     image: n8nio/n8n:latest
+    container_name: politica-n8n
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
-      - "5678:5678"
+      - "${N8N_PORT:-5678}:5678"
     environment:
       - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=admin
-      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD}
-      - WEBHOOK_URL=https://politica-argentina.vercel.app
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-n8n_secure_pass_2024}
+      - WEBHOOK_URL=${NEXTAUTH_URL:-http://localhost:3000}
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB:-politica_argentina}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER:-politica}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD:-politica_secure_pass_2024}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY:-n8n_encryption_key_2024}
     volumes:
-      - n8n-data:/home/node/.n8n
-      - ./n8n-workflows:/workflows
-    restart: unless-stopped
+      - n8n_data:/home/node/.n8n
+      - ./n8n-workflows:/workflows:ro
     networks:
       - politica-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5678/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-  # Redis for caching (optional)
-  redis:
-    image: redis:7-alpine
+  # ==================== pgAdmin (Optional - Development Only) ====================
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: politica-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@politica-argentina.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-pgadmin_pass}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
     ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
-    restart: unless-stopped
+      - "${PGADMIN_PORT:-5050}:80"
     networks:
       - politica-network
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    profiles:
+      - tools
 
-volumes:
-  tor-data:
-  n8n-data:
-  redis-data:
-
+# ==================== Networks ====================
 networks:
   politica-network:
     driver: bridge
+    name: politica-argentina-network
+
+# ==================== Volumes ====================
+volumes:
+  postgres_data:
+    name: politica-postgres-data
+    driver: local
+  redis_data:
+    name: politica-redis-data
+    driver: local
+  app_cache:
+    name: politica-app-cache
+    driver: local
+  tor_data:
+    name: politica-tor-data
+    driver: local
+  n8n_data:
+    name: politica-n8n-data
+    driver: local
+  pgadmin_data:
+    name: politica-pgadmin-data
+    driver: local

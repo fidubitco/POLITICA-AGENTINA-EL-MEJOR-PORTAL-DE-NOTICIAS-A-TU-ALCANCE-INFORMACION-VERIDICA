@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: true,
+  output: 'standalone', // Enable Docker optimization
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

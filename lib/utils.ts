@@ -30,6 +30,10 @@ export function formatDate(date: Date | string | null | undefined): string {
   });
 }
 
+export function formatRelativeTime(date: Date | string | null | undefined): string {
+  return formatDate(date);
+}
+
 export function truncate(str: string, length: number): string {
   if (str.length <= length) return str;
   return str.slice(0, length) + '...';
