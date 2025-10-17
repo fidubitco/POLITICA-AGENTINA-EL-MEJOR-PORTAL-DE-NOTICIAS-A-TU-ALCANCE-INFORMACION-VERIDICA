@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
   output: 'standalone', // Enable Docker optimization
   images: {
     formats: ['image/avif', 'image/webp'],
+    qualities: [50, 75, 85, 90, 95, 100],
     remotePatterns: [
       { protocol: 'https', hostname: '**' }
     ],

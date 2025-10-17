@@ -14,11 +14,11 @@ import { Separator } from "@/components/ui/separator";
 export const revalidate = 60;
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const post = await (db.post as any).findFirst({
     where: { slug, status: "PUBLISHED" },
     include: { 
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const { slug } = params;
+  const { slug } = await params;
 
   const post = await (db.post as any).findFirst({
     where: { slug, status: "PUBLISHED" },

@@ -87,12 +87,12 @@ export default function EnhancedPostCard({
             className="absolute inset-0"
           >
             <Image
-              src={coverImage || '/placeholder.jpg'}
+              src={coverImage || '/placeholder.jpg.svg'}
               alt={title}
               fill
               sizes={featured ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"}
               className="object-cover"
-              quality={90}
+              quality={85}
               priority={index < 3}
             />
           </motion.div>
