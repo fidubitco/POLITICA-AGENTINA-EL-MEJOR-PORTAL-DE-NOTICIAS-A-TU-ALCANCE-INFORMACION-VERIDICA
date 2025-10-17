@@ -103,9 +103,22 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Premium Typography - Serif Headings */
+/* Ultra-Premium Typography */
 .font-serif {
-  font-family: 'Georgia', 'Times New Roman', 'Charter', 'Iowan Old Style', serif;
+  font-family: 'Georgia', 'Times New Roman', 'Charter', 'Iowan Old Style', 'Palatino', serif;
+  font-feature-settings: "liga" 1, "dlig" 1, "kern" 1;
+}
+
+/* Magazine-Style Headings */
+h1.font-serif, h2.font-serif {
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+/* Ultra-Smooth Transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Premium Image Effects */
