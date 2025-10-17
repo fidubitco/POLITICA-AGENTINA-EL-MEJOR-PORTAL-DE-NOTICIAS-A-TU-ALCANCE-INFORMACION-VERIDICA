@@ -1,0 +1,262 @@
+{
+  "name": "PBN Content Automation - Argentina SEO",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "name": "Schedule Every 2 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://trends.google.com/trends/trendingsearches/daily/rss?geo=AR",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "xml"
+            }
+          }
+        }
+      },
+      "name": "Get Trending Topics (Argentina)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "data",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "topics",
+              "cssSelector": "item title",
+              "returnValue": "innerText"
+            }
+          ]
+        }
+      },
+      "name": "Extract Topics",
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:4000/api/generate-article",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{ $json.topic }}"
+            },
+            {
+              "name": "keywords",
+              "value": "política argentina, noticias, economía, actualidad"
+            },
+            {
+              "name": "length",
+              "value": "long"
+            },
+            {
+              "name": "seo_optimized",
+              "value": "true"
+            },
+            {
+              "name": "tone",
+              "value": "professional"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Generate Article with AI",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Quality control check\nconst article = $input.item.json.article;\n\n// Check word count\nconst wordCount = article.split(' ').length;\nif (wordCount < 1500) {\n  throw new Error('Article too short: ' + wordCount + ' words');\n}\n\n// Check readability (simple Flesch score approximation)\nconst sentences = article.split(/[.!?]+/).length;\nconst words = article.split(' ').length;\nconst syllables = words * 1.5; // Rough estimate\n\nconst fleschScore = 206.835 - 1.015 * (words / sentences) - 84.6 * (syllables / words);\n\nif (fleschScore < 50 || fleschScore > 80) {\n  $input.item.json.warning = 'Readability score outside target range: ' + fleschScore;\n}\n\n// Check keyword density\nconst keywords = ['política', 'argentina', 'economía', 'noticias'];\nlet keywordCount = 0;\nkeywords.forEach(kw => {\n  const regex = new RegExp(kw, 'gi');\n  keywordCount += (article.match(regex) || []).length;\n});\n\nconst keywordDensity = (keywordCount / words) * 100;\nif (keywordDensity > 3) {\n  throw new Error('Keyword stuffing detected: ' + keywordDensity + '%');\n}\n\n$input.item.json.quality_metrics = {\n  word_count: wordCount,\n  flesch_score: fleschScore,\n  keyword_density: keywordDensity\n};\n\nreturn $input.item;"
+      },
+      "name": "Quality Control",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:4000/api/generate",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "Generate 5 contextually relevant keywords for this article title: {{ $json.title }}"
+            },
+            {
+              "name": "model",
+              "value": "fast"
+            }
+          ]
+        }
+      },
+      "name": "Generate SEO Keywords",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generate meta tags\nconst article = $input.item.json.article;\nconst title = $input.item.json.title;\n\n// Meta description (150-160 characters)\nconst firstSentence = article.split('.')[0] + '.';\nconst metaDescription = firstSentence.substring(0, 157) + '...';\n\n// SEO title (50-60 characters)\nconst seoTitle = title.length > 60 ? title.substring(0, 57) + '...' : title;\n\n$input.item.json.seo = {\n  title: seoTitle,\n  description: metaDescription,\n  keywords: $input.item.json.keywords,\n  og_title: title,\n  og_description: metaDescription,\n  og_type: 'article',\n  twitter_card: 'summary_large_image'\n};\n\nreturn $input.item;"
+      },
+      "name": "Generate Meta Tags",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "site": "={{ $node['Select Random PBN'].json.site }}",
+        "title": "={{ $json.title }}",
+        "content": "={{ $json.article }}",
+        "status": "publish",
+        "categories": ["noticias", "política"],
+        "tags": "={{ $json.seo.keywords }}",
+        "additionalFields": {
+          "meta": {
+            "metaProperties": [
+              {
+                "name": "description",
+                "value": "={{ $json.seo.description }}"
+              },
+              {
+                "name": "keywords",
+                "value": "={{ $json.seo.keywords }}"
+              }
+            ]
+          }
+        }
+      },
+      "name": "Publish to WordPress",
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [1850, 300],
+      "credentials": {
+        "wordpressApi": {
+          "id": "1",
+          "name": "PBN WordPress API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Randomly select one of 15 PBN sites\nconst pbnSites = [\n  // Tier 1: Authority Domains (DA 85-90)\n  { tier: 1, site: 'https://expired-news-argentina-1.com', wp_api: 'https://expired-news-argentina-1.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T1_1_PASS },\n  { tier: 1, site: 'https://political-analysis-ar.com', wp_api: 'https://political-analysis-ar.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T1_2_PASS },\n  { tier: 1, site: 'https://economia-argentina-news.com', wp_api: 'https://economia-argentina-news.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T1_3_PASS },\n  { tier: 1, site: 'https://breaking-news-ba.com', wp_api: 'https://breaking-news-ba.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T1_4_PASS },\n  { tier: 1, site: 'https://argentina-politics-today.com', wp_api: 'https://argentina-politics-today.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T1_5_PASS },\n  \n  // Tier 2: Regional Domains (DA 75-84)\n  { tier: 2, site: 'https://noticias-buenos-aires-24.com', wp_api: 'https://noticias-buenos-aires-24.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T2_1_PASS },\n  { tier: 2, site: 'https://cordoba-informacion.com', wp_api: 'https://cordoba-informacion.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T2_2_PASS },\n  { tier: 2, site: 'https://rosario-noticias-hoy.com', wp_api: 'https://rosario-noticias-hoy.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T2_3_PASS },\n  { tier: 2, site: 'https://mendoza-al-dia.com', wp_api: 'https://mendoza-al-dia.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T2_4_PASS },\n  { tier: 2, site: 'https://tucuman-actualidad.com', wp_api: 'https://tucuman-actualidad.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T2_5_PASS },\n  \n  // Tier 3: Niche Domains (DA 70-79)\n  { tier: 3, site: 'https://economia-argentina-analysis.com', wp_api: 'https://economia-argentina-analysis.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T3_1_PASS },\n  { tier: 3, site: 'https://politica-opinion-ar.com', wp_api: 'https://politica-opinion-ar.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T3_2_PASS },\n  { tier: 3, site: 'https://deportes-argentina-live.com', wp_api: 'https://deportes-argentina-live.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T3_3_PASS },\n  { tier: 3, site: 'https://cultura-argentina-magazine.com', wp_api: 'https://cultura-argentina-magazine.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T3_4_PASS },\n  { tier: 3, site: 'https://tecnologia-innovacion-ar.com', wp_api: 'https://tecnologia-innovacion-ar.com/wp-json/wp/v2/', username: 'admin', password: process.env.PBN_T3_5_PASS }\n];\n\nconst randomIndex = Math.floor(Math.random() * pbnSites.length);\n$input.item.json.pbn = pbnSites[randomIndex];\n\nreturn $input.item;"
+      },
+      "name": "Select Random PBN",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1650, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Decide if this article should link to main site (5% probability)\nconst shouldLink = Math.random() < 0.05; // 5% chance\n\nif (shouldLink) {\n  const anchorTextOptions = [\n    // Branded (40%)\n    'POLÍTICA ARGENTINA',\n    'politica-argentina.com',\n    'portal POLÍTICA ARGENTINA',\n    \n    // Naked URL (20%)\n    'politica-argentina.com',\n    'https://politica-argentina.com',\n    \n    // Generic (20%)\n    'este artículo',\n    'fuente',\n    'más información',\n    'leer más',\n    \n    // Exact Match (10%)\n    'noticias argentina',\n    'política argentina hoy',\n    \n    // Partial Match (10%)\n    'noticias de política en argentina',\n    'portal de noticias argentino'\n  ];\n  \n  const anchorText = anchorTextOptions[Math.floor(Math.random() * anchorTextOptions.length)];\n  \n  // Insert link naturally into article\n  const article = $input.item.json.article;\n  const sentences = article.split('.');\n  const randomSentenceIndex = Math.floor(Math.random() * (sentences.length - 2)) + 1; // Not first or last\n  \n  sentences[randomSentenceIndex] += ` Para más detalles, visita <a href=\"https://politica-argentina.com\" rel=\"nofollow\">${anchorText}</a>.`;\n  \n  $input.item.json.article = sentences.join('.');\n  $input.item.json.link_added = true;\n  $input.item.json.anchor_text = anchorText;\n} else {\n  $input.item.json.link_added = false;\n}\n\nreturn $input.item;"
+      },
+      "name": "Add Link to Main Site (5% chance)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1450, 500]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO pbn_articles (pbn_domain, article_title, published_at, word_count, has_link, anchor_text, tier) VALUES ($1, $2, NOW(), $3, $4, $5, $6)",
+        "additionalFields": {
+          "queryParameters": "={{ $json.pbn.site }},={{ $json.title }},={{ $json.quality_metrics.word_count }},={{ $json.link_added }},={{ $json.anchor_text || null }},={{ $json.pbn.tier }}"
+        }
+      },
+      "name": "Log to Database",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [2050, 300],
+      "credentials": {
+        "postgres": {
+          "id": "2",
+          "name": "PostgreSQL - Politica Argentina"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "✅ PBN Article Published\\n\\nSite: {{ $json.pbn.site }}\\nTitle: {{ $json.title }}\\nWords: {{ $json.quality_metrics.word_count }}\\nLink Added: {{ $json.link_added }}\\n{{ $json.link_added ? 'Anchor: ' + $json.anchor_text : '' }}",
+        "chatId": "YOUR_TELEGRAM_CHAT_ID"
+      },
+      "name": "Notify Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [2250, 300],
+      "credentials": {
+        "telegramApi": {
+          "id": "3",
+          "name": "Telegram Bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Every 2 Hours": {
+      "main": [[{ "node": "Get Trending Topics (Argentina)", "type": "main", "index": 0 }]]
+    },
+    "Get Trending Topics (Argentina)": {
+      "main": [[{ "node": "Extract Topics", "type": "main", "index": 0 }]]
+    },
+    "Extract Topics": {
+      "main": [[{ "node": "Generate Article with AI", "type": "main", "index": 0 }]]
+    },
+    "Generate Article with AI": {
+      "main": [[{ "node": "Quality Control", "type": "main", "index": 0 }]]
+    },
+    "Quality Control": {
+      "main": [[{ "node": "Generate SEO Keywords", "type": "main", "index": 0 }]]
+    },
+    "Generate SEO Keywords": {
+      "main": [[{ "node": "Generate Meta Tags", "type": "main", "index": 0 }]]
+    },
+    "Generate Meta Tags": {
+      "main": [[{ "node": "Add Link to Main Site (5% chance)", "type": "main", "index": 0 }]]
+    },
+    "Add Link to Main Site (5% chance)": {
+      "main": [[{ "node": "Select Random PBN", "type": "main", "index": 0 }]]
+    },
+    "Select Random PBN": {
+      "main": [[{ "node": "Publish to WordPress", "type": "main", "index": 0 }]]
+    },
+    "Publish to WordPress": {
+      "main": [[{ "node": "Log to Database", "type": "main", "index": 0 }]]
+    },
+    "Log to Database": {
+      "main": [[{ "node": "Notify Telegram", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": ["pbn", "seo", "automation", "argentina"],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-17T19:00:00.000Z",
+  "versionId": "1"
+}
