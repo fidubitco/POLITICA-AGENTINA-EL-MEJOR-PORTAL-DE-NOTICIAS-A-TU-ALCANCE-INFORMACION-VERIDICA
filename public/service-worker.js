@@ -1,16 +1,24 @@
-const CACHE_NAME = 'politica-argentina-v1';
+const CACHE_NAME = 'politica-argentina-v2';
 const STATIC_ASSETS = [
-  '/',
   '/offline.html',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png',
 ];
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
+    caches.open(CACHE_NAME).then(async (cache) => {
+      // Cache assets one by one, ignore failures
+      const cachePromises = STATIC_ASSETS.map(async (url) => {
+        try {
+          const response = await fetch(url);
+          if (response.ok) {
+            await cache.put(url, response);
+          }
+        } catch (error) {
+          console.warn(`Failed to cache ${url}:`, error);
+        }
+      });
+      await Promise.allSettled(cachePromises);
     })
   );
   self.skipWaiting();
