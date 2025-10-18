@@ -1,0 +1,307 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 6.12kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 ...
+
+#3 [auth] library/node:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 DONE 2.6s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 1.54kB done
+#4 DONE 0.0s
+
+#5 [base 1/7] FROM docker.io/library/node:20-alpine@sha256:1ab6fc5a31d515dc7b6b25f6acfda2001821f2c2400252b6cb61044bd9f9ad48
+#5 resolve docker.io/library/node:20-alpine@sha256:1ab6fc5a31d515dc7b6b25f6acfda2001821f2c2400252b6cb61044bd9f9ad48 0.0s done
+#5 sha256:1ab6fc5a31d515dc7b6b25f6acfda2001821f2c2400252b6cb61044bd9f9ad48 7.67kB / 7.67kB done
+#5 sha256:cfdec67901844c550fbb1164a239e3d8a902853ebdc273f2f7f93ce5eaeda97f 1.72kB / 1.72kB done
+#5 sha256:30c8b6e55a5d5ecb074e7f05c212f3f604e0890aafb779922dff8485054c1e26 6.42kB / 6.42kB done
+#5 sha256:2d35ebdb57d9971fea0cac1582aa78935adf8058b2cc32db163c98822e5dfa1b 0B / 3.80MB 0.1s
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 0B / 42.75MB 0.1s
+#5 sha256:f2fbe8556258562779088bb23277d1d0b7e43fc6ddd52623166a2ac6d92bc73a 0B / 1.26MB 0.1s
+#5 ...
+
+#6 [internal] load build context
+#6 transferring context: 1.57MB 0.2s done
+#6 DONE 0.2s
+
+#5 [base 1/7] FROM docker.io/library/node:20-alpine@sha256:1ab6fc5a31d515dc7b6b25f6acfda2001821f2c2400252b6cb61044bd9f9ad48
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 3.15MB / 42.75MB 0.8s
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 7.34MB / 42.75MB 1.1s
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 11.53MB / 42.75MB 1.6s
+#5 sha256:2d35ebdb57d9971fea0cac1582aa78935adf8058b2cc32db163c98822e5dfa1b 1.05MB / 3.80MB 1.8s
+#5 sha256:2d35ebdb57d9971fea0cac1582aa78935adf8058b2cc32db163c98822e5dfa1b 2.10MB / 3.80MB 2.4s
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 15.73MB / 42.75MB 2.4s
+#5 sha256:f2fbe8556258562779088bb23277d1d0b7e43fc6ddd52623166a2ac6d92bc73a 1.05MB / 1.26MB 2.4s
+#5 sha256:2d35ebdb57d9971fea0cac1582aa78935adf8058b2cc32db163c98822e5dfa1b 3.15MB / 3.80MB 2.6s
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 18.87MB / 42.75MB 2.6s
+#5 sha256:2d35ebdb57d9971fea0cac1582aa78935adf8058b2cc32db163c98822e5dfa1b 3.80MB / 3.80MB 2.6s done
+#5 sha256:f2fbe8556258562779088bb23277d1d0b7e43fc6ddd52623166a2ac6d92bc73a 1.26MB / 1.26MB 2.6s done
+#5 extracting sha256:2d35ebdb57d9971fea0cac1582aa78935adf8058b2cc32db163c98822e5dfa1b 0.1s
+#5 sha256:c74c90aa7c8726728fa9d2e330254ef29381efbd566aaee9933c3113c26f20ce 0B / 445B 2.7s
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 23.07MB / 42.75MB 3.0s
+#5 extracting sha256:2d35ebdb57d9971fea0cac1582aa78935adf8058b2cc32db163c98822e5dfa1b 0.3s done
+#5 sha256:c74c90aa7c8726728fa9d2e330254ef29381efbd566aaee9933c3113c26f20ce 445B / 445B 3.0s done
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 27.26MB / 42.75MB 3.4s
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 31.46MB / 42.75MB 3.9s
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 34.60MB / 42.75MB 4.3s
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 39.85MB / 42.75MB 5.0s
+#5 sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 42.75MB / 42.75MB 5.3s done
+#5 extracting sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c
+#5 extracting sha256:c087321cece4f408fdac87711c4c5c51945101848dffd8848840912c1fceb02c 3.5s done
+#5 extracting sha256:f2fbe8556258562779088bb23277d1d0b7e43fc6ddd52623166a2ac6d92bc73a
+#5 extracting sha256:f2fbe8556258562779088bb23277d1d0b7e43fc6ddd52623166a2ac6d92bc73a 0.1s done
+#5 extracting sha256:c74c90aa7c8726728fa9d2e330254ef29381efbd566aaee9933c3113c26f20ce done
+#5 DONE 9.2s
+
+#7 [base 2/7] RUN apk add --no-cache     libc6-compat     tor     privoxy     curl     ca-certificates     tzdata
+#7 0.225 fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/main/x86_64/APKINDEX.tar.gz
+#7 0.480 fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/community/x86_64/APKINDEX.tar.gz
+#7 0.975 (1/21) Installing ca-certificates (20250911-r0)
+#7 1.043 (2/21) Installing brotli-libs (1.1.0-r2)
+#7 1.111 (3/21) Installing c-ares (1.34.5-r0)
+#7 1.169 (4/21) Installing libunistring (1.3-r0)
+#7 1.267 (5/21) Installing libidn2 (2.3.7-r0)
+#7 1.311 (6/21) Installing nghttp2-libs (1.65.0-r0)
+#7 1.362 (7/21) Installing libpsl (0.21.5-r3)
+#7 1.395 (8/21) Installing zstd-libs (1.5.7-r0)
+#7 1.462 (9/21) Installing libcurl (8.14.1-r2)
+#7 1.521 (10/21) Installing curl (8.14.1-r2)
+#7 1.563 (11/21) Installing musl-obstack (1.2.3-r2)
+#7 1.588 (12/21) Installing libucontext (1.3.2-r0)
+#7 1.612 (13/21) Installing gcompat (1.1.0-r4)
+#7 1.643 (14/21) Installing pcre (8.45-r4)
+#7 1.686 (15/21) Installing privoxy (3.0.34-r3)
+#7 1.879 Executing privoxy-3.0.34-r3.pre-install
+#7 1.911 (16/21) Installing libcap2 (2.76-r0)
+#7 1.947 (17/21) Installing libevent (2.1.12-r8)
+#7 2.009 (18/21) Installing xz-libs (5.8.1-r0)
+#7 2.046 (19/21) Installing libseccomp (2.6.0-r0)
+#7 2.086 (20/21) Installing tor (0.4.8.19-r0)
+#7 2.141 Executing tor-0.4.8.19-r0.pre-install
+#7 2.627 (21/21) Installing tzdata (2025b-r0)
+#7 2.721 Executing busybox-1.37.0-r19.trigger
+#7 2.727 Executing ca-certificates-20250911-r0.trigger
+#7 2.783 OK: 42 MiB in 39 packages
+#7 DONE 3.1s
+
+#8 [base 3/7] RUN ln -snf /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime && echo America/Argentina/Buenos_Aires > /etc/timezone
+#8 DONE 0.2s
+
+#9 [base 4/7] RUN echo "SOCKSPort 0.0.0.0:9050" >> /etc/tor/torrc &&     echo "ControlPort 9051" >> /etc/tor/torrc &&     echo "CookieAuthentication 1" >> /etc/tor/torrc &&     echo "MaxCircuitDirtiness 10" >> /etc/tor/torrc &&     echo "NewCircuitPeriod 15" >> /etc/tor/torrc
+#9 DONE 0.2s
+
+#10 [base 5/7] RUN echo "forward-socks5 / 127.0.0.1:9050 ." >> /etc/privoxy/config &&     echo "listen-address 0.0.0.0:8118" >> /etc/privoxy/config &&     echo "accept-intercepted-requests 1" >> /etc/privoxy/config
+#10 DONE 0.2s
+
+#11 [base 6/7] WORKDIR /app
+#11 DONE 0.0s
+
+#12 [base 7/7] RUN corepack enable && corepack prepare pnpm@latest --activate
+#12 1.340 Preparing pnpm@latest for immediate activation...
+#12 DONE 3.1s
+
+#13 [deps 1/2] COPY package.json pnpm-lock.yaml* ./
+#13 DONE 0.0s
+
+#14 [deps 2/2] RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store     pnpm install --frozen-lockfile --prefer-offline
+#14 ...
+
+#15 [runner  1/10] RUN addgroup --system --gid 1001 nodejs &&     adduser --system --uid 1001 nextjs &&     mkdir -p /app/.next/cache &&     chown -R nextjs:nodejs /app
+#15 DONE 0.3s
+
+#16 [runner  2/10] WORKDIR /app
+#16 DONE 0.0s
+
+#14 [deps 2/2] RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store     pnpm install --frozen-lockfile --prefer-offline
+#14 0.390 ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-10.14.0.tgz
+#14 3.374 Lockfile is up to date, resolution step is skipped
+#14 3.576 Progress: resolved 1, reused 0, downloaded 0, added 0
+#14 4.811 Packages: +794
+#14 4.811 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#14 4.959 Progress: resolved 794, reused 0, downloaded 0, added 0
+#14 5.960 Progress: resolved 794, reused 0, downloaded 29, added 27
+#14 6.961 Progress: resolved 794, reused 0, downloaded 57, added 57
+#14 7.964 Progress: resolved 794, reused 0, downloaded 105, added 105
+#14 8.964 Progress: resolved 794, reused 0, downloaded 142, added 142
+#14 9.968 Progress: resolved 794, reused 0, downloaded 172, added 172
+#14 10.97 Progress: resolved 794, reused 0, downloaded 213, added 213
+#14 11.97 Progress: resolved 794, reused 0, downloaded 242, added 241
+#14 12.97 Progress: resolved 794, reused 0, downloaded 266, added 266
+#14 13.97 Progress: resolved 794, reused 0, downloaded 283, added 282
+#14 14.97 Progress: resolved 794, reused 0, downloaded 304, added 302
+#14 15.97 Progress: resolved 794, reused 0, downloaded 348, added 346
+#14 16.98 Progress: resolved 794, reused 0, downloaded 393, added 393
+#14 17.98 Progress: resolved 794, reused 0, downloaded 444, added 443
+#14 18.98 Progress: resolved 794, reused 0, downloaded 481, added 481
+#14 19.98 Progress: resolved 794, reused 0, downloaded 494, added 494
+#14 20.98 Progress: resolved 794, reused 0, downloaded 519, added 518
+#14 21.98 Progress: resolved 794, reused 0, downloaded 539, added 536
+#14 22.98 Progress: resolved 794, reused 0, downloaded 585, added 584
+#14 23.98 Progress: resolved 794, reused 0, downloaded 640, added 640
+#14 24.98 Progress: resolved 794, reused 0, downloaded 691, added 691
+#14 25.98 Progress: resolved 794, reused 0, downloaded 727, added 727
+#14 26.98 Progress: resolved 794, reused 0, downloaded 751, added 751
+#14 27.98 Progress: resolved 794, reused 0, downloaded 776, added 776
+#14 28.99 Progress: resolved 794, reused 0, downloaded 786, added 786
+#14 29.99 Progress: resolved 794, reused 0, downloaded 787, added 787
+#14 31.24 Progress: resolved 794, reused 0, downloaded 788, added 787
+#14 32.25 Progress: resolved 794, reused 0, downloaded 791, added 788
+#14 33.27 Progress: resolved 794, reused 0, downloaded 791, added 791
+#14 34.26 Progress: resolved 794, reused 0, downloaded 793, added 792
+#14 35.26 Progress: resolved 794, reused 0, downloaded 793, added 793
+#14 37.54 Progress: resolved 794, reused 0, downloaded 794, added 793
+#14 38.80 Progress: resolved 794, reused 0, downloaded 794, added 794
+#14 38.80 Progress: resolved 794, reused 0, downloaded 794, added 794, done
+#14 40.18 
+#14 40.18 dependencies:
+#14 40.18 + @auth/prisma-adapter 2.11.0
+#14 40.18 + @dnd-kit/core 6.3.1
+#14 40.18 + @dnd-kit/sortable 10.0.0
+#14 40.18 + @dnd-kit/utilities 3.2.2
+#14 40.18 + @formatjs/intl-localematcher 0.6.2
+#14 40.18 + @google/generative-ai 0.24.1
+#14 40.18 + @huggingface/inference 4.11.3
+#14 40.18 + @prisma/client 6.17.1
+#14 40.18 + @prisma/extension-accelerate 2.0.2
+#14 40.18 + @radix-ui/react-avatar 1.1.10
+#14 40.18 + @radix-ui/react-dialog 1.1.15
+#14 40.18 + @radix-ui/react-dropdown-menu 2.1.16
+#14 40.18 + @radix-ui/react-label 2.1.7
+#14 40.18 + @radix-ui/react-progress 1.1.7
+#14 40.18 + @radix-ui/react-scroll-area 1.2.10
+#14 40.18 + @radix-ui/react-select 2.2.6
+#14 40.18 + @radix-ui/react-separator 1.1.7
+#14 40.18 + @radix-ui/react-slot 1.2.3
+#14 40.18 + @radix-ui/react-switch 1.2.6
+#14 40.18 + @radix-ui/react-tabs 1.1.13
+#14 40.18 + @radix-ui/react-toast 1.2.15
+#14 40.18 + @radix-ui/react-tooltip 1.2.8
+#14 40.18 + @tiptap/core 3.7.2
+#14 40.18 + @tiptap/extension-highlight 3.7.2
+#14 40.18 + @tiptap/extension-image 3.7.2
+#14 40.18 + @tiptap/extension-link 3.7.2
+#14 40.18 + @tiptap/extension-placeholder 3.7.0
+#14 40.18 + @tiptap/extension-text-align 3.7.2
+#14 40.18 + @tiptap/extension-typography 3.7.2
+#14 40.18 + @tiptap/pm 3.7.2
+#14 40.18 + @tiptap/react 3.7.0
+#14 40.18 + @tiptap/starter-kit 3.7.0
+#14 40.18 + @vercel/kv 3.0.0
+#14 40.18 + @vercel/og 0.8.5
+#14 40.18 + axios 1.12.2
+#14 40.18 + bcrypt 6.0.0
+#14 40.18 + cheerio 1.1.2
+#14 40.18 + class-variance-authority 0.7.1
+#14 40.18 + clsx 2.1.1
+#14 40.18 + date-fns 4.1.0
+#14 40.18 + discord.js 14.23.2
+#14 40.18 + framer-motion 12.23.24
+#14 40.18 + howler 2.2.4
+#14 40.18 + linkedin-api-client 0.3.0
+#14 40.18 + lucide-react 0.545.0
+#14 40.18 + medium-sdk 0.0.4
+#14 40.18 + nanoid 5.1.6
+#14 40.18 + negotiator 1.0.0
+#14 40.18 + next 15.5.5
+#14 40.18 + next-auth 5.0.0-beta.29
+#14 40.18 + next-image-export-optimizer 1.19.0
+#14 40.18 + next-intl 4.3.12
+#14 40.18 + next-sitemap 4.2.3
+#14 40.18 + node-telegram-bot-api 0.66.0
+#14 40.18 + react 19.1.0
+#14 40.18 + react-audio-player 0.17.0
+#14 40.18 + react-color 2.19.3
+#14 40.18 + react-dom 19.1.0
+#14 40.18 + recharts 3.3.0
+#14 40.18 + rss-parser 3.13.0
+#14 40.18 + sharp 0.34.4
+#14 40.18 + snoowrap 1.23.0
+#14 40.18 + tailwind-merge 3.3.1
+#14 40.18 + twitter-api-v2 1.27.0
+#14 40.18 + wavesurfer.js 7.11.0
+#14 40.18 + zlib-sync 0.1.10
+#14 40.18 + zod 4.1.12
+#14 40.18 
+#14 40.18 devDependencies:
+#14 40.18 + @eslint/eslintrc 3.3.1
+#14 40.18 + @tailwindcss/typography 0.5.19
+#14 40.18 + @types/bcrypt 6.0.0
+#14 40.18 + @types/node 20.19.21
+#14 40.18 + @types/react 19.2.2
+#14 40.18 + @types/react-dom 19.2.2
+#14 40.18 + autoprefixer 10.4.21
+#14 40.18 + eslint 9.37.0
+#14 40.18 + eslint-config-next 15.5.5
+#14 40.18 + postcss 8.5.6
+#14 40.18 + prisma 6.17.1
+#14 40.18 + tailwindcss 3.4.18
+#14 40.18 + tsx 4.20.6
+#14 40.18 + typescript 5.9.3
+#14 40.18 
+#14 40.18 ╭ Warning ─────────────────────────────────────────────────────────────────────╮
+#14 40.18 │                                                                              │
+#14 40.18 │   Ignored build scripts: @prisma/client, @prisma/engines, bcrypt, esbuild,   │
+#14 40.18 │   prisma, sharp, unrs-resolver, zlib-sync.                                   │
+#14 40.18 │   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+#14 40.18 │   to run scripts.                                                            │
+#14 40.18 │                                                                              │
+#14 40.18 ╰──────────────────────────────────────────────────────────────────────────────╯
+#14 40.18 
+#14 40.27 
+#14 40.27 > politica-argentina@0.1.0 postinstall /app
+#14 40.27 > prisma generate
+#14 40.27 
+#14 42.09 warn The configuration property `package.json#prisma` is deprecated and will be removed in Prisma 7. Please migrate to a Prisma config file (e.g., `prisma.config.ts`).
+#14 42.09 For more information, see: https://pris.ly/prisma-config
+#14 42.09 
+#14 45.56 Error: Could not find Prisma Schema that is required for this command.
+#14 45.56 You can either provide it with `--schema` argument,
+#14 45.56 set it in your Prisma Config file (e.g., `prisma.config.ts`),
+#14 45.56 set it as `prisma.schema` in your package.json,
+#14 45.56 or put it into the default location (`./prisma/schema.prisma`, or `./schema.prisma`.
+#14 45.56 Checked following paths:
+#14 45.56 
+#14 45.56 schema.prisma: file not found
+#14 45.56 prisma/schema.prisma: file not found
+#14 45.56 
+#14 45.56 See also https://pris.ly/d/prisma-schema-location
+#14 45.71  ELIFECYCLE  Command failed with exit code 1.
+#14 ERROR: process "/bin/sh -c pnpm install --frozen-lockfile --prefer-offline" did not complete successfully: exit code: 1
+------
+ > [deps 2/2] RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store     pnpm install --frozen-lockfile --prefer-offline:
+45.56 set it in your Prisma Config file (e.g., `prisma.config.ts`),
+45.56 set it as `prisma.schema` in your package.json,
+45.56 or put it into the default location (`./prisma/schema.prisma`, or `./schema.prisma`.
+45.56 Checked following paths:
+45.56 
+45.56 schema.prisma: file not found
+45.56 prisma/schema.prisma: file not found
+45.56 
+45.56 See also https://pris.ly/d/prisma-schema-location
+45.71  ELIFECYCLE  Command failed with exit code 1.
+------
+
+ [33m6 warnings found (use docker --debug to expand):
+[0m - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "NEXTAUTH_SECRET") (line 70)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "GEMINI_API_KEY") (line 71)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "CRON_SECRET") (line 72)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "NEXTAUTH_SECRET") (line 78)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "GEMINI_API_KEY") (line 79)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "CRON_SECRET") (line 80)
+Dockerfile:54
+--------------------
+  53 |     # Install ALL dependencies (including devDependencies for build)
+  54 | >>> RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
+  55 | >>>     pnpm install --frozen-lockfile --prefer-offline
+  56 |     
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pnpm install --frozen-lockfile --prefer-offline" did not complete successfully: exit code: 1
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/zur7c9dkk37foy7gyihw9ss5i

@@ -47,8 +47,9 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 # ============================
 FROM base AS deps
 
-# Copy package files
+# Copy package files and Prisma schema
 COPY package.json pnpm-lock.yaml* ./
+COPY prisma ./prisma
 
 # Install ALL dependencies (including devDependencies for build)
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \

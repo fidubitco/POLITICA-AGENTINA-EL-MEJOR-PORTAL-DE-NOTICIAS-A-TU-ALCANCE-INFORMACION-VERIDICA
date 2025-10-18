@@ -39,12 +39,8 @@ const nextConfig: NextConfig = {
       'recharts',
       'framer-motion'
     ],
-    // Reduce server-side memory usage
-    isrMemoryCacheSize: 0,
     serverMinification: true,
     serverSourceMaps: false,
-    // Optimize CSS
-    optimizeCss: true,
   },
 
   // Compiler optimizations

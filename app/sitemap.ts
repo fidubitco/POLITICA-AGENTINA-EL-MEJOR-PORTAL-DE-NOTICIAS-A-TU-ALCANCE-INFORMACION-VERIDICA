@@ -1,6 +1,10 @@
 import { db } from "@/lib/db";
 import type { MetadataRoute } from "next";
 
+// Force dynamic rendering to avoid database connection during build
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://politica-argentina.vercel.app";
 
