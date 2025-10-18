@@ -7,6 +7,11 @@ const locales = localeCodes
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
+  // Skip middleware for admin routes
+  if (pathname.startsWith('/admin') || pathname.startsWith('/login')) {
+    return NextResponse.next()
+  }
+
   // Check if there is any supported locale in the pathname
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
@@ -22,6 +27,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|icon|apple-icon|manifest|.*\\.svg|.*\\.png|.*\\.jpg).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|icon|apple-icon|manifest|audio|.*\\.svg|.*\\.png|.*\\.jpg|.*\\.mp3).*)',
   ],
 }
