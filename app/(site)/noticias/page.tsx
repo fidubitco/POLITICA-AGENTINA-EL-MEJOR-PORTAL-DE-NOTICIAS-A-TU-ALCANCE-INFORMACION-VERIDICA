@@ -9,6 +9,8 @@ import type { Metadata } from "next";
 import FadeIn from "@/components/animations/fade-in";
 import StaggerChildren, { StaggerItem } from "@/components/animations/stagger-children";
 
+// Force dynamic rendering to avoid database connection during build
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 
 export const metadata: Metadata = {

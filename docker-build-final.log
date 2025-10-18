@@ -1,0 +1,156 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 6.16kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 ...
+
+#3 [auth] library/node:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 DONE 1.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 1.54kB 0.0s done
+#4 DONE 0.0s
+
+#5 [base 1/7] FROM docker.io/library/node:20-alpine@sha256:1ab6fc5a31d515dc7b6b25f6acfda2001821f2c2400252b6cb61044bd9f9ad48
+#5 DONE 0.0s
+
+#6 [base 4/7] RUN echo "SOCKSPort 0.0.0.0:9050" >> /etc/tor/torrc &&     echo "ControlPort 9051" >> /etc/tor/torrc &&     echo "CookieAuthentication 1" >> /etc/tor/torrc &&     echo "MaxCircuitDirtiness 10" >> /etc/tor/torrc &&     echo "NewCircuitPeriod 15" >> /etc/tor/torrc
+#6 CACHED
+
+#7 [base 2/7] RUN apk add --no-cache     libc6-compat     tor     privoxy     curl     ca-certificates     tzdata
+#7 CACHED
+
+#8 [base 5/7] RUN echo "forward-socks5 / 127.0.0.1:9050 ." >> /etc/privoxy/config &&     echo "listen-address 0.0.0.0:8118" >> /etc/privoxy/config &&     echo "accept-intercepted-requests 1" >> /etc/privoxy/config
+#8 CACHED
+
+#9 [base 6/7] WORKDIR /app
+#9 CACHED
+
+#10 [base 7/7] RUN corepack enable && corepack prepare pnpm@latest --activate
+#10 CACHED
+
+#11 [runner  1/10] RUN addgroup --system --gid 1001 nodejs &&     adduser --system --uid 1001 nextjs &&     mkdir -p /app/.next/cache &&     chown -R nextjs:nodejs /app
+#11 CACHED
+
+#12 [base 3/7] RUN ln -snf /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime && echo America/Argentina/Buenos_Aires > /etc/timezone
+#12 CACHED
+
+#13 [runner  2/10] WORKDIR /app
+#13 CACHED
+
+#14 [internal] load build context
+#14 transferring context: 30.24kB 0.1s done
+#14 DONE 0.1s
+
+#15 [deps 1/3] COPY package.json pnpm-lock.yaml* ./
+#15 CACHED
+
+#16 [deps 2/3] COPY prisma ./prisma
+#16 CACHED
+
+#17 [deps 3/3] RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store     pnpm install --frozen-lockfile --prefer-offline
+#17 CACHED
+
+#18 [builder 1/5] COPY --from=deps /app/node_modules ./node_modules
+#18 CACHED
+
+#19 [builder 2/5] COPY . .
+#19 DONE 0.2s
+
+#20 [builder 3/5] RUN pnpm exec prisma generate --no-engine
+#20 0.692 ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-10.14.0.tgz
+#20 5.766 warn The configuration property `package.json#prisma` is deprecated and will be removed in Prisma 7. Please migrate to a Prisma config file (e.g., `prisma.config.ts`).
+#20 5.766 For more information, see: https://pris.ly/prisma-config
+#20 5.766 
+#20 6.003 Prisma schema loaded from prisma/schema.prisma
+#20 7.145 
+#20 7.145 ✔ Generated Prisma Client (v6.17.1, engine=none) to ./node_modules/.pnpm/@prisma+client@6.17.1_prisma@6.17.1_typescript@5.9.3__typescript@5.9.3/node_modules/@prisma/client in 533ms
+#20 7.145 
+#20 7.145 Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+#20 7.145 
+#20 7.145 Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+#20 7.145 
+#20 DONE 7.3s
+
+#21 [builder 4/5] RUN pnpm build
+#21 0.930 
+#21 0.930 > politica-argentina@0.1.0 build /app
+#21 0.930 > next build
+#21 0.930 
+#21 3.718    ▲ Next.js 15.5.5
+#21 3.720    - Experiments (use with caution):
+#21 3.720      · optimizePackageImports
+#21 3.721 
+#21 3.941    Creating an optimized production build ...
+#21 64.67  ✓ Compiled successfully in 60s
+#21 64.68    Skipping validation of types
+#21 64.68    Skipping linting
+#21 65.20    Collecting page data ...
+#21 67.35  ⚠ Using edge runtime on a page currently disables static generation for that page
+#21 73.13    Generating static pages (0/30) ...
+#21 74.20 RSS generation error: Error [PrismaClientKnownRequestError]: 
+#21 74.20 Invalid `prisma.post.findMany()` invocation:
+#21 74.20 
+#21 74.20 
+#21 74.20 Error validating datasource `db`: the URL must start with the protocol `prisma://`
+#21 74.20     at async x (.next/server/app/(site)/rss/route.js:1:7064) {
+#21 74.20   code: 'P6001',
+#21 74.20   meta: [Object],
+#21 74.20   clientVersion: '6.17.1'
+#21 74.20 }
+#21 74.50    Generating static pages (7/30) 
+#21 74.61    Generating static pages (14/30) 
+#21 74.81 Error occurred prerendering page "/noticias". Read more: https://nextjs.org/docs/messages/prerender-error
+#21 74.81 Error [PrismaClientKnownRequestError]: 
+#21 74.81 Invalid `prisma.post.findMany()` invocation:
+#21 74.81 
+#21 74.81 
+#21 74.81 Error validating datasource `db`: the URL must start with the protocol `prisma://`
+#21 74.81     at async s (.next/server/app/(site)/noticias/page.js:1:6583) {
+#21 74.81   code: 'P6001',
+#21 74.81   meta: [Object],
+#21 74.81   clientVersion: '6.17.1',
+#21 74.81   digest: '2104245031'
+#21 74.81 }
+#21 74.81 Export encountered an error on /(site)/noticias/page: /noticias, exiting the build.
+#21 74.82  ⨯ Next.js build worker exited with code: 1 and signal: null
+#21 74.93  ELIFECYCLE  Command failed with exit code 1.
+#21 ERROR: process "/bin/sh -c pnpm build" did not complete successfully: exit code: 1
+------
+ > [builder 4/5] RUN pnpm build:
+74.81 Error validating datasource `db`: the URL must start with the protocol `prisma://`
+74.81     at async s (.next/server/app/(site)/noticias/page.js:1:6583) {
+74.81   code: 'P6001',
+74.81   meta: [Object],
+74.81   clientVersion: '6.17.1',
+74.81   digest: '2104245031'
+74.81 }
+74.81 Export encountered an error on /(site)/noticias/page: /noticias, exiting the build.
+74.82  ⨯ Next.js build worker exited with code: 1 and signal: null
+74.93  ELIFECYCLE  Command failed with exit code 1.
+------
+
+ [33m6 warnings found (use docker --debug to expand):
+[0m - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "GEMINI_API_KEY") (line 80)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "CRON_SECRET") (line 81)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "NEXTAUTH_SECRET") (line 71)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "GEMINI_API_KEY") (line 72)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "CRON_SECRET") (line 73)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "NEXTAUTH_SECRET") (line 79)
+Dockerfile:90
+--------------------
+  88 |     
+  89 |     # Build Next.js application
+  90 | >>> RUN pnpm build
+  91 |     
+  92 |     # Remove development dependencies
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pnpm build" did not complete successfully: exit code: 1
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/sqqnxk71d4csqwyfmfn0l6rr7

@@ -1,6 +1,8 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
+// Force dynamic rendering to avoid database connection during build
+export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // Revalidate every hour
 
 export async function GET() {
