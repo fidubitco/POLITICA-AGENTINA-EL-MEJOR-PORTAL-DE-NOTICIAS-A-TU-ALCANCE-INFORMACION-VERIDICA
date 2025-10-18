@@ -1,24 +1,27 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { localeCodes, defaultLocale } from './lib/locales'
+
+const locales = localeCodes
 
 export function middleware(request: NextRequest) {
-  // Simple middleware without i18n redirects
-  // TODO: Implement proper i18n with [locale] folder structure
-  return NextResponse.next();
+  const pathname = request.nextUrl.pathname
+
+  // Check if there is any supported locale in the pathname
+  const pathnameHasLocale = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  )
+
+  if (pathnameHasLocale) return NextResponse.next()
+
+  // Redirect if there is no locale
+  const locale = defaultLocale
+  request.nextUrl.pathname = `/${locale}${pathname}`
+  return NextResponse.redirect(request.nextUrl)
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public files (images, icons, etc.)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico|icon|apple-icon|.*\\.svg|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.gif|.*\\.webp).*)',
-  ]
-};
-
-
+    '/((?!api|_next/static|_next/image|favicon.ico|icon|apple-icon|manifest|.*\\.svg|.*\\.png|.*\\.jpg).*)',
+  ],
+}
