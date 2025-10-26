@@ -100,13 +100,24 @@ export const HomeSimple = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredArticles.map((article) => (
             <Link key={article.id} href={`/noticia/${article.id}`}>
-              <a className="block bg-white rounded-lg shadow hover:shadow-xl transition">
-                <img
-                  src={article.imageUrl}
-                  alt={article.title}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                  loading="lazy"
-                />
+              <a className="block bg-white rounded-lg shadow hover:shadow-xl transition overflow-hidden">
+                <div className="relative h-48 bg-gray-200">
+                  <img
+                    src={article.imageUrl}
+                    alt={article.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://via.placeholder.com/400x300/3B82F6/FFFFFF?text=Política+Argentina';
+                    }}
+                  />
+                  {article.breaking && (
+                    <span className="absolute top-2 left-2 px-3 py-1 bg-red-600 text-white text-xs font-bold rounded">
+                      ÚLTIMA HORA
+                    </span>
+                  )}
+                </div>
                 <div className="p-5">
                   <span className="inline-block bg-blue-600 text-white text-xs px-3 py-1 rounded-full mb-2">
                     {article.category}

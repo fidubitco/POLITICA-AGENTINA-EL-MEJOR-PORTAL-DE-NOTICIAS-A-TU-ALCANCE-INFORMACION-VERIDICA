@@ -6,7 +6,7 @@ import { HomeSimple } from './pages/HomeSimple';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageWorking } from './pages/CategoryPageWorking';
 import { AdminIndex } from './pages/admin/AdminIndex';
-import { AdminDashboardFull } from './pages/admin/AdminDashboardFull';
+import { AdminDashboardEnterprise } from './pages/admin/AdminDashboardEnterprise';
 import { EditArticle } from './pages/admin/EditArticle';
 import { CreateNewsEnhanced } from './pages/admin/CreateNewsEnhanced';
 import { Candidatos } from './pages/Candidatos';
@@ -62,9 +62,9 @@ function App() {
             <Route key={`category-${lang.code}`} path={`/${lang.code}/categoria/:category`} component={CategoryPageWorking} />
           ))}
           
-          {/* Admin routes - FUNCIONALES */}
-          <Route path="/admin" component={AdminIndex} />
-          <Route path="/admin/dashboard" component={AdminDashboardFull} />
+          {/* Admin routes - ENTERPRISE GRADE */}
+          <Route path="/admin" component={AdminDashboardEnterprise} />
+          <Route path="/admin/dashboard" component={AdminDashboardEnterprise} />
           <Route path="/admin/editar/:id" component={EditArticle} />
           <Route path="/admin/crear-noticia" component={CreateNewsEnhanced} />
           
