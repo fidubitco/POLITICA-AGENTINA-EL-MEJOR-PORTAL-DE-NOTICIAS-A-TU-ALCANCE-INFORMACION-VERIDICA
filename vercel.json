@@ -8,18 +8,10 @@
   "public": true,
   "cleanUrls": true,
   "trailingSlash": false,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(favicon\\.ico|favicon\\.png|favicon-16x16\\.png|favicon-32x32\\.png|apple-touch-icon\\.png|manifest\\.json|robots\\.txt|sitemap\\.xml|sw\\.js)",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(assets|images|locales)/(.*)$",
-      "dest": "/$1/$2"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
@@ -33,11 +25,15 @@
       ]
     },
     {
-      "source": "/(favicon|logo|manifest|robots|sitemap).*",
+      "source": "/(favicon.*|logo.*|manifest.*|robots.*|sitemap.*|apple-touch-icon.*)",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=86400"
+        },
+        {
+          "key": "Content-Type",
+          "value": "image/x-icon"
         }
       ]
     },
