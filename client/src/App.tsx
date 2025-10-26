@@ -11,6 +11,7 @@ import { DashboardEnhanced } from './pages/admin/DashboardEnhanced';
 import { CreateNews } from './pages/admin/CreateNews';
 import { CreateNewsEnhanced } from './pages/admin/CreateNewsEnhanced';
 import { AutoNews } from './pages/admin/AutoNews';
+import { PoliticalAdmin } from './pages/admin/PoliticalAdmin';
 import { Candidatos } from './pages/Candidatos';
 import { Encuestas } from './pages/Encuestas';
 import { ResultadosElectorales } from './pages/ResultadosElectorales';
@@ -57,6 +58,7 @@ function App() {
           <Route path="/admin/crear-noticia" component={CreateNewsEnhanced} />
           <Route path="/admin/crear-noticia-simple" component={CreateNews} />
           <Route path="/admin/auto-noticias" component={AutoNews} />
+          <Route path="/admin/politica" component={PoliticalAdmin} />
           
           {/* Auth routes */}
           <Route path="/login" component={Login} />
