@@ -6,7 +6,7 @@
   "installCommand": "pnpm install",
   "rewrites": [
     {
-      "source": "/((?!assets|images|locales|favicon|logo|manifest|robots|sitemap|sw.js).*)",
+      "source": "/((?!assets|images|locales|favicon|logo|manifest.json|robots.txt|sitemap.xml|sw.js).*)",
       "destination": "/index.html"
     }
   ],
@@ -17,6 +17,28 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(favicon|logo|manifest|robots|sitemap).*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
         }
       ]
     }

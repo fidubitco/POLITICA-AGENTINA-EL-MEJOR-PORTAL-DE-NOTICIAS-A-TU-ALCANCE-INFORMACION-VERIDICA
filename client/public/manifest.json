@@ -1,93 +1,29 @@
 {
   "name": "Política Argentina - Portal de Noticias",
   "short_name": "Política Argentina",
-  "description": "Portal profesional de noticias argentinas. Información confiable, actualizada y de calidad sobre política, economía, sociedad y más.",
+  "description": "El mejor portal de noticias de Argentina. Información veraz y actualizada sobre política, economía, sociedad y más.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#3B82F6",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
   "orientation": "portrait-primary",
-  "scope": "/",
-  "lang": "es-AR",
-  "dir": "ltr",
-  "categories": ["news", "politics", "society"],
   "icons": [
     {
-      "src": "/favicon-16x16.png",
-      "sizes": "16x16",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    },
-    {
-      "src": "/android-chrome-192x192.png",
+      "src": "/favicon.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "/logo.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
-  "screenshots": [
-    {
-      "src": "/screenshot-desktop.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/screenshot-mobile.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Últimas Noticias",
-      "short_name": "Últimas",
-      "description": "Ver las últimas noticias",
-      "url": "/",
-      "icons": [
-        {
-          "src": "/favicon-32x32.png",
-          "sizes": "32x32"
-        }
-      ]
-    },
-    {
-      "name": "Política",
-      "short_name": "Política",
-      "description": "Noticias de política",
-      "url": "/category/politica",
-      "icons": [
-        {
-          "src": "/favicon-32x32.png",
-          "sizes": "32x32"
-        }
-      ]
-    },
-    {
-      "name": "Economía",
-      "short_name": "Economía",
-      "description": "Noticias de economía",
-      "url": "/category/economia",
-      "icons": [
-        {
-          "src": "/favicon-32x32.png",
-          "sizes": "32x32"
-        }
-      ]
-    }
-  ]
+  "categories": ["news", "politics", "business"],
+  "lang": "es-AR",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
 }

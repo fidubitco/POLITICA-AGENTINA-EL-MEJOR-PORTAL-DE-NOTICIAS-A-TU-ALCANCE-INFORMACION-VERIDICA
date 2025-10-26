@@ -1,19 +1,32 @@
+# robots.txt para Política Argentina
+
 User-agent: *
 Allow: /
 
 # Sitemap
 Sitemap: https://politicaargentina.com/sitemap.xml
 
-# Disallow admin areas
+# Disallow admin pages
 Disallow: /admin/
 Disallow: /api/
-Disallow: /_internal/
 
-# Allow important pages
+# Allow all public pages
 Allow: /
-Allow: /category/
-Allow: /article/
-Allow: /search
+Allow: /noticia/
+Allow: /categoria/
+Allow: /en/
+Allow: /fr/
+Allow: /pt/
 
-# Crawl delay
+# Crawl-delay
 Crawl-delay: 1
+
+# Specific bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
