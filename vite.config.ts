@@ -20,6 +20,7 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: false,
     minify: "terser",
+    copyPublicDir: true,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -27,6 +28,7 @@ export default defineConfig({
           router: ["wouter"],
           trpc: ["@trpc/client", "@trpc/server"],
           ui: ["lucide-react", "framer-motion"],
+          recharts: ["recharts"],
         },
       },
     },
@@ -37,6 +39,7 @@ export default defineConfig({
       },
     },
   },
+  publicDir: "./client/public",
   optimizeDeps: {
     include: ["react", "react-dom", "wouter"],
   },
