@@ -5,6 +5,7 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   root: "./client",
+  publicDir: "public",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./client/src"),
@@ -20,7 +21,6 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: false,
     minify: "terser",
-    copyPublicDir: true,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -39,7 +39,6 @@ export default defineConfig({
       },
     },
   },
-  publicDir: "./client/public",
   optimizeDeps: {
     include: ["react", "react-dom", "wouter"],
   },
