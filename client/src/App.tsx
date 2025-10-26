@@ -2,6 +2,7 @@ import React from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Switch } from 'wouter';
 import { useTranslation } from 'react-i18next';
+import { AuthProvider } from './contexts/AuthContext';
 import { HomePageBBC } from './pages/HomePageBBC';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageBBC } from './pages/CategoryPageBBC';
@@ -10,6 +11,12 @@ import { DashboardEnhanced } from './pages/admin/DashboardEnhanced';
 import { CreateNews } from './pages/admin/CreateNews';
 import { CreateNewsEnhanced } from './pages/admin/CreateNewsEnhanced';
 import { AutoNews } from './pages/admin/AutoNews';
+import { Candidatos } from './pages/Candidatos';
+import { Encuestas } from './pages/Encuestas';
+import { ResultadosElectorales } from './pages/ResultadosElectorales';
+import { Finanzas } from './pages/Finanzas';
+import { Login } from './pages/auth/Login';
+import { Register } from './pages/auth/Register';
 import './styles/design-system.css';
 import './styles/globals.css';
 import './styles/bbc-style.css';
@@ -23,8 +30,9 @@ function App() {
 
   return (
     <HelmetProvider>
-      <div className="App">
-        <Switch>
+      <AuthProvider>
+        <div className="App">
+          <Switch>
           {/* Home routes */}
           <Route path="/" component={HomePageBBC} />
           <Route path="/en/" component={HomePageBBC} />
@@ -50,10 +58,23 @@ function App() {
           <Route path="/admin/crear-noticia-simple" component={CreateNews} />
           <Route path="/admin/auto-noticias" component={AutoNews} />
           
+          {/* Auth routes */}
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          
+          {/* Political routes */}
+          <Route path="/candidatos" component={Candidatos} />
+          <Route path="/encuestas" component={Encuestas} />
+          <Route path="/resultados" component={ResultadosElectorales} />
+          
+          {/* Finance routes */}
+          <Route path="/finanzas" component={Finanzas} />
+          
           {/* Fallback */}
           <Route path="/:rest*" component={HomePageBBC} />
-        </Switch>
-      </div>
+          </Switch>
+        </div>
+      </AuthProvider>
     </HelmetProvider>
   );
 }
