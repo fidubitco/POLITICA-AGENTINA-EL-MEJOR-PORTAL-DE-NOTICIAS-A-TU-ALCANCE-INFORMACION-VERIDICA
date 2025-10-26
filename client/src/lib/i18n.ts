@@ -5,20 +5,44 @@ import HttpBackend from 'i18next-http-backend';
 
 // Las traducciones se cargarán dinámicamente desde /locales/
 
-// Idiomas soportados - TOP 20 LANGUAGES
+// Idiomas soportados - TOP 11 LANGUAGES (COMPLETAMENTE TRADUCIDOS)
 export const supportedLanguages = [
-  { code: 'es', name: 'Español', flag: '🇦🇷', nativeName: 'Español' },
-  { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English' },
-  { code: 'pt', name: 'Português', flag: '🇧🇷', nativeName: 'Português' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷', nativeName: 'Français' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪', nativeName: 'Deutsch' },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹', nativeName: 'Italiano' },
-  { code: 'zh', name: 'Chinese', flag: '🇨🇳', nativeName: '中文' },
-  { code: 'ja', name: 'Japanese', flag: '🇯🇵', nativeName: '日本語' },
-  { code: 'ru', name: 'Russian', flag: '🇷🇺', nativeName: 'Русский' },
-  { code: 'ar', name: 'Arabic', flag: '🇸🇦', nativeName: 'العربية' },
-  { code: 'ko', name: 'Korean', flag: '🇰🇷', nativeName: '한국어' },
+  { code: 'es', name: 'Español', flag: '🇦🇷', nativeName: 'Español', dir: 'ltr' },
+  { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English', dir: 'ltr' },
+  { code: 'pt', name: 'Português', flag: '🇧🇷', nativeName: 'Português', dir: 'ltr' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷', nativeName: 'Français', dir: 'ltr' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪', nativeName: 'Deutsch', dir: 'ltr' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹', nativeName: 'Italiano', dir: 'ltr' },
+  { code: 'zh', name: 'Chinese', flag: '🇨🇳', nativeName: '中文', dir: 'ltr' },
+  { code: 'ja', name: 'Japanese', flag: '🇯🇵', nativeName: '日本語', dir: 'ltr' },
+  { code: 'ru', name: 'Russian', flag: '🇷🇺', nativeName: 'Русский', dir: 'ltr' },
+  { code: 'ar', name: 'Arabic', flag: '🇸🇦', nativeName: 'العربية', dir: 'rtl' },
+  { code: 'ko', name: 'Korean', flag: '🇰🇷', nativeName: '한국어', dir: 'ltr' },
 ];
+
+// Helper functions
+export const getLanguageByCode = (code: string) => {
+  return supportedLanguages.find(lang => lang.code === code) || supportedLanguages[0];
+};
+
+export const getLanguageDirection = (code: string) => {
+  const lang = getLanguageByCode(code);
+  return lang.dir || 'ltr';
+};
+
+export const getLanguageUrlPrefix = (code: string) => {
+  return code === 'es' ? '' : `/${code}`;
+};
+
+export const removeLanguagePrefix = (path: string) => {
+  const langCodes = supportedLanguages.map(l => l.code).filter(c => c !== 'es');
+  for (const code of langCodes) {
+    if (path.startsWith(`/${code}/`) || path === `/${code}`) {
+      return path.replace(`/${code}`, '') || '/';
+    }
+  }
+  return path;
+};
 
 i18n
   .use(HttpBackend)
