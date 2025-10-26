@@ -20,6 +20,7 @@ import './styles/dashboard-premium.css';
 // Inicializar i18n
 import './lib/i18n';
 
+// Sistema completo funcional - v2.0
 function App() {
   const { i18n } = useTranslation();
 
