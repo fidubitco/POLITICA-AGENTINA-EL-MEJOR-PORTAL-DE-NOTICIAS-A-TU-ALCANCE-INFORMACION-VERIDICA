@@ -6,7 +6,7 @@
 import { Link } from 'wouter';
 import { useTranslation } from 'react-i18next';
 import { Clock, Eye, ArrowRight } from 'lucide-react';
-import { SupremeSEO } from '../components/SupremeSEO';
+import { MegaExtremeSEO } from '../components/MegaExtremeSEO';
 import { BBCHeader } from '../components/BBCHeader';
 import { allArticles } from '../data/allNews';
 
@@ -36,12 +36,13 @@ export const HomeSimple = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <SupremeSEO
-        title="Noticias Políticas de Argentina"
-        description="Portal de noticias políticas de Argentina. Últimas noticias sobre Milei, economía, dólar, inflación."
-        keywords="política argentina, noticias, Milei, economía"
+      <MegaExtremeSEO
+        title="Política Argentina - Portal de Noticias Políticas #1"
+        description="Portal profesional de noticias políticas de Argentina. Últimas noticias sobre Javier Milei, reforma económica, dólar blue, inflación, congreso nacional. Cobertura 24/7 con información veraz y análisis experto."
+        keywords="política argentina, noticias argentina, Javier Milei, reforma económica, dólar blue, inflación argentina, congreso nacional, elecciones argentina, gobierno argentino, casa rosada, senado argentina, diputados argentina, economía argentina, análisis político"
         url={`https://politicaargentina.com${i18n.language !== 'es' ? `/${i18n.language}` : ''}/`}
         type="website"
+        lang={i18n.language}
       />
 
       <BBCHeader />

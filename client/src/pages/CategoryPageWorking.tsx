@@ -5,9 +5,10 @@
 
 import React from 'react';
 import { useParams, Link } from 'wouter';
-import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Calendar, Eye, ThumbsUp, Share2 } from 'lucide-react';
 import { getArticlesByCategory, allArticles } from '../data/allNews';
+import { MegaExtremeSEO } from '../components/MegaExtremeSEO';
 
 const categories = {
   politica: { name: 'Política', color: '#3B82F6', description: 'Últimas noticias sobre política argentina' },
@@ -20,6 +21,7 @@ const categories = {
 
 export const CategoryPageWorking: React.FC = () => {
   const params = useParams();
+  const { i18n } = useTranslation();
   const categorySlug = (params.category || 'politica').toLowerCase();
   
   console.log('CategoryPageWorking - categorySlug:', categorySlug);
@@ -49,12 +51,15 @@ export const CategoryPageWorking: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{category.name} - Política Argentina</title>
-        <meta name="description" content={category.description} />
-        <meta property="og:title" content={`${category.name} - Política Argentina`} />
-        <meta property="og:description" content={category.description} />
-      </Helmet>
+      <MegaExtremeSEO
+        title={`${category.name} - Noticias de ${category.name} en Argentina`}
+        description={`${category.description}. Cobertura completa de ${category.name.toLowerCase()} en Argentina con ${articles.length} artículos actualizados. Información veraz y análisis experto.`}
+        keywords={`${category.name.toLowerCase()} argentina, noticias ${category.name.toLowerCase()}, ${category.name.toLowerCase()} hoy, últimas noticias ${category.name.toLowerCase()}`}
+        url={`https://politicaargentina.com${i18n.language !== 'es' ? `/${i18n.language}` : ''}/categoria/${categorySlug}`}
+        type="website"
+        section={category.name}
+        lang={i18n.language}
+      />
 
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
