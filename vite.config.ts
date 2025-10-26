@@ -15,8 +15,9 @@ export default defineConfig({
     host: true,
   },
   build: {
-    outDir: "public",
+    outDir: "../public",
     assetsDir: "assets",
+    emptyOutDir: true,
     sourcemap: false,
     minify: "terser",
     rollupOptions: {
