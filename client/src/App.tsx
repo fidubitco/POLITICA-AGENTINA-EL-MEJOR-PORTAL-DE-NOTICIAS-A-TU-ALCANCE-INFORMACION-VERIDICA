@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { HomePageBBC } from './pages/HomePageBBC';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageWorking } from './pages/CategoryPageWorking';
+import { AdminIndex } from './pages/admin/AdminIndex';
 import { AdminDashboardFull } from './pages/admin/AdminDashboardFull';
 import { EditArticle } from './pages/admin/EditArticle';
 import { CreateNewsEnhanced } from './pages/admin/CreateNewsEnhanced';
@@ -47,6 +48,7 @@ function App() {
           <Route path="/pt/categoria/:category" component={CategoryPageWorking} />
           
           {/* Admin routes - FUNCIONALES */}
+          <Route path="/admin" component={AdminIndex} />
           <Route path="/admin/dashboard" component={AdminDashboardFull} />
           <Route path="/admin/editar/:id" component={EditArticle} />
           <Route path="/admin/crear-noticia" component={CreateNewsEnhanced} />

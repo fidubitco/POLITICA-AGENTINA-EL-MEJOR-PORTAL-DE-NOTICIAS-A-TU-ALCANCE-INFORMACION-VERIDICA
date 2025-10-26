@@ -1,32 +1,50 @@
-# robots.txt para Política Argentina
+# Robots.txt OPTIMIZADO PARA MÁXIMA INDEXACIÓN
+# Política Argentina - Portal de Noticias #1
 
 User-agent: *
 Allow: /
+Allow: /categoria/*
+Allow: /noticia/*
+Allow: /candidatos
+Allow: /encuestas
+Allow: /resultados
+Allow: /finanzas
 
-# Sitemap
-Sitemap: https://politicaargentina.com/sitemap.xml
-
-# Disallow admin pages
+# Bloquear admin
 Disallow: /admin/
 Disallow: /api/
 
-# Allow all public pages
-Allow: /
-Allow: /noticia/
-Allow: /categoria/
-Allow: /en/
-Allow: /fr/
-Allow: /pt/
+# Sitemaps
+Sitemap: https://politicaargentina.com/sitemap.xml
+Sitemap: https://politicaargentina.com/sitemap-news.xml
+Sitemap: https://politicaargentina.com/sitemap-categories.xml
 
-# Crawl-delay
-Crawl-delay: 1
-
-# Specific bots
+# Crawl-delay para bots específicos
 User-agent: Googlebot
+Crawl-delay: 0
+Allow: /
+
+User-agent: Googlebot-News
+Crawl-delay: 0
 Allow: /
 
 User-agent: Bingbot
+Crawl-delay: 1
 Allow: /
 
 User-agent: Slurp
+Crawl-delay: 1
 Allow: /
+
+# Prioridad máxima para Google News
+User-agent: Googlebot-News
+Allow: /noticia/
+Allow: /categoria/
+
+# Indexación de imágenes
+User-agent: Googlebot-Image
+Allow: /images/
+
+# Cache
+User-agent: *
+Cache: public

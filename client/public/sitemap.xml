@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   
-  <!-- Home Pages -->
+  <!-- Homepage - Máxima prioridad -->
   <url>
     <loc>https://politicaargentina.com/</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-10-26</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="es" href="https://politicaargentina.com/" />
@@ -14,72 +15,90 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://politicaargentina.com/fr/" />
     <xhtml:link rel="alternate" hreflang="pt" href="https://politicaargentina.com/pt/" />
   </url>
-  
-  <url>
-    <loc>https://politicaargentina.com/en/</loc>
-    <lastmod>2025-01-26</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://politicaargentina.com/fr/</loc>
-    <lastmod>2025-01-26</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://politicaargentina.com/pt/</loc>
-    <lastmod>2025-01-26</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <!-- Category Pages -->
+
+  <!-- Categorías - Alta prioridad -->
   <url>
     <loc>https://politicaargentina.com/categoria/politica</loc>
-    <lastmod>2025-01-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://politicaargentina.com/categoria/economia</loc>
-    <lastmod>2025-01-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://politicaargentina.com/categoria/sociedad</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-10-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>https://politicaargentina.com/categoria/internacional</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-10-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>https://politicaargentina.com/categoria/deportes</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-10-26</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>https://politicaargentina.com/categoria/cultura</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Artículos - Google News -->
+  <url>
+    <loc>https://politicaargentina.com/noticia/1</loc>
+    <lastmod>2025-10-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+    <news:news>
+      <news:publication>
+        <news:name>Política Argentina</news:name>
+        <news:language>es</news:language>
+      </news:publication>
+      <news:publication_date>2025-10-26</news:publication_date>
+      <news:title>Milei anuncia un nuevo paquete de reformas económicas para 2025</news:title>
+      <news:keywords>Milei, Reformas, Economía, Argentina</news:keywords>
+    </news:news>
+    <image:image>
+      <image:loc>https://politicaargentina.com/images/milei-1.jpg</image:loc>
+      <image:title>Milei anuncia reformas</image:title>
+    </image:image>
   </url>
-  
-  <!-- Note: Article URLs should be generated dynamically from database -->
-  <!-- This is a static sitemap. For production, implement dynamic sitemap generation -->
-  
+
+  <!-- Secciones especiales -->
+  <url>
+    <loc>https://politicaargentina.com/candidatos</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://politicaargentina.com/encuestas</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://politicaargentina.com/resultados</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://politicaargentina.com/finanzas</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

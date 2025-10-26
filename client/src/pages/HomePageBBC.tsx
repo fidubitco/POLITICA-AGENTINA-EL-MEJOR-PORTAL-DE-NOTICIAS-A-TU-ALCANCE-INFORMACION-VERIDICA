@@ -1,6 +1,6 @@
 import { BBCHeader } from '../components/BBCHeader';
 import { BBCNewsCard } from '../components/BBCNewsCard';
-import { MegaSEO } from '../components/MegaSEO';
+import { SupremeSEO } from '../components/SupremeSEO';
 import { allArticles, getFeaturedArticles, getBreakingNews, getArticlesByCategory } from '../data/allNews';
 import { TrendingUp, Clock, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -22,10 +22,10 @@ export const HomePageBBC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <MegaSEO
-        title={t('home.title', 'Noticias Políticas de Argentina')}
-        description={t('home.description', 'Portal profesional de noticias políticas de Argentina. Últimas noticias, análisis y tendencias políticas en tiempo real. Cobertura completa de política, economía, sociedad e internacional.')}
-        keywords="política argentina, noticias argentina, gobierno argentino, elecciones argentina, congreso nacional, presidente argentina, economía argentina, dólar, inflación, noticias políticas, análisis político"
+      <SupremeSEO
+        title="Noticias Políticas de Argentina - Información Veraz y Actualizada"
+        description="Portal profesional de noticias políticas de Argentina. Últimas noticias sobre Milei, Congreso, economía, dólar, inflación. Cobertura 24/7 de política, economía, sociedad e internacional. Análisis experto y datos en tiempo real."
+        keywords="política argentina, noticias argentina, Milei, gobierno argentino, elecciones argentina, congreso nacional, presidente argentina, economía argentina, dólar blue, inflación argentina, noticias políticas, análisis político, casa rosada, senado, diputados, reforma económica"
         url={`https://politicaargentina.com${i18n.language !== 'es' ? `/${i18n.language}` : ''}/`}
         type="website"
       />

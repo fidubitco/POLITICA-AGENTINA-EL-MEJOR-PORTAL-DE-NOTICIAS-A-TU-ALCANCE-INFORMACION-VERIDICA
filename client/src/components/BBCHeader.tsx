@@ -94,6 +94,11 @@ export const BBCHeader = () => {
                   <a className="bbc-nav-link">{category.label}</a>
                 </Link>
               ))}
+              <Link href="/admin/dashboard">
+                <a className="bbc-nav-link bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                  📊 Admin
+                </a>
+              </Link>
               <button className="text-white hover:opacity-80 transition">
                 <Search size={20} />
               </button>
