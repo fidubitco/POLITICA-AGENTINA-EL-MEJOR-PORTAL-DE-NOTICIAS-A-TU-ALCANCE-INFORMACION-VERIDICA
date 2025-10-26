@@ -8,8 +8,10 @@ import { CategoryPageBBC } from './pages/CategoryPageBBC';
 import { DashboardAnalytics } from './pages/admin/DashboardAnalytics';
 import { CreateNews } from './pages/admin/CreateNews';
 import { AutoNews } from './pages/admin/AutoNews';
+import './styles/design-system.css';
 import './styles/globals.css';
 import './styles/bbc-style.css';
+import './styles/dashboard-premium.css';
 
 // Inicializar i18n
 import './lib/i18n';

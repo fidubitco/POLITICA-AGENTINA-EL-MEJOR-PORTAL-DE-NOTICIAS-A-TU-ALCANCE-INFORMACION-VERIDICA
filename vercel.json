@@ -6,7 +6,7 @@
   "installCommand": "pnpm install",
   "rewrites": [
     {
-      "source": "/((?!assets|images|locales|favicon|logo|manifest|robots|sitemap).*)",
+      "source": "/((?!assets|images|locales|favicon|logo|manifest|robots|sitemap|sw.js).*)",
       "destination": "/index.html"
     }
   ],
