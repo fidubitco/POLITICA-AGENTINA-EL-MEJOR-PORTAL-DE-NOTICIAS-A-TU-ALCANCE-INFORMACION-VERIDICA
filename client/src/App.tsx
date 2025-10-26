@@ -9,6 +9,7 @@ import { AdminIndex } from './pages/admin/AdminIndex';
 import { AdminDashboardEnterprise } from './pages/admin/AdminDashboardEnterprise';
 import { EditArticle } from './pages/admin/EditArticle';
 import { CreateNewsEnhanced } from './pages/admin/CreateNewsEnhanced';
+import { CMSEditor } from './pages/admin/CMSEditor';
 import { Candidatos } from './pages/Candidatos';
 import { Encuestas } from './pages/Encuestas';
 import { ResultadosElectorales } from './pages/ResultadosElectorales';
@@ -65,8 +66,10 @@ function App() {
           {/* Admin routes - ENTERPRISE GRADE */}
           <Route path="/admin" component={AdminDashboardEnterprise} />
           <Route path="/admin/dashboard" component={AdminDashboardEnterprise} />
+          <Route path="/admin/cms" component={CMSEditor} />
+          <Route path="/admin/editor" component={CMSEditor} />
           <Route path="/admin/editar/:id" component={EditArticle} />
-          <Route path="/admin/crear-noticia" component={CreateNewsEnhanced} />
+          <Route path="/admin/crear-noticia" component={CMSEditor} />
           
           {/* Political routes - TODOS LOS IDIOMAS */}
           <Route path="/candidatos" component={Candidatos} />

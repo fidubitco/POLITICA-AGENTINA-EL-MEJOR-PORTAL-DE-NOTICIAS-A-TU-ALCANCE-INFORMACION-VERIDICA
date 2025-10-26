@@ -66,6 +66,7 @@ export const AdminDashboardEnterprise = () => {
 
   const menuItems = [
     { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard', href: '/admin/dashboard' },
+    { id: 'cms', icon: Edit, label: 'Editor CMS', href: '/admin/cms' },
     { id: 'articles', icon: FileText, label: 'Artículos', href: '/admin/articles' },
     { id: 'create', icon: Plus, label: 'Crear Noticia', href: '/admin/crear-noticia' },
     { id: 'users', icon: Users, label: 'Usuarios', href: '/admin/users' },
