@@ -15,6 +15,15 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = () => {
+      // 🚀 MODO DESARROLLO - Bypass auth si está en desarrollo
+      const isDevelopment = import.meta.env.DEV || window.location.hostname === 'localhost';
+      
+      if (isDevelopment) {
+        console.log('🔓 Modo desarrollo: Acceso admin sin autenticación');
+        setIsAuthenticated(true);
+        return;
+      }
+
       const token = localStorage.getItem('auth_token');
       const user = localStorage.getItem('user');
 

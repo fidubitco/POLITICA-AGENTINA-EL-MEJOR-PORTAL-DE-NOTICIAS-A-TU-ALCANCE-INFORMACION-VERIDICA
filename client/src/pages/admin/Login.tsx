@@ -69,6 +69,30 @@ export const Login = () => {
           </p>
         </div>
 
+        {/* 🔑 CREDENCIALES DE DEMO */}
+        <div className="mb-6 bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 rounded-xl p-4">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+              <span className="text-white text-lg">🔑</span>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-blue-900 mb-2 text-sm">Credenciales de Demo</h3>
+              <div className="space-y-1 text-xs">
+                <p className="text-blue-800">
+                  <strong>Email:</strong> <code className="bg-white px-2 py-0.5 rounded font-mono">admin@politicaargentina.com</code>
+                </p>
+                <p className="text-blue-800">
+                  <strong>Pass:</strong> <code className="bg-white px-2 py-0.5 rounded font-mono">Admin2025!</code>
+                </p>
+              </div>
+              <p className="text-xs text-blue-600 mt-2 flex items-center gap-1">
+                <span>💡</span>
+                <span>Usa estas credenciales para acceder</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Error Message */}
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
