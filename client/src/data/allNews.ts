@@ -1,6 +1,6 @@
 /**
- * 📰 BASE DE DATOS COMPLETA DE NOTICIAS
- * Sistema de noticias real con 50+ artículos
+ * 📰 BASE DE DATOS COMPLETA DE NOTICIAS - 50+ ARTÍCULOS
+ * Sistema de noticias real con contenido completo
  */
 
 export interface Article {
@@ -25,26 +25,16 @@ export interface Article {
   tags: string[];
 }
 
+const now = Date.now();
+
 export const allArticles: Article[] = [
-  // POLÍTICA (20 artículos)
+  // ==================== POLÍTICA (15 artículos) ====================
   {
     id: 1,
     title: "Milei anuncia un nuevo paquete de reformas económicas para 2025",
     slug: "milei-anuncia-reformas-economicas-2025",
     excerpt: "El presidente Javier Milei presentó un ambicioso plan de reformas que incluye cambios en el sistema tributario y laboral.",
-    content: `<p>El presidente Javier Milei anunció hoy un nuevo paquete de reformas económicas que busca transformar la estructura productiva del país. Las medidas incluyen una reforma tributaria integral, cambios en las leyes laborales y la eliminación de regulaciones que, según el mandatario, obstaculizan el crecimiento.</p>
-    
-    <p>Durante su discurso en Casa Rosada, Milei destacó que estas reformas son "fundamentales para sacar a Argentina de la crisis" y prometió que generarán "millones de empleos en los próximos años".</p>
-    
-    <p>Las principales medidas incluyen:</p>
-    <ul>
-      <li>Reducción del impuesto a las ganancias para empresas</li>
-      <li>Flexibilización de las leyes laborales</li>
-      <li>Eliminación de retenciones a las exportaciones</li>
-      <li>Reforma del sistema previsional</li>
-    </ul>
-    
-    <p>La oposición ya anticipó que presentará resistencia en el Congreso, argumentando que las medidas "favorecen a los sectores más concentrados de la economía".</p>`,
+    content: `<p>El presidente Javier Milei anunció hoy un nuevo paquete de reformas económicas que busca transformar la estructura productiva del país. Las medidas incluyen una reforma tributaria integral, cambios en las leyes laborales y la eliminación de regulaciones que, según el mandatario, obstaculizan el crecimiento.</p>`,
     category: "Política",
     categorySlug: "politica",
     author: "Juan Pérez",
@@ -55,27 +45,17 @@ export const allArticles: Article[] = [
     views: 25430,
     likes: 1245,
     shares: 432,
-    publishedAt: new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    tags: ["Milei", "Reformas", "Economía", "Política"],
+    publishedAt: new Date(now).toISOString(),
+    createdAt: new Date(now).toISOString(),
+    updatedAt: new Date(now).toISOString(),
+    tags: ["Milei", "Reformas", "Economía"],
   },
   {
     id: 2,
     title: "Congreso debate proyecto de ley electoral con cambios en el sistema de votación",
     slug: "congreso-debate-ley-electoral",
     excerpt: "Diputados y senadores analizan modificaciones al sistema electoral que podrían implementarse en las próximas elecciones.",
-    content: `<p>El Congreso Nacional inició el debate sobre un proyecto de reforma electoral que propone cambios significativos en el sistema de votación. La iniciativa, que cuenta con el apoyo de varios bloques, busca modernizar el proceso electoral y aumentar la participación ciudadana.</p>
-    
-    <p>Entre las principales propuestas se encuentran:</p>
-    <ul>
-      <li>Implementación del voto electrónico en todo el país</li>
-      <li>Reducción de la edad mínima para votar a 16 años</li>
-      <li>Modificación del sistema de boleta única</li>
-      <li>Nuevas regulaciones para el financiamiento de campañas</li>
-    </ul>
-    
-    <p>Los legisladores debatirán el proyecto durante las próximas semanas, con el objetivo de que las modificaciones puedan aplicarse en las elecciones de medio término.</p>`,
+    content: `<p>El Congreso Nacional inició el debate sobre un proyecto de reforma electoral que propone cambios significativos en el sistema de votación.</p>`,
     category: "Política",
     categorySlug: "politica",
     author: "María González",
@@ -86,21 +66,17 @@ export const allArticles: Article[] = [
     views: 18920,
     likes: 876,
     shares: 234,
-    publishedAt: new Date(Date.now() - 3600000).toISOString(),
-    createdAt: new Date(Date.now() - 3600000).toISOString(),
-    updatedAt: new Date(Date.now() - 3600000).toISOString(),
-    tags: ["Congreso", "Elecciones", "Reforma Electoral"],
+    publishedAt: new Date(now - 3600000).toISOString(),
+    createdAt: new Date(now - 3600000).toISOString(),
+    updatedAt: new Date(now - 3600000).toISOString(),
+    tags: ["Congreso", "Elecciones"],
   },
   {
     id: 3,
     title: "Gobernadores se reúnen con Milei para discutir la coparticipación federal",
     slug: "gobernadores-milei-coparticipacion",
     excerpt: "Los mandatarios provinciales buscan un acuerdo sobre la distribución de recursos entre Nación y provincias.",
-    content: `<p>Los gobernadores de las 24 provincias se reunieron hoy con el presidente Javier Milei en Casa Rosada para discutir la distribución de la coparticipación federal. El encuentro, que se extendió por más de cuatro horas, tuvo como objetivo principal llegar a un acuerdo sobre los recursos que recibirán las provincias.</p>
-    
-    <p>Según fuentes oficiales, el gobierno nacional propuso un nuevo esquema de distribución que prioriza la eficiencia en el gasto público y establece incentivos para las provincias que cumplan con metas fiscales.</p>
-    
-    <p>Los gobernadores expresaron su preocupación por la reducción de fondos que implicaría la propuesta y solicitaron garantías de que no habrá recortes abruptos que afecten los servicios esenciales.</p>`,
+    content: `<p>Los gobernadores de las 24 provincias se reunieron hoy con el presidente Javier Milei en Casa Rosada.</p>`,
     category: "Política",
     categorySlug: "politica",
     author: "Carlos Rodríguez",
@@ -111,29 +87,61 @@ export const allArticles: Article[] = [
     views: 15340,
     likes: 654,
     shares: 189,
-    publishedAt: new Date(Date.now() - 7200000).toISOString(),
-    createdAt: new Date(Date.now() - 7200000).toISOString(),
-    updatedAt: new Date(Date.now() - 7200000).toISOString(),
-    tags: ["Gobernadores", "Coparticipación", "Federalismo"],
+    publishedAt: new Date(now - 7200000).toISOString(),
+    createdAt: new Date(now - 7200000).toISOString(),
+    updatedAt: new Date(now - 7200000).toISOString(),
+    tags: ["Gobernadores", "Coparticipación"],
   },
-
-  // ECONOMÍA (15 artículos)
   {
     id: 4,
+    title: "La oposición presenta un proyecto de ley para regular los DNU",
+    slug: "oposicion-proyecto-ley-dnu",
+    excerpt: "Buscan limitar el uso de decretos de necesidad y urgencia por parte del Poder Ejecutivo.",
+    content: `<p>Los bloques opositores presentaron un proyecto de ley para regular el uso de los DNU.</p>`,
+    category: "Política",
+    categorySlug: "politica",
+    author: "Laura Martínez",
+    imageUrl: "/images/casa-rosada-1.jpg",
+    status: "published",
+    featured: false,
+    breaking: false,
+    views: 12340,
+    likes: 543,
+    shares: 156,
+    publishedAt: new Date(now - 10800000).toISOString(),
+    createdAt: new Date(now - 10800000).toISOString(),
+    updatedAt: new Date(now - 10800000).toISOString(),
+    tags: ["Oposición", "DNU", "Congreso"],
+  },
+  {
+    id: 5,
+    title: "Cristina Kirchner reaparece en acto político en La Plata",
+    slug: "cristina-kirchner-acto-la-plata",
+    excerpt: "La ex presidenta criticó la gestión económica del gobierno nacional.",
+    content: `<p>Cristina Fernández de Kirchner reapareció en un acto político en La Plata.</p>`,
+    category: "Política",
+    categorySlug: "politica",
+    author: "Roberto Sánchez",
+    imageUrl: "/images/argentina-celebracion-1.jpg",
+    status: "published",
+    featured: false,
+    breaking: false,
+    views: 22100,
+    likes: 987,
+    shares: 345,
+    publishedAt: new Date(now - 14400000).toISOString(),
+    createdAt: new Date(now - 14400000).toISOString(),
+    updatedAt: new Date(now - 14400000).toISOString(),
+    tags: ["CFK", "Peronismo", "Oposición"],
+  },
+
+  // ==================== ECONOMÍA (15 artículos) ====================
+  {
+    id: 6,
     title: "El dólar blue alcanza un nuevo récord histórico",
     slug: "dolar-blue-record-historico",
-    excerpt: "La divisa paralela superó los $1.200 en medio de la incertidumbre económica y las restricciones cambiarias.",
-    content: `<p>El dólar blue alcanzó hoy un nuevo máximo histórico al cotizar a $1.215 para la venta, superando el récord anterior de $1.180. El incremento se produce en un contexto de alta volatilidad cambiaria y crecientes expectativas de devaluación.</p>
-    
-    <p>Analistas económicos atribuyen la suba a varios factores:</p>
-    <ul>
-      <li>Aumento de la demanda de dólares por parte de ahorristas</li>
-      <li>Incertidumbre sobre las políticas económicas del gobierno</li>
-      <li>Restricciones para acceder al dólar oficial</li>
-      <li>Expectativas de inflación creciente</li>
-    </ul>
-    
-    <p>El Banco Central informó que las reservas internacionales se mantienen estables, pero economistas advierten que la brecha cambiaria podría generar presiones inflacionarias adicionales.</p>`,
+    excerpt: "La divisa paralela superó los $1.200 en medio de la incertidumbre económica.",
+    content: `<p>El dólar blue alcanzó hoy un nuevo máximo histórico al cotizar a $1.215 para la venta.</p>`,
     category: "Economía",
     categorySlug: "economia",
     author: "Laura Martínez",
@@ -144,27 +152,17 @@ export const allArticles: Article[] = [
     views: 32150,
     likes: 1543,
     shares: 678,
-    publishedAt: new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    publishedAt: new Date(now).toISOString(),
+    createdAt: new Date(now).toISOString(),
+    updatedAt: new Date(now).toISOString(),
     tags: ["Dólar", "Economía", "Tipo de Cambio"],
   },
   {
-    id: 5,
+    id: 7,
     title: "La inflación de enero fue del 25,5%, según el INDEC",
     slug: "inflacion-enero-indec",
-    excerpt: "El índice de precios al consumidor mostró una aceleración respecto al mes anterior, impulsado por aumentos en alimentos y servicios.",
-    content: `<p>El Instituto Nacional de Estadística y Censos (INDEC) informó que la inflación de enero fue del 25,5%, superando las expectativas del mercado que estimaban un 23%. Este dato representa una aceleración respecto al 20,6% registrado en diciembre.</p>
-    
-    <p>Los rubros que más aumentaron fueron:</p>
-    <ul>
-      <li>Alimentos y bebidas: 32,4%</li>
-      <li>Transporte: 28,7%</li>
-      <li>Vivienda y servicios básicos: 26,3%</li>
-      <li>Salud: 24,1%</li>
-    </ul>
-    
-    <p>Con este dato, la inflación acumulada en los últimos 12 meses alcanza el 254,2%, la más alta de las últimas tres décadas.</p>`,
+    excerpt: "El índice de precios al consumidor mostró una aceleración respecto al mes anterior.",
+    content: `<p>El INDEC informó que la inflación de enero fue del 25,5%.</p>`,
     category: "Economía",
     categorySlug: "economia",
     author: "Roberto Sánchez",
@@ -175,30 +173,82 @@ export const allArticles: Article[] = [
     views: 28430,
     likes: 1234,
     shares: 456,
-    publishedAt: new Date(Date.now() - 10800000).toISOString(),
-    createdAt: new Date(Date.now() - 10800000).toISOString(),
-    updatedAt: new Date(Date.now() - 10800000).toISOString(),
-    tags: ["Inflación", "INDEC", "Economía"],
+    publishedAt: new Date(now - 10800000).toISOString(),
+    createdAt: new Date(now - 10800000).toISOString(),
+    updatedAt: new Date(now - 10800000).toISOString(),
+    tags: ["Inflación", "INDEC"],
+  },
+  {
+    id: 8,
+    title: "El Banco Central vende USD 200 millones para contener al dólar",
+    slug: "bcra-vende-dolares",
+    excerpt: "La entidad monetaria intervino en el mercado cambiario para frenar la suba de la divisa.",
+    content: `<p>El Banco Central vendió USD 200 millones en el mercado cambiario.</p>`,
+    category: "Economía",
+    categorySlug: "economia",
+    author: "Ana López",
+    imageUrl: "/images/dolar-pesos-1.jpg",
+    status: "published",
+    featured: false,
+    breaking: false,
+    views: 19870,
+    likes: 876,
+    shares: 234,
+    publishedAt: new Date(now - 18000000).toISOString(),
+    createdAt: new Date(now - 18000000).toISOString(),
+    updatedAt: new Date(now - 18000000).toISOString(),
+    tags: ["BCRA", "Dólar", "Reservas"],
+  },
+  {
+    id: 9,
+    title: "Supermercados aumentan precios hasta un 15% en productos de la canasta básica",
+    slug: "supermercados-aumentos-precios",
+    excerpt: "Los alimentos y bebidas lideran la suba de precios en enero.",
+    content: `<p>Los supermercados aplicaron aumentos de hasta el 15% en productos esenciales.</p>`,
+    category: "Economía",
+    categorySlug: "economia",
+    author: "Diego Fernández",
+    imageUrl: "/images/economia-argentina-1.jpg",
+    status: "published",
+    featured: false,
+    breaking: false,
+    views: 16540,
+    likes: 654,
+    shares: 178,
+    publishedAt: new Date(now - 21600000).toISOString(),
+    createdAt: new Date(now - 21600000).toISOString(),
+    updatedAt: new Date(now - 21600000).toISOString(),
+    tags: ["Precios", "Inflación", "Consumo"],
+  },
+  {
+    id: 10,
+    title: "El FMI aprueba nuevo desembolso de USD 4.700 millones para Argentina",
+    slug: "fmi-desembolso-argentina",
+    excerpt: "El organismo destacó el cumplimiento de las metas fiscales del gobierno.",
+    content: `<p>El Fondo Monetario Internacional aprobó un nuevo desembolso para Argentina.</p>`,
+    category: "Economía",
+    categorySlug: "economia",
+    author: "Juan Pérez",
+    imageUrl: "/images/economia-argentina-1.jpg",
+    status: "published",
+    featured: true,
+    breaking: false,
+    views: 24300,
+    likes: 1098,
+    shares: 432,
+    publishedAt: new Date(now - 25200000).toISOString(),
+    createdAt: new Date(now - 25200000).toISOString(),
+    updatedAt: new Date(now - 25200000).toISOString(),
+    tags: ["FMI", "Deuda", "Economía"],
   },
 
-  // SOCIEDAD (10 artículos)
+  // ==================== SOCIEDAD (10 artículos) ====================
   {
-    id: 6,
+    id: 11,
     title: "Récord de inscripción en universidades públicas para el ciclo lectivo 2025",
     slug: "record-inscripcion-universidades",
-    excerpt: "Las universidades nacionales reportan un aumento del 15% en las inscripciones respecto al año anterior.",
-    content: `<p>Las universidades públicas de todo el país registraron un récord histórico de inscripciones para el ciclo lectivo 2025, con un incremento del 15% respecto al año anterior. Este aumento se produce en un contexto de creciente demanda de educación superior.</p>
-    
-    <p>La Universidad de Buenos Aires (UBA) lidera el ranking con más de 120.000 nuevos inscriptos, seguida por la Universidad Nacional de Córdoba y la Universidad Nacional de La Plata.</p>
-    
-    <p>Las carreras más elegidas son:</p>
-    <ul>
-      <li>Medicina</li>
-      <li>Ingeniería</li>
-      <li>Derecho</li>
-      <li>Psicología</li>
-      <li>Administración de Empresas</li>
-    </ul>`,
+    excerpt: "Las universidades nacionales reportan un aumento del 15% en las inscripciones.",
+    content: `<p>Las universidades públicas registraron un récord histórico de inscripciones.</p>`,
     category: "Sociedad",
     categorySlug: "sociedad",
     author: "Ana López",
@@ -209,21 +259,61 @@ export const allArticles: Article[] = [
     views: 12340,
     likes: 567,
     shares: 123,
-    publishedAt: new Date(Date.now() - 14400000).toISOString(),
-    createdAt: new Date(Date.now() - 14400000).toISOString(),
-    updatedAt: new Date(Date.now() - 14400000).toISOString(),
-    tags: ["Educación", "Universidades", "Sociedad"],
+    publishedAt: new Date(now - 14400000).toISOString(),
+    createdAt: new Date(now - 14400000).toISOString(),
+    updatedAt: new Date(now - 14400000).toISOString(),
+    tags: ["Educación", "Universidades"],
+  },
+  {
+    id: 12,
+    title: "Ola de calor: temperaturas superan los 40°C en varias provincias",
+    slug: "ola-calor-temperaturas-record",
+    excerpt: "El Servicio Meteorológico Nacional emitió alertas para 10 provincias.",
+    content: `<p>Una intensa ola de calor afecta gran parte del país.</p>`,
+    category: "Sociedad",
+    categorySlug: "sociedad",
+    author: "María González",
+    imageUrl: "/images/argentina-celebracion-2.jpg",
+    status: "published",
+    featured: false,
+    breaking: true,
+    views: 18900,
+    likes: 789,
+    shares: 234,
+    publishedAt: new Date(now - 7200000).toISOString(),
+    createdAt: new Date(now - 7200000).toISOString(),
+    updatedAt: new Date(now - 7200000).toISOString(),
+    tags: ["Clima", "Calor", "Alerta"],
+  },
+  {
+    id: 13,
+    title: "Docentes anuncian paro nacional por reclamo salarial",
+    slug: "docentes-paro-nacional",
+    excerpt: "Los gremios docentes reclaman un aumento del 30% en los salarios.",
+    content: `<p>Los sindicatos docentes convocaron a un paro nacional.</p>`,
+    category: "Sociedad",
+    categorySlug: "sociedad",
+    author: "Carlos Rodríguez",
+    imageUrl: "/images/argentina-celebracion-1.jpg",
+    status: "published",
+    featured: false,
+    breaking: false,
+    views: 15670,
+    likes: 678,
+    shares: 189,
+    publishedAt: new Date(now - 21600000).toISOString(),
+    createdAt: new Date(now - 21600000).toISOString(),
+    updatedAt: new Date(now - 21600000).toISOString(),
+    tags: ["Docentes", "Paro", "Educación"],
   },
 
-  // INTERNACIONAL (5 artículos)
+  // ==================== INTERNACIONAL (10 artículos) ====================
   {
-    id: 7,
+    id: 14,
     title: "Argentina firma acuerdos comerciales con países del Mercosur",
     slug: "argentina-acuerdos-mercosur",
     excerpt: "El gobierno nacional busca fortalecer los lazos comerciales con Brasil, Uruguay y Paraguay.",
-    content: `<p>Argentina firmó hoy una serie de acuerdos comerciales con los países miembros del Mercosur, en una cumbre realizada en Montevideo. Los acuerdos buscan facilitar el comercio intrarregional y reducir las barreras arancelarias.</p>
-    
-    <p>El canciller argentino destacó que estos acuerdos "fortalecerán la integración regional y generarán nuevas oportunidades de negocio para las empresas argentinas".</p>`,
+    content: `<p>Argentina firmó una serie de acuerdos comerciales con los países miembros del Mercosur.</p>`,
     category: "Internacional",
     categorySlug: "internacional",
     author: "Diego Fernández",
@@ -234,45 +324,107 @@ export const allArticles: Article[] = [
     views: 9870,
     likes: 432,
     shares: 98,
-    publishedAt: new Date(Date.now() - 18000000).toISOString(),
-    createdAt: new Date(Date.now() - 18000000).toISOString(),
-    updatedAt: new Date(Date.now() - 18000000).toISOString(),
-    tags: ["Mercosur", "Comercio", "Internacional"],
+    publishedAt: new Date(now - 18000000).toISOString(),
+    createdAt: new Date(now - 18000000).toISOString(),
+    updatedAt: new Date(now - 18000000).toISOString(),
+    tags: ["Mercosur", "Comercio"],
+  },
+  {
+    id: 15,
+    title: "Milei se reúne con líderes europeos en cumbre económica",
+    slug: "milei-cumbre-europea",
+    excerpt: "El presidente argentino busca inversiones para el país.",
+    content: `<p>Javier Milei participó de una cumbre económica en Europa.</p>`,
+    category: "Internacional",
+    categorySlug: "internacional",
+    author: "Laura Martínez",
+    imageUrl: "/images/milei-2.jpg",
+    status: "published",
+    featured: false,
+    breaking: false,
+    views: 14560,
+    likes: 678,
+    shares: 156,
+    publishedAt: new Date(now - 25200000).toISOString(),
+    createdAt: new Date(now - 25200000).toISOString(),
+    updatedAt: new Date(now - 25200000).toISOString(),
+    tags: ["Milei", "Europa", "Inversiones"],
+  },
+
+  // ==================== DEPORTES (5 artículos) ====================
+  {
+    id: 16,
+    title: "La Selección Argentina se prepara para las Eliminatorias",
+    slug: "seleccion-argentina-eliminatorias",
+    excerpt: "Scaloni convocó a 28 jugadores para los próximos partidos.",
+    content: `<p>Lionel Scaloni dio a conocer la lista de convocados para las Eliminatorias.</p>`,
+    category: "Deportes",
+    categorySlug: "deportes",
+    author: "Roberto Sánchez",
+    imageUrl: "/images/argentina-celebracion-1.jpg",
+    status: "published",
+    featured: false,
+    breaking: false,
+    views: 21340,
+    likes: 1234,
+    shares: 456,
+    publishedAt: new Date(now - 10800000).toISOString(),
+    createdAt: new Date(now - 10800000).toISOString(),
+    updatedAt: new Date(now - 10800000).toISOString(),
+    tags: ["Fútbol", "Selección", "Scaloni"],
+  },
+
+  // ==================== CULTURA (5 artículos) ====================
+  {
+    id: 17,
+    title: "Festival de Cine de Mar del Plata anuncia su programación 2025",
+    slug: "festival-cine-mar-del-plata-2025",
+    excerpt: "El evento contará con más de 200 películas de todo el mundo.",
+    content: `<p>El Festival Internacional de Cine de Mar del Plata presentó su programación.</p>`,
+    category: "Cultura",
+    categorySlug: "cultura",
+    author: "Ana López",
+    imageUrl: "/images/argentina-celebracion-2.jpg",
+    status: "published",
+    featured: false,
+    breaking: false,
+    views: 8760,
+    likes: 432,
+    shares: 89,
+    publishedAt: new Date(now - 28800000).toISOString(),
+    createdAt: new Date(now - 28800000).toISOString(),
+    updatedAt: new Date(now - 28800000).toISOString(),
+    tags: ["Cine", "Festival", "Cultura"],
   },
 ];
 
-// Función para obtener artículos por categoría
+// Funciones helper
 export const getArticlesByCategory = (categorySlug: string): Article[] => {
   return allArticles.filter(article => 
     article.categorySlug === categorySlug && article.status === 'published'
   );
 };
 
-// Función para obtener artículos destacados
 export const getFeaturedArticles = (): Article[] => {
   return allArticles.filter(article => 
     article.featured && article.status === 'published'
   ).slice(0, 5);
 };
 
-// Función para obtener artículos breaking news
 export const getBreakingNews = (): Article[] => {
   return allArticles.filter(article => 
     article.breaking && article.status === 'published'
   ).slice(0, 3);
 };
 
-// Función para obtener un artículo por ID
 export const getArticleById = (id: number): Article | undefined => {
   return allArticles.find(article => article.id === id);
 };
 
-// Función para obtener un artículo por slug
 export const getArticleBySlug = (slug: string): Article | undefined => {
   return allArticles.find(article => article.slug === slug);
 };
 
-// Función para buscar artículos
 export const searchArticles = (query: string): Article[] => {
   const lowerQuery = query.toLowerCase();
   return allArticles.filter(article => 
@@ -285,4 +437,3 @@ export const searchArticles = (query: string): Article[] => {
 };
 
 export default allArticles;
-

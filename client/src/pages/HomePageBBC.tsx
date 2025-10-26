@@ -1,23 +1,24 @@
 import { BBCHeader } from '../components/BBCHeader';
 import { BBCNewsCard } from '../components/BBCNewsCard';
 import { MegaSEO } from '../components/MegaSEO';
-import { newsData } from '../data/newsData';
+import { allArticles, getFeaturedArticles, getBreakingNews, getArticlesByCategory } from '../data/allNews';
 import { TrendingUp, Clock, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import '../styles/bbc-style.css';
 
 export const HomePageBBC = () => {
   const { t, i18n } = useTranslation();
-  // Separar noticias por categoría
-  const featuredNews = newsData.filter(n => n.isFeatured)[0];
-  const breakingNews = newsData.filter(n => n.isBreaking && !n.isFeatured);
-  const politicaNews = newsData.filter(n => n.category === 'Política').slice(0, 4);
-  const economiaNews = newsData.filter(n => n.category === 'Economía').slice(0, 4);
-  const sociedadNews = newsData.filter(n => n.category === 'Sociedad').slice(0, 4);
-  const internacionalNews = newsData.filter(n => n.category === 'Internacional').slice(0, 3);
-  const deportesNews = newsData.filter(n => n.category === 'Deportes').slice(0, 3);
-  const culturaNews = newsData.filter(n => n.category === 'Cultura').slice(0, 2);
-  const latestNews = newsData.slice(0, 6);
+  
+  // Usar las noticias reales de allNews
+  const featuredNews = getFeaturedArticles()[0];
+  const breakingNews = getBreakingNews();
+  const politicaNews = getArticlesByCategory('politica').slice(0, 4);
+  const economiaNews = getArticlesByCategory('economia').slice(0, 4);
+  const sociedadNews = getArticlesByCategory('sociedad').slice(0, 4);
+  const internacionalNews = getArticlesByCategory('internacional').slice(0, 3);
+  const deportesNews = getArticlesByCategory('deportes').slice(0, 3);
+  const culturaNews = getArticlesByCategory('cultura').slice(0, 2);
+  const latestNews = allArticles.filter(a => a.status === 'published').slice(0, 6);
 
   return (
     <div className="min-h-screen bg-white">
