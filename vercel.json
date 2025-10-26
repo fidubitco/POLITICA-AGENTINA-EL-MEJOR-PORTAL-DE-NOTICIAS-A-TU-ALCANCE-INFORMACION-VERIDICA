@@ -1,12 +1,16 @@
 {
+  "version": 2,
   "framework": null,
   "buildCommand": "pnpm install && pnpm build",
   "outputDirectory": "public",
   "devCommand": "pnpm dev",
   "installCommand": "pnpm install",
+  "public": true,
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/((?!assets|images|locales|favicon.ico|favicon.png|favicon-16x16.png|favicon-32x32.png|apple-touch-icon.png|logo|manifest.json|robots.txt|sitemap.xml|sw.js).*)",
+      "source": "/((?!assets|images|locales|favicon|logo|manifest|robots|sitemap|sw|apple-touch-icon).*)",
       "destination": "/index.html"
     }
   ],
