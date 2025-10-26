@@ -1,30 +1,43 @@
 import { useState } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { Menu, X, Globe, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { supportedLanguages } from '../lib/i18n';
 
 export const BBCHeader = () => {
   const { t, i18n } = useTranslation();
+  const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const categories = [
-    { id: 'politica', label: 'Política', href: '/categoria/politica' },
-    { id: 'economia', label: 'Economía', href: '/categoria/economia' },
-    { id: 'sociedad', label: 'Sociedad', href: '/categoria/sociedad' },
-    { id: 'internacional', label: 'Internacional', href: '/categoria/internacional' },
-    { id: 'deportes', label: 'Deportes', href: '/categoria/deportes' },
-    { id: 'cultura', label: 'Cultura', href: '/categoria/cultura' },
-  ];
-
-  const languages = [
-    { code: 'es', name: 'Español', flag: '🇦🇷' },
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
-    { code: 'pt', name: 'Português', flag: '🇧🇷' },
+    { id: 'politica', label: t('nav.politics', 'Política'), href: '/categoria/politica' },
+    { id: 'economia', label: t('nav.economy', 'Economía'), href: '/categoria/economia' },
+    { id: 'sociedad', label: t('nav.society', 'Sociedad'), href: '/categoria/sociedad' },
+    { id: 'internacional', label: t('nav.international', 'Internacional'), href: '/categoria/internacional' },
+    { id: 'deportes', label: t('nav.sports', 'Deportes'), href: '/categoria/deportes' },
+    { id: 'cultura', label: t('nav.culture', 'Cultura'), href: '/categoria/cultura' },
   ];
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    
+    // Cambiar URL según el idioma
+    const currentPath = location;
+    let newPath = currentPath;
+    
+    // Remover prefijo de idioma actual si existe
+    supportedLanguages.forEach(lang => {
+      if (currentPath.startsWith(`/${lang.code}/`)) {
+        newPath = currentPath.replace(`/${lang.code}`, '');
+      }
+    });
+    
+    // Agregar nuevo prefijo de idioma (excepto español)
+    if (lng !== 'es') {
+      newPath = `/${lng}${newPath}`;
+    }
+    
+    setLocation(newPath || '/');
   };
 
   return (
@@ -44,29 +57,29 @@ export const BBCHeader = () => {
               </span>
             </div>
             <div className="flex items-center gap-4">
-              {/* Language Selector */}
-              <div className="relative group">
-                <button className="flex items-center gap-2 text-white text-sm hover:opacity-80 transition">
-                  <Globe size={16} />
-                  <span className="hidden md:inline">
-                    {languages.find(l => l.code === i18n.language)?.name || 'Español'}
-                  </span>
-                </button>
-                <div className="absolute right-0 top-full mt-2 bg-white shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[150px]">
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => changeLanguage(lang.code)}
-                      className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-100 transition flex items-center gap-2 ${
-                        i18n.language === lang.code ? 'bg-gray-50 font-semibold' : ''
-                      }`}
-                    >
-                      <span>{lang.flag}</span>
-                      <span>{lang.name}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+                    {/* Language Selector - TOP 11 LANGUAGES */}
+                    <div className="relative group">
+                      <button className="flex items-center gap-2 text-white text-sm hover:opacity-80 transition">
+                        <Globe size={16} />
+                        <span className="hidden md:inline">
+                          {supportedLanguages.find(l => l.code === i18n.language)?.nativeName || 'Español'}
+                        </span>
+                      </button>
+                      <div className="absolute right-0 top-full mt-2 bg-white shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[180px] max-h-[400px] overflow-y-auto">
+                        {supportedLanguages.map((lang) => (
+                          <button
+                            key={lang.code}
+                            onClick={() => changeLanguage(lang.code)}
+                            className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-100 transition flex items-center gap-2 ${
+                              i18n.language === lang.code ? 'bg-blue-50 font-semibold text-blue-600' : ''
+                            }`}
+                          >
+                            <span className="text-xl">{lang.flag}</span>
+                            <span>{lang.nativeName}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
             </div>
           </div>
         </div>
