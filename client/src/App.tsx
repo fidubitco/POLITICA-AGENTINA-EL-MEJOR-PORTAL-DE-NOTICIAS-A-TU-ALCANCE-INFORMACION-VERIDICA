@@ -12,6 +12,7 @@ import { AdminDashboardEnterprise } from './pages/admin/AdminDashboardEnterprise
 import { EditArticle } from './pages/admin/EditArticle';
 import { CreateNewsEnhanced } from './pages/admin/CreateNewsEnhanced';
 import { CMSEditor } from './pages/admin/CMSEditor';
+import { AINewsCreator } from './pages/admin/AINewsCreator';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Candidatos } from './pages/Candidatos';
 import { Encuestas } from './pages/Encuestas';
@@ -113,6 +114,13 @@ function App() {
               </ProtectedRoute>
             )}
           </Route>
+          <Route path="/admin/ai-creator">
+            {() => (
+              <ProtectedRoute>
+                <AINewsCreator />
+              </ProtectedRoute>
+            )}
+          </Route>
           
           {/* Political routes - TODOS LOS IDIOMAS */}
           <Route path="/candidatos" component={Candidatos} />
@@ -134,10 +142,10 @@ function App() {
           
           {/* Fallback */}
           <Route path="/:rest*" component={HomeSimple} />
-        </Switch>
+      </Switch>
         </div>
       </HelmetProvider>
-    </ThemeProvider>
+      </ThemeProvider>
   );
 }
 
