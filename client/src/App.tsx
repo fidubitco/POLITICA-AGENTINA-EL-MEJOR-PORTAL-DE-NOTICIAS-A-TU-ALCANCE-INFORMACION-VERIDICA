@@ -13,6 +13,8 @@ import { EditArticle } from './pages/admin/EditArticle';
 import { CreateNewsEnhanced } from './pages/admin/CreateNewsEnhanced';
 import { CMSEditor } from './pages/admin/CMSEditor';
 import { AINewsCreator } from './pages/admin/AINewsCreator';
+import { SEOAuditor } from './pages/admin/SEOAuditor';
+import { RealTimeAnalytics } from './pages/admin/RealTimeAnalytics';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Candidatos } from './pages/Candidatos';
 import { Encuestas } from './pages/Encuestas';
@@ -118,6 +120,20 @@ function App() {
             {() => (
               <ProtectedRoute>
                 <AINewsCreator />
+              </ProtectedRoute>
+            )}
+          </Route>
+          <Route path="/admin/seo-auditor">
+            {() => (
+              <ProtectedRoute>
+                <SEOAuditor />
+              </ProtectedRoute>
+            )}
+          </Route>
+          <Route path="/admin/analytics">
+            {() => (
+              <ProtectedRoute>
+                <RealTimeAnalytics />
               </ProtectedRoute>
             )}
           </Route>
