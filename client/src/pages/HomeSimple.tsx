@@ -13,14 +13,26 @@ import { allArticles } from '../data/allNews';
 export const HomeSimple = () => {
   const { i18n } = useTranslation();
 
-  // Obtener solo los artículos necesarios
-  const featuredArticles = allArticles
-    .filter(a => a.featured && a.status === 'published')
-    .slice(0, 6);
-  
+  // Obtener artículos organizados
   const breakingNews = allArticles
     .filter(a => a.breaking && a.status === 'published')
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     .slice(0, 1);
+  
+  const featuredArticles = allArticles
+    .filter(a => a.featured && a.status === 'published')
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, 6);
+  
+  const politicaNews = allArticles
+    .filter(a => a.categorySlug === 'politica' && a.status === 'published')
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, 4);
+  
+  const economiaNews = allArticles
+    .filter(a => a.categorySlug === 'economia' && a.status === 'published')
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, 4);
 
   const formatNumber = (num: number) => {
     if (num >= 1000) return `${(num / 1000).toFixed(1)}k`;
@@ -122,10 +134,110 @@ export const HomeSimple = () => {
         </div>
       </div>
 
+      {/* Política Section */}
+      {politicaNews.length > 0 && (
+        <div className="bg-blue-50 py-12">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-3xl font-bold text-blue-900">Política</h2>
+              <Link href="/categoria/politica">
+                <a className="text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-2">
+                  Ver todas <ArrowRight className="w-4 h-4" />
+                </a>
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {politicaNews.map((article) => (
+                <Link key={article.id} href={`/noticia/${article.id}`}>
+                  <a className="block bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+                    <div className="flex gap-4">
+                      <img
+                        src={article.imageUrl}
+                        alt={article.title}
+                        className="w-32 h-32 object-cover rounded"
+                        loading="lazy"
+                      />
+                      <div className="flex-1">
+                        <h3 className="text-lg font-bold mb-2 line-clamp-2 hover:text-blue-600">
+                          {article.title}
+                        </h3>
+                        <p className="text-gray-600 text-sm mb-2 line-clamp-2">
+                          {article.excerpt}
+                        </p>
+                        <div className="flex items-center gap-3 text-sm text-gray-500">
+                          <span className="flex items-center gap-1">
+                            <Eye className="w-4 h-4" />
+                            {formatNumber(article.views)}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {getTimeAgo(article.publishedAt)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Economía Section */}
+      {economiaNews.length > 0 && (
+        <div className="bg-green-50 py-12">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-3xl font-bold text-green-900">Economía</h2>
+              <Link href="/categoria/economia">
+                <a className="text-green-600 hover:text-green-800 font-semibold flex items-center gap-2">
+                  Ver todas <ArrowRight className="w-4 h-4" />
+                </a>
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {economiaNews.map((article) => (
+                <Link key={article.id} href={`/noticia/${article.id}`}>
+                  <a className="block bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+                    <div className="flex gap-4">
+                      <img
+                        src={article.imageUrl}
+                        alt={article.title}
+                        className="w-32 h-32 object-cover rounded"
+                        loading="lazy"
+                      />
+                      <div className="flex-1">
+                        <h3 className="text-lg font-bold mb-2 line-clamp-2 hover:text-green-600">
+                          {article.title}
+                        </h3>
+                        <p className="text-gray-600 text-sm mb-2 line-clamp-2">
+                          {article.excerpt}
+                        </p>
+                        <div className="flex items-center gap-3 text-sm text-gray-500">
+                          <span className="flex items-center gap-1">
+                            <Eye className="w-4 h-4" />
+                            {formatNumber(article.views)}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {getTimeAgo(article.publishedAt)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Categories */}
       <div className="bg-white py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8">Categorías</h2>
+          <h2 className="text-3xl font-bold mb-8">Todas las Categorías</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
               { name: 'Política', slug: 'politica', color: 'bg-blue-600' },
@@ -136,7 +248,7 @@ export const HomeSimple = () => {
               { name: 'Cultura', slug: 'cultura', color: 'bg-pink-600' },
             ].map((cat) => (
               <Link key={cat.slug} href={`/categoria/${cat.slug}`}>
-                <a className={`${cat.color} text-white p-6 rounded-lg text-center hover:opacity-90 transition`}>
+                <a className={`${cat.color} text-white p-6 rounded-lg text-center hover:opacity-90 transition block`}>
                   <div className="font-bold text-lg">{cat.name}</div>
                 </a>
               </Link>

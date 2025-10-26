@@ -8,10 +8,18 @@
   "public": true,
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/((?!assets|images|locales|favicon|logo|manifest|robots|sitemap|sw|apple-touch-icon).*)",
-      "destination": "/index.html"
+      "src": "/(favicon\\.ico|favicon\\.png|favicon-16x16\\.png|favicon-32x32\\.png|apple-touch-icon\\.png|manifest\\.json|robots\\.txt|sitemap\\.xml|sw\\.js)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(assets|images|locales)/(.*)$",
+      "dest": "/$1/$2"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "headers": [
