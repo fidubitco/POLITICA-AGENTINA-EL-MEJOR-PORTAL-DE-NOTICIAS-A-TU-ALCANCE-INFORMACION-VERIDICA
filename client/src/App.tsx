@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Switch, useLocation } from 'wouter';
 import { useTranslation } from 'react-i18next';
-import { HomeUltraPremium } from './pages/HomeUltraPremium';
+import { HomeSimple } from './pages/HomeSimple';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageWorking } from './pages/CategoryPageWorking';
 import { AdminIndex } from './pages/admin/AdminIndex';
@@ -45,9 +45,9 @@ function App() {
       <div className="App">
         <Switch>
           {/* Home routes - TODOS LOS IDIOMAS */}
-          <Route path="/" component={HomeUltraPremium} />
+          <Route path="/" component={HomeSimple} />
           {supportedLanguages.filter(l => l.code !== 'es').map(lang => (
-            <Route key={`home-${lang.code}`} path={`/${lang.code}`} component={HomeUltraPremium} />
+            <Route key={`home-${lang.code}`} path={`/${lang.code}`} component={HomeSimple} />
           ))}
           
           {/* Article detail routes - TODOS LOS IDIOMAS */}
@@ -87,7 +87,7 @@ function App() {
           ))}
           
           {/* Fallback */}
-          <Route path="/:rest*" component={HomeUltraPremium} />
+          <Route path="/:rest*" component={HomeSimple} />
         </Switch>
       </div>
     </HelmetProvider>

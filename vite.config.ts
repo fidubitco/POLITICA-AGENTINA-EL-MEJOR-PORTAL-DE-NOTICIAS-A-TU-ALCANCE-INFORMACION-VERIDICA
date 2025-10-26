@@ -20,22 +20,15 @@ export default defineConfig({
     assetsDir: "assets",
     emptyOutDir: true,
     sourcemap: false,
-    minify: "terser",
+    minify: "esbuild",
+    target: "es2015",
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ["react", "react-dom"],
           router: ["wouter"],
-          trpc: ["@trpc/client", "@trpc/server"],
-          ui: ["lucide-react", "framer-motion"],
-          recharts: ["recharts"],
+          i18n: ["react-i18next", "i18next"],
         },
-      },
-    },
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
       },
     },
   },
