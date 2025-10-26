@@ -1,12 +1,14 @@
-[phases.setup]
-nixPkgs = ["nodejs_18", "pnpm"]
+# nixpacks.toml
+# Configuración optimizada para Railway
+
+nixPkgs = ["nodejs_20", "pnpm"]
 
 [phases.install]
 cmds = ["pnpm install --frozen-lockfile"]
 
 [phases.build]
-cmds = ["pnpm build:full"]
+# Solo construir el backend
+cmds = ["pnpm build:backend"]
 
 [start]
 cmd = "node dist/index.js"
-
