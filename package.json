@@ -7,7 +7,7 @@
     "dev": "concurrently \"pnpm run dev:client\" \"pnpm run dev:server\"",
     "dev:client": "vite",
     "dev:server": "NODE_ENV=development npx tsx server/index.ts",
-    "build": "vite build",
+    "build": "vite build && node scripts/copy-public-files.js",
     "build:backend": "esbuild server/enterprise/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js",
     "build:full": "pnpm build && pnpm build:backend",
     "start": "NODE_ENV=production node dist/index.js",
