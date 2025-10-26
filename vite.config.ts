@@ -15,7 +15,7 @@ export default defineConfig({
     host: true,
   },
   build: {
-    outDir: "dist/public",
+    outDir: "public",
     assetsDir: "assets",
     sourcemap: false,
     minify: "terser",
