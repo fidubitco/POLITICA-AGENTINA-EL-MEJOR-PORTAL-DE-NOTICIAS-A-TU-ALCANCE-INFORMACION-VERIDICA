@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { HomePageBBC } from './pages/HomePageBBC';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageBBC } from './pages/CategoryPageBBC';
+import { CategoryPageEnhanced } from './pages/CategoryPageEnhanced';
 import { DashboardAnalytics } from './pages/admin/DashboardAnalytics';
 import { DashboardEnhanced } from './pages/admin/DashboardEnhanced';
 import { CreateNews } from './pages/admin/CreateNews';
@@ -47,10 +48,10 @@ function App() {
           <Route path="/pt/noticia/:id" component={ArticleDetailPage} />
           
           {/* Category routes */}
-          <Route path="/categoria/:category" component={CategoryPageBBC} />
-          <Route path="/en/categoria/:category" component={CategoryPageBBC} />
-          <Route path="/fr/categoria/:category" component={CategoryPageBBC} />
-          <Route path="/pt/categoria/:category" component={CategoryPageBBC} />
+          <Route path="/categoria/:category" component={CategoryPageEnhanced} />
+          <Route path="/en/categoria/:category" component={CategoryPageEnhanced} />
+          <Route path="/fr/categoria/:category" component={CategoryPageEnhanced} />
+          <Route path="/pt/categoria/:category" component={CategoryPageEnhanced} />
           
           {/* Admin routes */}
           <Route path="/admin/dashboard" component={DashboardEnhanced} />
