@@ -20,6 +20,7 @@ import './styles/design-system.css';
 import './styles/globals.css';
 import './styles/bbc-style.css';
 import './styles/dashboard-premium.css';
+import './styles/categories-optimized.css';
 
 // Inicializar i18n
 import './lib/i18n';

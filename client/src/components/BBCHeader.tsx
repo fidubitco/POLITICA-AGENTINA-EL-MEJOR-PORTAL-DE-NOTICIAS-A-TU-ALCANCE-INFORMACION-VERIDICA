@@ -9,21 +9,21 @@ export const BBCHeader = () => {
   const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Categorías con iconos y colores profesionales
+  // Categorías con iconos y colores ultra profesionales optimizados
   const allCategories = [
-    { id: 'politica', label: t('nav.politics', 'Política'), href: '/categoria/politica', icon: '🏛️', color: '#3B82F6', bgGradient: 'from-blue-500 to-blue-600' },
-    { id: 'economia', label: t('nav.economy', 'Economía'), href: '/categoria/economia', icon: '💰', color: '#10B981', bgGradient: 'from-green-500 to-green-600' },
-    { id: 'internacional', label: t('nav.international', 'Internacional'), href: '/categoria/internacional', icon: '🌎', color: '#EF4444', bgGradient: 'from-red-500 to-red-600' },
-    { id: 'sociedad', label: t('nav.society', 'Sociedad'), href: '/categoria/sociedad', icon: '👥', color: '#F59E0B', bgGradient: 'from-amber-500 to-amber-600' },
-    { id: 'deportes', label: t('nav.sports', 'Deportes'), href: '/categoria/deportes', icon: '⚽', color: '#8B5CF6', bgGradient: 'from-purple-500 to-purple-600' },
-    { id: 'cultura', label: t('nav.culture', 'Cultura'), href: '/categoria/cultura', icon: '🎭', color: '#EC4899', bgGradient: 'from-pink-500 to-pink-600' },
-    { id: 'tecnologia', label: t('nav.technology', 'Tecnología'), href: '/categoria/tecnologia', icon: '💻', color: '#06B6D4', bgGradient: 'from-cyan-500 to-cyan-600' },
-    { id: 'negocios', label: t('nav.business', 'Negocios'), href: '/categoria/negocios', icon: '🏢', color: '#14B8A6', bgGradient: 'from-teal-500 to-teal-600' },
-    { id: 'espectaculos', label: t('nav.entertainment', 'Espectáculos'), href: '/categoria/espectaculos', icon: '🎬', color: '#F97316', bgGradient: 'from-orange-500 to-orange-600' },
-    { id: 'salud', label: t('nav.health', 'Salud'), href: '/categoria/salud', icon: '🏥', color: '#84CC16', bgGradient: 'from-lime-500 to-lime-600' },
-    { id: 'lifestyle', label: t('nav.lifestyle', 'Lifestyle'), href: '/categoria/lifestyle', icon: '🏠', color: '#A855F7', bgGradient: 'from-violet-500 to-violet-600' },
-    { id: 'ciencia', label: t('nav.science', 'Ciencia'), href: '/categoria/ciencia', icon: '🔬', color: '#6366F1', bgGradient: 'from-indigo-500 to-indigo-600' },
-    { id: 'judicial', label: t('nav.judicial', 'Judicial'), href: '/categoria/judicial', icon: '⚖️', color: '#78350F', bgGradient: 'from-amber-800 to-amber-900' },
+    { id: 'politica', label: t('nav.politics', 'Política'), href: '/categoria/politica', icon: '🏛️', color: '#2563EB', bgGradient: 'from-blue-600 to-blue-800', shadow: 'shadow-blue-500/50' },
+    { id: 'economia', label: t('nav.economy', 'Economía'), href: '/categoria/economia', icon: '💰', color: '#059669', bgGradient: 'from-green-600 to-green-800', shadow: 'shadow-green-500/50' },
+    { id: 'internacional', label: t('nav.international', 'Internacional'), href: '/categoria/internacional', icon: '🌎', color: '#DC2626', bgGradient: 'from-red-600 to-red-800', shadow: 'shadow-red-500/50' },
+    { id: 'sociedad', label: t('nav.society', 'Sociedad'), href: '/categoria/sociedad', icon: '👥', color: '#EA580C', bgGradient: 'from-orange-600 to-orange-800', shadow: 'shadow-orange-500/50' },
+    { id: 'deportes', label: t('nav.sports', 'Deportes'), href: '/categoria/deportes', icon: '⚽', color: '#7C3AED', bgGradient: 'from-purple-600 to-purple-800', shadow: 'shadow-purple-500/50' },
+    { id: 'cultura', label: t('nav.culture', 'Cultura'), href: '/categoria/cultura', icon: '🎭', color: '#DB2777', bgGradient: 'from-pink-600 to-pink-800', shadow: 'shadow-pink-500/50' },
+    { id: 'tecnologia', label: t('nav.technology', 'Tecnología'), href: '/categoria/tecnologia', icon: '💻', color: '#0891B2', bgGradient: 'from-cyan-600 to-cyan-800', shadow: 'shadow-cyan-500/50' },
+    { id: 'negocios', label: t('nav.business', 'Negocios'), href: '/categoria/negocios', icon: '🏢', color: '#0D9488', bgGradient: 'from-teal-600 to-teal-800', shadow: 'shadow-teal-500/50' },
+    { id: 'espectaculos', label: t('nav.entertainment', 'Espectáculos'), href: '/categoria/espectaculos', icon: '🎬', color: '#EA580C', bgGradient: 'from-orange-600 to-orange-800', shadow: 'shadow-orange-500/50' },
+    { id: 'salud', label: t('nav.health', 'Salud'), href: '/categoria/salud', icon: '🏥', color: '#65A30D', bgGradient: 'from-lime-600 to-lime-800', shadow: 'shadow-lime-500/50' },
+    { id: 'lifestyle', label: t('nav.lifestyle', 'Lifestyle'), href: '/categoria/lifestyle', icon: '🏠', color: '#9333EA', bgGradient: 'from-violet-600 to-violet-800', shadow: 'shadow-violet-500/50' },
+    { id: 'ciencia', label: t('nav.science', 'Ciencia'), href: '/categoria/ciencia', icon: '🔬', color: '#4F46E5', bgGradient: 'from-indigo-600 to-indigo-800', shadow: 'shadow-indigo-500/50' },
+    { id: 'judicial', label: t('nav.judicial', 'Judicial'), href: '/categoria/judicial', icon: '⚖️', color: '#92400E', bgGradient: 'from-amber-800 to-amber-950', shadow: 'shadow-amber-700/50' },
   ];
   
   const mainCategories = allCategories.slice(0, 6);
