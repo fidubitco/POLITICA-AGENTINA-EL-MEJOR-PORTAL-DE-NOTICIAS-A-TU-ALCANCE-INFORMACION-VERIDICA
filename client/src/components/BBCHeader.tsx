@@ -9,20 +9,21 @@ export const BBCHeader = () => {
   const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Importar categorías desde el archivo centralizado
+  // Categorías con iconos y colores profesionales
   const allCategories = [
-    { id: 'politica', label: t('nav.politics', 'Política'), href: '/categoria/politica', icon: '🏛️', color: '#3B82F6' },
-    { id: 'economia', label: t('nav.economy', 'Economía'), href: '/categoria/economia', icon: '💰', color: '#10B981' },
-    { id: 'internacional', label: t('nav.international', 'Internacional'), href: '/categoria/internacional', icon: '🌎', color: '#EF4444' },
-    { id: 'sociedad', label: t('nav.society', 'Sociedad'), href: '/categoria/sociedad', icon: '👥', color: '#F59E0B' },
-    { id: 'deportes', label: t('nav.sports', 'Deportes'), href: '/categoria/deportes', icon: '⚽', color: '#8B5CF6' },
-    { id: 'cultura', label: t('nav.culture', 'Cultura'), href: '/categoria/cultura', icon: '🎭', color: '#EC4899' },
-    { id: 'tecnologia', label: t('nav.technology', 'Tecnología'), href: '/categoria/tecnologia', icon: '💻', color: '#06B6D4' },
-    { id: 'negocios', label: t('nav.business', 'Negocios'), href: '/categoria/negocios', icon: '🏢', color: '#14B8A6' },
-    { id: 'espectaculos', label: t('nav.entertainment', 'Espectáculos'), href: '/categoria/espectaculos', icon: '🎬', color: '#F97316' },
-    { id: 'salud', label: t('nav.health', 'Salud'), href: '/categoria/salud', icon: '🏥', color: '#84CC16' },
-    { id: 'lifestyle', label: t('nav.lifestyle', 'Lifestyle'), href: '/categoria/lifestyle', icon: '🏠', color: '#A855F7' },
-    { id: 'ciencia', label: t('nav.science', 'Ciencia'), href: '/categoria/ciencia', icon: '🔬', color: '#6366F1' },
+    { id: 'politica', label: t('nav.politics', 'Política'), href: '/categoria/politica', icon: '🏛️', color: '#3B82F6', bgGradient: 'from-blue-500 to-blue-600' },
+    { id: 'economia', label: t('nav.economy', 'Economía'), href: '/categoria/economia', icon: '💰', color: '#10B981', bgGradient: 'from-green-500 to-green-600' },
+    { id: 'internacional', label: t('nav.international', 'Internacional'), href: '/categoria/internacional', icon: '🌎', color: '#EF4444', bgGradient: 'from-red-500 to-red-600' },
+    { id: 'sociedad', label: t('nav.society', 'Sociedad'), href: '/categoria/sociedad', icon: '👥', color: '#F59E0B', bgGradient: 'from-amber-500 to-amber-600' },
+    { id: 'deportes', label: t('nav.sports', 'Deportes'), href: '/categoria/deportes', icon: '⚽', color: '#8B5CF6', bgGradient: 'from-purple-500 to-purple-600' },
+    { id: 'cultura', label: t('nav.culture', 'Cultura'), href: '/categoria/cultura', icon: '🎭', color: '#EC4899', bgGradient: 'from-pink-500 to-pink-600' },
+    { id: 'tecnologia', label: t('nav.technology', 'Tecnología'), href: '/categoria/tecnologia', icon: '💻', color: '#06B6D4', bgGradient: 'from-cyan-500 to-cyan-600' },
+    { id: 'negocios', label: t('nav.business', 'Negocios'), href: '/categoria/negocios', icon: '🏢', color: '#14B8A6', bgGradient: 'from-teal-500 to-teal-600' },
+    { id: 'espectaculos', label: t('nav.entertainment', 'Espectáculos'), href: '/categoria/espectaculos', icon: '🎬', color: '#F97316', bgGradient: 'from-orange-500 to-orange-600' },
+    { id: 'salud', label: t('nav.health', 'Salud'), href: '/categoria/salud', icon: '🏥', color: '#84CC16', bgGradient: 'from-lime-500 to-lime-600' },
+    { id: 'lifestyle', label: t('nav.lifestyle', 'Lifestyle'), href: '/categoria/lifestyle', icon: '🏠', color: '#A855F7', bgGradient: 'from-violet-500 to-violet-600' },
+    { id: 'ciencia', label: t('nav.science', 'Ciencia'), href: '/categoria/ciencia', icon: '🔬', color: '#6366F1', bgGradient: 'from-indigo-500 to-indigo-600' },
+    { id: 'judicial', label: t('nav.judicial', 'Judicial'), href: '/categoria/judicial', icon: '⚖️', color: '#78350F', bgGradient: 'from-amber-800 to-amber-900' },
   ];
   
   const mainCategories = allCategories.slice(0, 6);
@@ -51,13 +52,13 @@ export const BBCHeader = () => {
   };
 
   return (
-    <header className="bbc-header">
-      {/* Top Bar */}
-      <div className="bbc-header-top">
-        <div className="container-bbc">
-          <div className="flex justify-between items-center">
+    <header className="sticky top-0 z-50 shadow-xl">
+      {/* Top Bar - Gradient Background */}
+      <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between items-center py-2">
             <div className="flex items-center gap-4">
-              <span className="text-white text-sm font-semibold">
+              <span className="text-white text-xs md:text-sm font-semibold">
                 {new Date().toLocaleDateString('es-AR', { 
                   weekday: 'long', 
                   year: 'numeric', 
@@ -67,99 +68,124 @@ export const BBCHeader = () => {
               </span>
             </div>
             <div className="flex items-center gap-4">
-                    {/* Language Selector - TOP 11 LANGUAGES */}
-                    <div className="relative group">
-                      <button className="flex items-center gap-2 text-white text-sm hover:opacity-80 transition">
-                        <Globe size={16} />
-                        <span className="hidden md:inline">
-                          {supportedLanguages.find(l => l.code === i18n.language)?.nativeName || 'Español'}
-                        </span>
-                      </button>
-                      <div className="absolute right-0 top-full mt-2 bg-white shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[180px] max-h-[400px] overflow-y-auto">
-                        {supportedLanguages.map((lang) => (
-                          <button
-                            key={lang.code}
-                            onClick={() => changeLanguage(lang.code)}
-                            className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-100 transition flex items-center gap-2 ${
-                              i18n.language === lang.code ? 'bg-blue-50 font-semibold text-blue-600' : ''
-                            }`}
-                          >
-                            <span className="text-xl">{lang.flag}</span>
-                            <span>{lang.nativeName}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+              {/* Language Selector */}
+              <div className="relative group">
+                <button className="flex items-center gap-2 text-white text-xs md:text-sm hover:text-blue-400 transition-colors">
+                  <Globe size={16} />
+                  <span className="hidden md:inline">
+                    {supportedLanguages.find(l => l.code === i18n.language)?.nativeName || 'Español'}
+                  </span>
+                </button>
+                <div className="absolute right-0 top-full mt-2 bg-white shadow-2xl rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[200px] max-h-[400px] overflow-y-auto">
+                  {supportedLanguages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => changeLanguage(lang.code)}
+                      className={`w-full px-4 py-3 text-left text-sm hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 transition-all flex items-center gap-3 ${
+                        i18n.language === lang.code ? 'bg-gradient-to-r from-blue-50 to-blue-100 font-bold text-blue-700 border-l-4 border-blue-600' : 'text-gray-700'
+                      }`}
+                    >
+                      <span className="text-2xl">{lang.flag}</span>
+                      <span>{lang.nativeName}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Header */}
-      <div className="bbc-header-main">
-        <div className="container-bbc">
-          <div className="flex justify-between items-center">
+      {/* Main Header - White Background */}
+      <div className="bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between items-center py-4">
             {/* Logo */}
             <Link href="/">
-              <a className="bbc-logo">
-                <span className="text-3xl">🇦🇷</span>
+              <a className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <span className="text-4xl md:text-5xl">🇦🇷</span>
                 <div className="flex flex-col leading-tight">
-                  <span className="text-2xl md:text-3xl">Política Argentina</span>
-                  <span className="text-xs font-normal opacity-80">Información Veraz y Actualizada</span>
+                  <span className="text-2xl md:text-3xl font-black bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                    Política Argentina
+                  </span>
+                  <span className="text-xs md:text-sm text-gray-600 font-semibold">
+                    {t('site.tagline', 'Información Veraz y Actualizada')}
+                  </span>
                 </div>
               </a>
             </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex bbc-nav items-center">
-            {mainCategories.map((category) => (
-              <Link key={category.id} href={category.href}>
-                <a className="bbc-nav-link flex items-center gap-1">
-                  <span>{category.icon}</span>
-                  <span>{category.label}</span>
-                </a>
-              </Link>
-            ))}
-            
-            {/* Dropdown "Más" */}
-            <div className="relative group">
-              <button className="bbc-nav-link flex items-center gap-1">
-                <span>➕</span>
-                <span>Más</span>
-              </button>
-              <div className="absolute left-0 top-full mt-2 bg-white shadow-2xl rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[280px]">
-                <div className="grid grid-cols-2 gap-2 p-4">
-                  {moreCategories.map((category) => (
-                    <Link key={category.id} href={category.href}>
-                      <a 
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-800"
-                        style={{ borderLeft: `3px solid ${category.color}` }}
-                      >
-                        <span className="text-xl">{category.icon}</span>
-                        <span className="text-sm font-semibold">{category.label}</span>
-                      </a>
-                    </Link>
-                  ))}
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {mainCategories.map((category) => (
+                <Link key={category.id} href={category.href}>
+                  <a 
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-gray-700 hover:text-white transition-all hover:shadow-lg"
+                    style={{ 
+                      ['--hover-bg' as any]: category.color 
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = `linear-gradient(135deg, ${category.color}, ${category.color}dd)`;
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    <span className="text-lg">{category.icon}</span>
+                    <span className="text-sm">{category.label}</span>
+                  </a>
+                </Link>
+              ))}
+              
+              {/* Dropdown "Más" */}
+              <div className="relative group">
+                <button className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-gray-700 hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-200 transition-all">
+                  <span className="text-lg">➕</span>
+                  <span className="text-sm">{t('nav.more', 'Más')}</span>
+                </button>
+                <div className="absolute left-0 top-full mt-2 bg-white shadow-2xl rounded-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[320px] border border-gray-200">
+                  <div className="grid grid-cols-2 gap-2 p-4">
+                    {moreCategories.map((category) => (
+                      <Link key={category.id} href={category.href}>
+                        <a 
+                          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:shadow-lg transition-all text-gray-800 font-semibold"
+                          style={{ borderLeft: `4px solid ${category.color}` }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = `linear-gradient(135deg, ${category.color}15, ${category.color}25)`;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'transparent';
+                          }}
+                        >
+                          <span className="text-2xl">{category.icon}</span>
+                          <span className="text-sm">{category.label}</span>
+                        </a>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            <Link href="/admin/dashboard">
-              <a className="bbc-nav-link bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors ml-2">
-                📊 Admin
-              </a>
-            </Link>
-            <button className="text-white hover:opacity-80 transition ml-2">
-              <Search size={20} />
-            </button>
-          </nav>
+              
+              <Link href="/admin/dashboard">
+                <a className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl ml-2">
+                  <span className="text-lg">📊</span>
+                  <span className="text-sm">Admin</span>
+                </a>
+              </Link>
+              
+              <button className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-all ml-2">
+                <Search size={20} />
+              </button>
+            </nav>
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden text-white"
+              className="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-all"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
@@ -167,22 +193,41 @@ export const BBCHeader = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#1a1a1a] border-t border-white/10">
-          <div className="container-bbc py-4">
+        <div className="lg:hidden bg-gradient-to-b from-gray-50 to-white border-t border-gray-200 shadow-xl">
+          <div className="max-w-7xl mx-auto px-4 py-4">
             <nav className="flex flex-col gap-2">
-              {categories.map((category) => (
+              {allCategories.map((category) => (
                 <Link key={category.id} href={category.href}>
                   <a 
-                    className="text-white py-3 px-4 hover:bg-white/10 rounded transition"
+                    className="flex items-center gap-3 py-3 px-4 rounded-lg font-semibold text-gray-800 hover:shadow-lg transition-all"
+                    style={{ borderLeft: `5px solid ${category.color}` }}
                     onClick={() => setMobileMenuOpen(false)}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = `linear-gradient(135deg, ${category.color}15, ${category.color}25)`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                    }}
                   >
-                    {category.label}
+                    <span className="text-2xl">{category.icon}</span>
+                    <span>{category.label}</span>
                   </a>
                 </Link>
               ))}
-              <button className="text-white py-3 px-4 hover:bg-white/10 rounded transition text-left flex items-center gap-2">
-                <Search size={18} />
-                <span>Buscar</span>
+              
+              <Link href="/admin/dashboard">
+                <a 
+                  className="flex items-center gap-3 py-3 px-4 rounded-lg font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg mt-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="text-2xl">📊</span>
+                  <span>Admin</span>
+                </a>
+              </Link>
+              
+              <button className="flex items-center gap-3 py-3 px-4 rounded-lg font-semibold text-gray-800 hover:bg-gray-100 transition-all mt-2">
+                <Search size={24} />
+                <span>{t('nav.search', 'Buscar')}</span>
               </button>
             </nav>
           </div>
