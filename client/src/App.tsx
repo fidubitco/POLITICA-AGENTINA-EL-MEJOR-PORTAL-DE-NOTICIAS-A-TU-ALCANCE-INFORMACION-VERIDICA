@@ -2,23 +2,16 @@ import React from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Switch } from 'wouter';
 import { useTranslation } from 'react-i18next';
-import { AuthProvider } from './contexts/AuthContext';
 import { HomePageBBC } from './pages/HomePageBBC';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
-import { CategoryPageBBC } from './pages/CategoryPageBBC';
-import { CategoryPageEnhanced } from './pages/CategoryPageEnhanced';
-import { DashboardAnalytics } from './pages/admin/DashboardAnalytics';
-import { DashboardEnhanced } from './pages/admin/DashboardEnhanced';
-import { CreateNews } from './pages/admin/CreateNews';
+import { CategoryPageWorking } from './pages/CategoryPageWorking';
+import { AdminDashboardFull } from './pages/admin/AdminDashboardFull';
+import { EditArticle } from './pages/admin/EditArticle';
 import { CreateNewsEnhanced } from './pages/admin/CreateNewsEnhanced';
-import { AutoNews } from './pages/admin/AutoNews';
-import { PoliticalAdmin } from './pages/admin/PoliticalAdmin';
 import { Candidatos } from './pages/Candidatos';
 import { Encuestas } from './pages/Encuestas';
 import { ResultadosElectorales } from './pages/ResultadosElectorales';
 import { Finanzas } from './pages/Finanzas';
-import { Login } from './pages/auth/Login';
-import { Register } from './pages/auth/Register';
 import './styles/design-system.css';
 import './styles/globals.css';
 import './styles/bbc-style.css';
@@ -32,9 +25,8 @@ function App() {
 
   return (
     <HelmetProvider>
-      <AuthProvider>
-        <div className="App">
-          <Switch>
+      <div className="App">
+        <Switch>
           {/* Home routes */}
           <Route path="/" component={HomePageBBC} />
           <Route path="/en/" component={HomePageBBC} />
@@ -47,23 +39,16 @@ function App() {
           <Route path="/fr/noticia/:id" component={ArticleDetailPage} />
           <Route path="/pt/noticia/:id" component={ArticleDetailPage} />
           
-          {/* Category routes */}
-          <Route path="/categoria/:category" component={CategoryPageEnhanced} />
-          <Route path="/en/categoria/:category" component={CategoryPageEnhanced} />
-          <Route path="/fr/categoria/:category" component={CategoryPageEnhanced} />
-          <Route path="/pt/categoria/:category" component={CategoryPageEnhanced} />
+          {/* Category routes - FUNCIONALES */}
+          <Route path="/categoria/:category" component={CategoryPageWorking} />
+          <Route path="/en/categoria/:category" component={CategoryPageWorking} />
+          <Route path="/fr/categoria/:category" component={CategoryPageWorking} />
+          <Route path="/pt/categoria/:category" component={CategoryPageWorking} />
           
-          {/* Admin routes */}
-          <Route path="/admin/dashboard" component={DashboardEnhanced} />
-          <Route path="/admin/dashboard-simple" component={DashboardAnalytics} />
+          {/* Admin routes - FUNCIONALES */}
+          <Route path="/admin/dashboard" component={AdminDashboardFull} />
+          <Route path="/admin/editar/:id" component={EditArticle} />
           <Route path="/admin/crear-noticia" component={CreateNewsEnhanced} />
-          <Route path="/admin/crear-noticia-simple" component={CreateNews} />
-          <Route path="/admin/auto-noticias" component={AutoNews} />
-          <Route path="/admin/politica" component={PoliticalAdmin} />
-          
-          {/* Auth routes */}
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
           
           {/* Political routes */}
           <Route path="/candidatos" component={Candidatos} />
@@ -75,9 +60,8 @@ function App() {
           
           {/* Fallback */}
           <Route path="/:rest*" component={HomePageBBC} />
-          </Switch>
-        </div>
-      </AuthProvider>
+        </Switch>
+      </div>
     </HelmetProvider>
   );
 }
