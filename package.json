@@ -18,6 +18,8 @@
     "db:push": "drizzle-kit push:mysql",
     "db:migrate": "drizzle-kit migrate",
     "db:generate": "drizzle-kit generate:mysql",
+    "db:schema": "mysql -u root -p < database/schema-optimized.sql",
+    "create:admin": "npx tsx scripts/create-admin.ts",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "type-check": "tsc --noEmit",

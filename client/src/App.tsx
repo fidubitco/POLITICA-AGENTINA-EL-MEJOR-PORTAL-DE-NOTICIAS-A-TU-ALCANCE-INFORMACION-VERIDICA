@@ -5,11 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { HomeSimple } from './pages/HomeSimple';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageWorking } from './pages/CategoryPageWorking';
+import { Login } from './pages/admin/Login';
 import { AdminIndex } from './pages/admin/AdminIndex';
 import { AdminDashboardEnterprise } from './pages/admin/AdminDashboardEnterprise';
 import { EditArticle } from './pages/admin/EditArticle';
 import { CreateNewsEnhanced } from './pages/admin/CreateNewsEnhanced';
 import { CMSEditor } from './pages/admin/CMSEditor';
+import { ProtectedRoute } from './components/ProtectedRoute';
 import { Candidatos } from './pages/Candidatos';
 import { Encuestas } from './pages/Encuestas';
 import { ResultadosElectorales } from './pages/ResultadosElectorales';
@@ -63,13 +65,50 @@ function App() {
             <Route key={`category-${lang.code}`} path={`/${lang.code}/categoria/:category`} component={CategoryPageWorking} />
           ))}
           
-          {/* Admin routes - ENTERPRISE GRADE */}
-          <Route path="/admin" component={AdminDashboardEnterprise} />
-          <Route path="/admin/dashboard" component={AdminDashboardEnterprise} />
-          <Route path="/admin/cms" component={CMSEditor} />
-          <Route path="/admin/editor" component={CMSEditor} />
-          <Route path="/admin/editar/:id" component={EditArticle} />
-          <Route path="/admin/crear-noticia" component={CMSEditor} />
+          {/* Admin routes - PROTECTED */}
+          <Route path="/admin/login" component={Login} />
+          <Route path="/admin">
+            {() => (
+              <ProtectedRoute>
+                <AdminDashboardEnterprise />
+              </ProtectedRoute>
+            )}
+          </Route>
+          <Route path="/admin/dashboard">
+            {() => (
+              <ProtectedRoute>
+                <AdminDashboardEnterprise />
+              </ProtectedRoute>
+            )}
+          </Route>
+          <Route path="/admin/cms">
+            {() => (
+              <ProtectedRoute>
+                <CMSEditor />
+              </ProtectedRoute>
+            )}
+          </Route>
+          <Route path="/admin/editor">
+            {() => (
+              <ProtectedRoute>
+                <CMSEditor />
+              </ProtectedRoute>
+            )}
+          </Route>
+          <Route path="/admin/editar/:id">
+            {() => (
+              <ProtectedRoute>
+                <EditArticle />
+              </ProtectedRoute>
+            )}
+          </Route>
+          <Route path="/admin/crear-noticia">
+            {() => (
+              <ProtectedRoute>
+                <CMSEditor />
+              </ProtectedRoute>
+            )}
+          </Route>
           
           {/* Political routes - TODOS LOS IDIOMAS */}
           <Route path="/candidatos" component={Candidatos} />

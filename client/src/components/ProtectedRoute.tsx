@@ -1,81 +1,66 @@
-import React, { ReactNode } from 'react';
-import { Redirect } from 'wouter';
-import { useAuth } from '../contexts/AuthContext';
-import { Activity } from 'lucide-react';
+/**
+ * 🔒 PROTECTED ROUTE - Protección de rutas de admin
+ */
+
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'wouter';
 
 interface ProtectedRouteProps {
-  children: ReactNode;
-  requireAdmin?: boolean;
-  requireEditor?: boolean;
+  children: React.ReactNode;
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
-  children,
-  requireAdmin = false,
-  requireEditor = false,
-}) => {
-  const { user, loading, isAuthenticated, isAdmin, isEditor } = useAuth();
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const [, setLocation] = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-  // Mostrar loading mientras se verifica la autenticación
-  if (loading) {
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = localStorage.getItem('auth_token');
+      const user = localStorage.getItem('user');
+
+      if (!token || !user) {
+        setIsAuthenticated(false);
+        setLocation('/admin/login');
+        return;
+      }
+
+      // Verificar que el token no esté expirado (opcional)
+      try {
+        const userData = JSON.parse(user);
+        if (userData.role === 'admin' || userData.role === 'editor') {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+          setLocation('/admin/login');
+        }
+      } catch (error) {
+        setIsAuthenticated(false);
+        setLocation('/admin/login');
+      }
+    };
+
+    checkAuth();
+  }, [setLocation]);
+
+  // Mostrar loading mientras verifica
+  if (isAuthenticated === null) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <Activity className="animate-spin mx-auto mb-4 text-blue-600" size={48} />
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-gray-600">Verificando autenticación...</p>
         </div>
       </div>
     );
   }
 
-  // Si no está autenticado, redirigir a login
+  // Si no está autenticado, no mostrar nada (ya redirigió)
   if (!isAuthenticated) {
-    return <Redirect to="/login" />;
+    return null;
   }
 
-  // Si requiere admin y no es admin, redirigir a home
-  if (requireAdmin && !isAdmin) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center max-w-md">
-          <div className="text-6xl mb-4">🔒</div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Acceso Denegado</h1>
-          <p className="text-gray-600 mb-6">
-            No tienes permisos de administrador para acceder a esta página.
-          </p>
-          <a
-            href="/"
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-          >
-            Volver al Inicio
-          </a>
-        </div>
-      </div>
-    );
-  }
-
-  // Si requiere editor y no es editor ni admin, redirigir a home
-  if (requireEditor && !isEditor) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center max-w-md">
-          <div className="text-6xl mb-4">🔒</div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Acceso Denegado</h1>
-          <p className="text-gray-600 mb-6">
-            No tienes permisos de editor para acceder a esta página.
-          </p>
-          <a
-            href="/"
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-          >
-            Volver al Inicio
-          </a>
-        </div>
-      </div>
-    );
-  }
-
-  // Si pasa todas las validaciones, mostrar el contenido
+  // Si está autenticado, mostrar el contenido
   return <>{children}</>;
 };
 
+export default ProtectedRoute;

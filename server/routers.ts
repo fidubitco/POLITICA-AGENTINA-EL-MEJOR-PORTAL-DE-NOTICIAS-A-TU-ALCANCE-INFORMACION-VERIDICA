@@ -2,15 +2,42 @@
  * 🔌 TRPC ROUTERS - API Endpoints
  */
 
-import { initTRPC } from '@trpc/server';
+import { initTRPC, TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { Context } from './context';
 import { generateArticleWithAI, improveArticleWithAI } from './services/ai';
+import { login, register, getCurrentUser, isAdmin, canEdit } from './services/auth';
 
 const t = initTRPC.context<Context>().create();
 
 export const router = t.router;
 export const publicProcedure = t.procedure;
+
+// Middleware de autenticación
+const isAuthenticated = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.user) {
+    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'No autenticado' });
+  }
+  return next({ ctx: { ...ctx, user: ctx.user } });
+});
+
+const isAdminMiddleware = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.user || !isAdmin(ctx.user)) {
+    throw new TRPCError({ code: 'FORBIDDEN', message: 'Acceso denegado' });
+  }
+  return next({ ctx: { ...ctx, user: ctx.user } });
+});
+
+const canEditMiddleware = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.user || !canEdit(ctx.user)) {
+    throw new TRPCError({ code: 'FORBIDDEN', message: 'Sin permisos de edición' });
+  }
+  return next({ ctx: { ...ctx, user: ctx.user } });
+});
+
+export const protectedProcedure = t.procedure.use(isAuthenticated);
+export const adminProcedure = t.procedure.use(isAdminMiddleware);
+export const editorProcedure = t.procedure.use(canEditMiddleware);
 
 // ============================================
 // ARTICLES ROUTER
@@ -226,9 +253,49 @@ const usersRouter = router({
 });
 
 // ============================================
+// AUTH ROUTER
+// ============================================
+const authRouter = router({
+  // Login
+  login: publicProcedure
+    .input(z.object({
+      email: z.string().email(),
+      password: z.string().min(6),
+    }))
+    .mutation(async ({ input }) => {
+      return await login(input.email, input.password);
+    }),
+
+  // Register (solo admin puede crear usuarios)
+  register: adminProcedure
+    .input(z.object({
+      email: z.string().email(),
+      password: z.string().min(6),
+      name: z.string(),
+      role: z.enum(['admin', 'editor', 'author', 'user']).default('user'),
+    }))
+    .mutation(async ({ input }) => {
+      return await register(input.email, input.password, input.name, input.role);
+    }),
+
+  // Obtener usuario actual
+  me: protectedProcedure
+    .query(async ({ ctx }) => {
+      return ctx.user;
+    }),
+
+  // Logout (solo frontend)
+  logout: publicProcedure
+    .mutation(async () => {
+      return { success: true };
+    }),
+});
+
+// ============================================
 // APP ROUTER (Main)
 // ============================================
 export const appRouter = router({
+  auth: authRouter,
   articles: articlesRouter,
   analytics: analyticsRouter,
   users: usersRouter,
