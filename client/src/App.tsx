@@ -6,7 +6,9 @@ import { HomePageBBC } from './pages/HomePageBBC';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageBBC } from './pages/CategoryPageBBC';
 import { DashboardAnalytics } from './pages/admin/DashboardAnalytics';
+import { DashboardEnhanced } from './pages/admin/DashboardEnhanced';
 import { CreateNews } from './pages/admin/CreateNews';
+import { CreateNewsEnhanced } from './pages/admin/CreateNewsEnhanced';
 import { AutoNews } from './pages/admin/AutoNews';
 import './styles/design-system.css';
 import './styles/globals.css';
@@ -42,8 +44,10 @@ function App() {
           <Route path="/pt/categoria/:category" component={CategoryPageBBC} />
           
           {/* Admin routes */}
-          <Route path="/admin/dashboard" component={DashboardAnalytics} />
-          <Route path="/admin/crear-noticia" component={CreateNews} />
+          <Route path="/admin/dashboard" component={DashboardEnhanced} />
+          <Route path="/admin/dashboard-simple" component={DashboardAnalytics} />
+          <Route path="/admin/crear-noticia" component={CreateNewsEnhanced} />
+          <Route path="/admin/crear-noticia-simple" component={CreateNews} />
           <Route path="/admin/auto-noticias" component={AutoNews} />
           
           {/* Fallback */}
