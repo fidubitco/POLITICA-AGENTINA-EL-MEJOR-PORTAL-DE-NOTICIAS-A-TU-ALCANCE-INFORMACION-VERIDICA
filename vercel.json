@@ -1,17 +1,11 @@
 {
-  "version": 2,
   "buildCommand": "pnpm build",
   "outputDirectory": "public",
   "installCommand": "pnpm install",
-  "framework": null,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/((?!assets|images|locales|favicon|logo|manifest|robots|sitemap).*)",
+      "destination": "/index.html"
     }
   ]
 }
