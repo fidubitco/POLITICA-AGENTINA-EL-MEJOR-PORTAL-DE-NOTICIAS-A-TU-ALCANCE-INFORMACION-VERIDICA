@@ -9,14 +9,24 @@ export const BBCHeader = () => {
   const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const categories = [
-    { id: 'politica', label: t('nav.politics', 'Política'), href: '/categoria/politica' },
-    { id: 'economia', label: t('nav.economy', 'Economía'), href: '/categoria/economia' },
-    { id: 'sociedad', label: t('nav.society', 'Sociedad'), href: '/categoria/sociedad' },
-    { id: 'internacional', label: t('nav.international', 'Internacional'), href: '/categoria/internacional' },
-    { id: 'deportes', label: t('nav.sports', 'Deportes'), href: '/categoria/deportes' },
-    { id: 'cultura', label: t('nav.culture', 'Cultura'), href: '/categoria/cultura' },
+  // Importar categorías desde el archivo centralizado
+  const allCategories = [
+    { id: 'politica', label: t('nav.politics', 'Política'), href: '/categoria/politica', icon: '🏛️', color: '#3B82F6' },
+    { id: 'economia', label: t('nav.economy', 'Economía'), href: '/categoria/economia', icon: '💰', color: '#10B981' },
+    { id: 'internacional', label: t('nav.international', 'Internacional'), href: '/categoria/internacional', icon: '🌎', color: '#EF4444' },
+    { id: 'sociedad', label: t('nav.society', 'Sociedad'), href: '/categoria/sociedad', icon: '👥', color: '#F59E0B' },
+    { id: 'deportes', label: t('nav.sports', 'Deportes'), href: '/categoria/deportes', icon: '⚽', color: '#8B5CF6' },
+    { id: 'cultura', label: t('nav.culture', 'Cultura'), href: '/categoria/cultura', icon: '🎭', color: '#EC4899' },
+    { id: 'tecnologia', label: t('nav.technology', 'Tecnología'), href: '/categoria/tecnologia', icon: '💻', color: '#06B6D4' },
+    { id: 'negocios', label: t('nav.business', 'Negocios'), href: '/categoria/negocios', icon: '🏢', color: '#14B8A6' },
+    { id: 'espectaculos', label: t('nav.entertainment', 'Espectáculos'), href: '/categoria/espectaculos', icon: '🎬', color: '#F97316' },
+    { id: 'salud', label: t('nav.health', 'Salud'), href: '/categoria/salud', icon: '🏥', color: '#84CC16' },
+    { id: 'lifestyle', label: t('nav.lifestyle', 'Lifestyle'), href: '/categoria/lifestyle', icon: '🏠', color: '#A855F7' },
+    { id: 'ciencia', label: t('nav.science', 'Ciencia'), href: '/categoria/ciencia', icon: '🔬', color: '#6366F1' },
   ];
+  
+  const mainCategories = allCategories.slice(0, 6);
+  const moreCategories = allCategories.slice(6);
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -100,22 +110,49 @@ export const BBCHeader = () => {
               </a>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex bbc-nav">
-              {categories.map((category) => (
-                <Link key={category.id} href={category.href}>
-                  <a className="bbc-nav-link">{category.label}</a>
-                </Link>
-              ))}
-              <Link href="/admin/dashboard">
-                <a className="bbc-nav-link bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                  📊 Admin
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex bbc-nav items-center">
+            {mainCategories.map((category) => (
+              <Link key={category.id} href={category.href}>
+                <a className="bbc-nav-link flex items-center gap-1">
+                  <span>{category.icon}</span>
+                  <span>{category.label}</span>
                 </a>
               </Link>
-              <button className="text-white hover:opacity-80 transition">
-                <Search size={20} />
+            ))}
+            
+            {/* Dropdown "Más" */}
+            <div className="relative group">
+              <button className="bbc-nav-link flex items-center gap-1">
+                <span>➕</span>
+                <span>Más</span>
               </button>
-            </nav>
+              <div className="absolute left-0 top-full mt-2 bg-white shadow-2xl rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[280px]">
+                <div className="grid grid-cols-2 gap-2 p-4">
+                  {moreCategories.map((category) => (
+                    <Link key={category.id} href={category.href}>
+                      <a 
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-800"
+                        style={{ borderLeft: `3px solid ${category.color}` }}
+                      >
+                        <span className="text-xl">{category.icon}</span>
+                        <span className="text-sm font-semibold">{category.label}</span>
+                      </a>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <Link href="/admin/dashboard">
+              <a className="bbc-nav-link bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors ml-2">
+                📊 Admin
+              </a>
+            </Link>
+            <button className="text-white hover:opacity-80 transition ml-2">
+              <Search size={20} />
+            </button>
+          </nav>
 
             {/* Mobile Menu Button */}
             <button

@@ -87,7 +87,7 @@ const articlesRouter = router({
   create: publicProcedure
     .input(z.object({
       title: z.string(),
-      slug: z.string(),
+          slug: z.string(),
       excerpt: z.string(),
       content: z.string(),
       category: z.string(),
@@ -116,10 +116,10 @@ const articlesRouter = router({
   // Actualizar artículo
   update: publicProcedure
     .input(z.object({
-      id: z.number(),
-      title: z.string().optional(),
-      excerpt: z.string().optional(),
-      content: z.string().optional(),
+          id: z.number(),
+          title: z.string().optional(),
+          excerpt: z.string().optional(),
+          content: z.string().optional(),
       category: z.string().optional(),
       categorySlug: z.string().optional(),
       imageUrl: z.string().optional(),
@@ -128,7 +128,7 @@ const articlesRouter = router({
       breaking: z.boolean().optional(),
       tags: z.array(z.string()).optional(),
     }))
-    .mutation(async ({ input, ctx }) => {
+      .mutation(async ({ input, ctx }) => {
       const { id, ...data } = input;
       
       if (data.tags) {
@@ -152,11 +152,11 @@ const articlesRouter = router({
   // Generar artículo con IA
   generateWithAI: publicProcedure
     .input(z.object({
-      topic: z.string(),
-      category: z.string(),
+          topic: z.string(),
+          category: z.string(),
       keywords: z.array(z.string()).optional(),
     }))
-    .mutation(async ({ input }) => {
+      .mutation(async ({ input }) => {
       try {
         const article = await generateArticleWithAI(input.topic, input.category, input.keywords);
         return { success: true, article };
@@ -168,10 +168,10 @@ const articlesRouter = router({
   // Mejorar artículo con IA
   improveWithAI: publicProcedure
     .input(z.object({
-      content: z.string(),
+          content: z.string(),
       title: z.string().optional(),
     }))
-    .mutation(async ({ input }) => {
+      .mutation(async ({ input }) => {
       try {
         const improved = await improveArticleWithAI(input.content, input.title);
         return { success: true, improved };
@@ -262,7 +262,7 @@ const authRouter = router({
       email: z.string().email(),
       password: z.string().min(6),
     }))
-    .mutation(async ({ input }) => {
+      .mutation(async ({ input }) => {
       return await login(input.email, input.password);
     }),
 

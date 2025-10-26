@@ -1,494 +1,170 @@
-// Categorías completas con contenido, contexto y funciones
+/**
+ * 📂 CATEGORÍAS COMPLETAS - 12 Categorías Principales
+ */
 
 export interface Category {
   id: string;
   name: string;
   slug: string;
   description: string;
-  icon: string;
   color: string;
-  gradient: string;
+  icon: string;
+  subcategories: string[];
   keywords: string[];
-  subcategories: Subcategory[];
-  featuredTopics: string[];
-  relatedCategories: string[];
+  priority: number;
 }
 
-export interface Subcategory {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  articleCount: number;
-}
-
-export const CATEGORIES: Category[] = [
+export const categories: Category[] = [
   {
-    id: 'politica',
+    id: '1',
     name: 'Política',
     slug: 'politica',
-    description: 'Noticias y análisis sobre política argentina, gobierno, congreso, elecciones y partidos políticos.',
-    icon: 'landmark',
-    color: '#3b82f6',
-    gradient: 'from-blue-500 to-blue-700',
-    keywords: ['gobierno', 'congreso', 'senado', 'diputados', 'presidente', 'elecciones', 'partidos', 'legislación'],
-    subcategories: [
-      {
-        id: 'gobierno',
-        name: 'Gobierno Nacional',
-        slug: 'gobierno',
-        description: 'Decisiones y políticas del poder ejecutivo',
-        articleCount: 156
-      },
-      {
-        id: 'congreso',
-        name: 'Congreso',
-        slug: 'congreso',
-        description: 'Actividad legislativa en Senado y Diputados',
-        articleCount: 89
-      },
-      {
-        id: 'elecciones',
-        name: 'Elecciones',
-        slug: 'elecciones',
-        description: 'Campañas, encuestas y resultados electorales',
-        articleCount: 124
-      },
-      {
-        id: 'partidos',
-        name: 'Partidos Políticos',
-        slug: 'partidos',
-        description: 'Noticias sobre los principales partidos',
-        articleCount: 67
-      },
-      {
-        id: 'provincias',
-        name: 'Política Provincial',
-        slug: 'provincias',
-        description: 'Política en las provincias argentinas',
-        articleCount: 93
-      }
-    ],
-    featuredTopics: [
-      'Reforma Económica',
-      'Ley Ómnibus',
-      'Relaciones Internacionales',
-      'Seguridad Nacional',
-      'Derechos Humanos'
-    ],
-    relatedCategories: ['economia', 'sociedad', 'internacional']
+    description: 'Últimas noticias sobre política argentina, gobierno, congreso, elecciones y partidos políticos',
+    color: '#3B82F6',
+    icon: '🏛️',
+    subcategories: ['Gobierno', 'Congreso', 'Partidos Políticos', 'Elecciones', 'Provincias'],
+    keywords: ['política argentina', 'gobierno', 'congreso', 'elecciones', 'milei', 'casa rosada', 'senado', 'diputados'],
+    priority: 1,
   },
   {
-    id: 'economia',
+    id: '2',
     name: 'Economía',
     slug: 'economia',
-    description: 'Análisis económico, finanzas, mercados, inflación, dólar y políticas económicas de Argentina.',
-    icon: 'trending-up',
-    color: '#10b981',
-    gradient: 'from-green-500 to-green-700',
-    keywords: ['dólar', 'inflación', 'mercado', 'finanzas', 'BCRA', 'FMI', 'deuda', 'inversión'],
-    subcategories: [
-      {
-        id: 'finanzas',
-        name: 'Finanzas',
-        slug: 'finanzas',
-        description: 'Mercados financieros y bolsa',
-        articleCount: 234
-      },
-      {
-        id: 'dolar',
-        name: 'Dólar',
-        slug: 'dolar',
-        description: 'Cotizaciones y análisis del dólar',
-        articleCount: 187
-      },
-      {
-        id: 'inflacion',
-        name: 'Inflación',
-        slug: 'inflacion',
-        description: 'Índices de precios y análisis',
-        articleCount: 145
-      },
-      {
-        id: 'empresas',
-        name: 'Empresas',
-        slug: 'empresas',
-        description: 'Noticias del mundo empresarial',
-        articleCount: 112
-      },
-      {
-        id: 'empleo',
-        name: 'Empleo',
-        slug: 'empleo',
-        description: 'Mercado laboral y salarios',
-        articleCount: 98
-      }
-    ],
-    featuredTopics: [
-      'Dolarización',
-      'Acuerdo con FMI',
-      'Riesgo País',
-      'Inversiones Extranjeras',
-      'Reforma Tributaria'
-    ],
-    relatedCategories: ['politica', 'internacional', 'tecnologia']
+    description: 'Análisis económico, mercados, dólar, inflación, empresas y finanzas personales',
+    color: '#10B981',
+    icon: '💰',
+    subcategories: ['Mercados', 'Dólar', 'Inflación', 'Empresas', 'Finanzas Personales'],
+    keywords: ['economía argentina', 'dólar', 'inflación', 'mercados', 'bolsa', 'finanzas', 'inversiones'],
+    priority: 2,
   },
   {
-    id: 'sociedad',
-    name: 'Sociedad',
-    slug: 'sociedad',
-    description: 'Noticias sociales, educación, salud, seguridad, derechos y movimientos sociales en Argentina.',
-    icon: 'users',
-    color: '#f59e0b',
-    gradient: 'from-amber-500 to-amber-700',
-    keywords: ['educación', 'salud', 'seguridad', 'derechos', 'protestas', 'sindicatos', 'justicia'],
-    subcategories: [
-      {
-        id: 'educacion',
-        name: 'Educación',
-        slug: 'educacion',
-        description: 'Sistema educativo y universidades',
-        articleCount: 134
-      },
-      {
-        id: 'salud',
-        name: 'Salud',
-        slug: 'salud',
-        description: 'Sistema de salud y medicina',
-        articleCount: 156
-      },
-      {
-        id: 'seguridad',
-        name: 'Seguridad',
-        slug: 'seguridad',
-        description: 'Seguridad ciudadana y policiales',
-        articleCount: 189
-      },
-      {
-        id: 'derechos',
-        name: 'Derechos Humanos',
-        slug: 'derechos',
-        description: 'Derechos civiles y sociales',
-        articleCount: 87
-      },
-      {
-        id: 'medio-ambiente',
-        name: 'Medio Ambiente',
-        slug: 'medio-ambiente',
-        description: 'Ecología y cambio climático',
-        articleCount: 76
-      }
-    ],
-    featuredTopics: [
-      'Reforma Educativa',
-      'Sistema de Salud',
-      'Inseguridad',
-      'Derechos Laborales',
-      'Cambio Climático'
-    ],
-    relatedCategories: ['politica', 'economia', 'cultura']
-  },
-  {
-    id: 'internacional',
+    id: '3',
     name: 'Internacional',
     slug: 'internacional',
-    description: 'Noticias internacionales, relaciones exteriores, Mercosur, y la posición de Argentina en el mundo.',
-    icon: 'globe',
-    color: '#8b5cf6',
-    gradient: 'from-purple-500 to-purple-700',
-    keywords: ['Mercosur', 'BRICS', 'diplomacia', 'comercio exterior', 'ONU', 'relaciones exteriores'],
-    subcategories: [
-      {
-        id: 'latinoamerica',
-        name: 'Latinoamérica',
-        slug: 'latinoamerica',
-        description: 'Noticias de la región',
-        articleCount: 167
-      },
-      {
-        id: 'eeuu',
-        name: 'Estados Unidos',
-        slug: 'eeuu',
-        description: 'Relaciones con EEUU',
-        articleCount: 123
-      },
-      {
-        id: 'europa',
-        name: 'Europa',
-        slug: 'europa',
-        description: 'Noticias europeas',
-        articleCount: 98
-      },
-      {
-        id: 'asia',
-        name: 'Asia',
-        slug: 'asia',
-        description: 'Relaciones con Asia',
-        articleCount: 67
-      },
-      {
-        id: 'mercosur',
-        name: 'Mercosur',
-        slug: 'mercosur',
-        description: 'Bloque regional',
-        articleCount: 54
-      }
-    ],
-    featuredTopics: [
-      'Ingreso a BRICS',
-      'Acuerdos Comerciales',
-      'Cumbre del Mercosur',
-      'Relaciones con China',
-      'Política Exterior'
-    ],
-    relatedCategories: ['politica', 'economia', 'cultura']
+    description: 'Noticias internacionales de América Latina, Estados Unidos, Europa, Asia y Medio Oriente',
+    color: '#EF4444',
+    icon: '🌎',
+    subcategories: ['América Latina', 'Estados Unidos', 'Europa', 'Asia', 'Medio Oriente'],
+    keywords: ['noticias internacionales', 'mundo', 'américa latina', 'eeuu', 'europa', 'asia'],
+    priority: 3,
   },
   {
-    id: 'deportes',
+    id: '4',
+    name: 'Sociedad',
+    slug: 'sociedad',
+    description: 'Noticias de sociedad, educación, salud, seguridad, medio ambiente y derechos humanos',
+    color: '#F59E0B',
+    icon: '👥',
+    subcategories: ['Educación', 'Salud', 'Seguridad', 'Medio Ambiente', 'Derechos Humanos'],
+    keywords: ['sociedad argentina', 'educación', 'salud', 'seguridad', 'medio ambiente', 'derechos'],
+    priority: 4,
+  },
+  {
+    id: '5',
     name: 'Deportes',
     slug: 'deportes',
-    description: 'Noticias deportivas, fútbol, selección argentina, Copa América, y otros deportes nacionales.',
-    icon: 'trophy',
-    color: '#ef4444',
-    gradient: 'from-red-500 to-red-700',
-    keywords: ['fútbol', 'selección', 'Messi', 'Copa América', 'River', 'Boca', 'AFA', 'deportes'],
-    subcategories: [
-      {
-        id: 'futbol',
-        name: 'Fútbol',
-        slug: 'futbol',
-        description: 'Fútbol argentino e internacional',
-        articleCount: 456
-      },
-      {
-        id: 'seleccion',
-        name: 'Selección Argentina',
-        slug: 'seleccion',
-        description: 'La Scaloneta y sus logros',
-        articleCount: 234
-      },
-      {
-        id: 'otros-deportes',
-        name: 'Otros Deportes',
-        slug: 'otros-deportes',
-        description: 'Rugby, tenis, básquet y más',
-        articleCount: 123
-      },
-      {
-        id: 'olimpicos',
-        name: 'Juegos Olímpicos',
-        slug: 'olimpicos',
-        description: 'Deportes olímpicos',
-        articleCount: 67
-      }
-    ],
-    featuredTopics: [
-      'Copa América 2024',
-      'Eliminatorias Mundial',
-      'Superclásico',
-      'Messi en Inter Miami',
-      'AFA y Política'
-    ],
-    relatedCategories: ['sociedad', 'cultura', 'internacional']
+    description: 'Fútbol, básquet, tenis, rugby, olimpiadas y todas las disciplinas deportivas',
+    color: '#8B5CF6',
+    icon: '⚽',
+    subcategories: ['Fútbol', 'Básquet', 'Tenis', 'Rugby', 'Olimpiadas'],
+    keywords: ['deportes argentina', 'fútbol', 'messi', 'selección', 'boca', 'river', 'tenis', 'básquet'],
+    priority: 5,
   },
   {
-    id: 'cultura',
+    id: '6',
     name: 'Cultura',
     slug: 'cultura',
-    description: 'Arte, música, cine, literatura, teatro y expresiones culturales de Argentina.',
-    icon: 'palette',
-    color: '#ec4899',
-    gradient: 'from-pink-500 to-pink-700',
-    keywords: ['arte', 'música', 'cine', 'literatura', 'teatro', 'cultura', 'entretenimiento'],
-    subcategories: [
-      {
-        id: 'cine',
-        name: 'Cine',
-        slug: 'cine',
-        description: 'Cine argentino e internacional',
-        articleCount: 145
-      },
-      {
-        id: 'musica',
-        name: 'Música',
-        slug: 'musica',
-        description: 'Escena musical argentina',
-        articleCount: 167
-      },
-      {
-        id: 'literatura',
-        name: 'Literatura',
-        slug: 'literatura',
-        description: 'Libros y autores argentinos',
-        articleCount: 98
-      },
-      {
-        id: 'teatro',
-        name: 'Teatro',
-        slug: 'teatro',
-        description: 'Teatro y espectáculos',
-        articleCount: 76
-      },
-      {
-        id: 'arte',
-        name: 'Arte',
-        slug: 'arte',
-        description: 'Artes visuales y exposiciones',
-        articleCount: 54
-      }
-    ],
-    featuredTopics: [
-      'Festival de Cine',
-      'Rock Nacional',
-      'Literatura Argentina',
-      'Teatro Independiente',
-      'Arte Contemporáneo'
-    ],
-    relatedCategories: ['sociedad', 'internacional', 'deportes']
+    description: 'Cine, música, teatro, literatura, arte y todas las expresiones culturales',
+    color: '#EC4899',
+    icon: '🎭',
+    subcategories: ['Cine', 'Música', 'Teatro', 'Literatura', 'Arte'],
+    keywords: ['cultura argentina', 'cine', 'música', 'teatro', 'literatura', 'arte', 'espectáculos'],
+    priority: 6,
   },
   {
-    id: 'tecnologia',
+    id: '7',
     name: 'Tecnología',
     slug: 'tecnologia',
-    description: 'Innovación tecnológica, startups argentinas, transformación digital y ciencia.',
-    icon: 'cpu',
-    color: '#06b6d4',
-    gradient: 'from-cyan-500 to-cyan-700',
-    keywords: ['tecnología', 'innovación', 'startups', 'IA', 'ciencia', 'digital', 'internet'],
-    subcategories: [
-      {
-        id: 'startups',
-        name: 'Startups',
-        slug: 'startups',
-        description: 'Emprendimientos tecnológicos',
-        articleCount: 123
-      },
-      {
-        id: 'ia',
-        name: 'Inteligencia Artificial',
-        slug: 'ia',
-        description: 'IA y machine learning',
-        articleCount: 98
-      },
-      {
-        id: 'ciencia',
-        name: 'Ciencia',
-        slug: 'ciencia',
-        description: 'Investigación científica',
-        articleCount: 87
-      },
-      {
-        id: 'internet',
-        name: 'Internet',
-        slug: 'internet',
-        description: 'Conectividad y redes',
-        articleCount: 76
-      },
-      {
-        id: 'innovacion',
-        name: 'Innovación',
-        slug: 'innovacion',
-        description: 'Nuevas tecnologías',
-        articleCount: 65
-      }
-    ],
-    featuredTopics: [
-      'Unicornios Argentinos',
-      'IA en Argentina',
-      'Transformación Digital',
-      'Ciberseguridad',
-      'Blockchain'
-    ],
-    relatedCategories: ['economia', 'educacion', 'internacional']
+    description: 'Startups, innovación, ciencia, gadgets, inteligencia artificial y tecnología',
+    color: '#06B6D4',
+    icon: '💻',
+    subcategories: ['Startups', 'Innovación', 'Ciencia', 'Gadgets', 'IA'],
+    keywords: ['tecnología', 'startups', 'innovación', 'ciencia', 'ia', 'inteligencia artificial', 'gadgets'],
+    priority: 7,
   },
   {
-    id: 'opinion',
-    name: 'Opinión',
-    slug: 'opinion',
-    description: 'Columnas de opinión, análisis político, editoriales y debates sobre la actualidad argentina.',
-    icon: 'message-square',
-    color: '#6366f1',
-    gradient: 'from-indigo-500 to-indigo-700',
-    keywords: ['opinión', 'análisis', 'editorial', 'columna', 'debate', 'perspectiva'],
-    subcategories: [
-      {
-        id: 'columnistas',
-        name: 'Columnistas',
-        slug: 'columnistas',
-        description: 'Columnas de opinión',
-        articleCount: 234
-      },
-      {
-        id: 'editoriales',
-        name: 'Editoriales',
-        slug: 'editoriales',
-        description: 'Posición editorial',
-        articleCount: 156
-      },
-      {
-        id: 'analisis',
-        name: 'Análisis',
-        slug: 'analisis',
-        description: 'Análisis en profundidad',
-        articleCount: 189
-      },
-      {
-        id: 'debates',
-        name: 'Debates',
-        slug: 'debates',
-        description: 'Debates y controversias',
-        articleCount: 123
-      }
-    ],
-    featuredTopics: [
-      'Reforma del Estado',
-      'Modelo Económico',
-      'Política Exterior',
-      'Justicia Social',
-      'Democracia'
-    ],
-    relatedCategories: ['politica', 'economia', 'sociedad']
-  }
+    id: '8',
+    name: 'Negocios',
+    slug: 'negocios',
+    description: 'Empresas, emprendedores, inversiones, startups y mercado laboral',
+    color: '#14B8A6',
+    icon: '🏢',
+    subcategories: ['Empresas', 'Emprendedores', 'Inversiones', 'Startups', 'Mercado Laboral'],
+    keywords: ['negocios', 'empresas', 'emprendedores', 'inversiones', 'startups', 'trabajo'],
+    priority: 8,
+  },
+  {
+    id: '9',
+    name: 'Espectáculos',
+    slug: 'espectaculos',
+    description: 'TV, streaming, celebridades, eventos, premios y entretenimiento',
+    color: '#F97316',
+    icon: '🎬',
+    subcategories: ['TV', 'Streaming', 'Celebridades', 'Eventos', 'Premios'],
+    keywords: ['espectáculos', 'tv', 'streaming', 'celebridades', 'famosos', 'entretenimiento'],
+    priority: 9,
+  },
+  {
+    id: '10',
+    name: 'Salud',
+    slug: 'salud',
+    description: 'Medicina, bienestar, nutrición, fitness y salud mental',
+    color: '#84CC16',
+    icon: '🏥',
+    subcategories: ['Medicina', 'Bienestar', 'Nutrición', 'Fitness', 'Salud Mental'],
+    keywords: ['salud', 'medicina', 'bienestar', 'nutrición', 'fitness', 'salud mental'],
+    priority: 10,
+  },
+  {
+    id: '11',
+    name: 'Lifestyle',
+    slug: 'lifestyle',
+    description: 'Gastronomía, viajes, moda, decoración y tendencias',
+    color: '#A855F7',
+    icon: '🏠',
+    subcategories: ['Gastronomía', 'Viajes', 'Moda', 'Decoración', 'Tendencias'],
+    keywords: ['lifestyle', 'gastronomía', 'viajes', 'moda', 'decoración', 'tendencias'],
+    priority: 11,
+  },
+  {
+    id: '12',
+    name: 'Ciencia',
+    slug: 'ciencia',
+    description: 'Investigación, descubrimientos, espacio, tecnología y medio ambiente',
+    color: '#6366F1',
+    icon: '🔬',
+    subcategories: ['Investigación', 'Descubrimientos', 'Espacio', 'Tecnología', 'Medio Ambiente'],
+    keywords: ['ciencia', 'investigación', 'descubrimientos', 'espacio', 'astronomía', 'medio ambiente'],
+    priority: 12,
+  },
 ];
 
-// Función para obtener categoría por slug
 export const getCategoryBySlug = (slug: string): Category | undefined => {
-  return CATEGORIES.find(cat => cat.slug === slug);
+  return categories.find(cat => cat.slug === slug);
 };
 
-// Función para obtener subcategorías de una categoría
-export const getSubcategories = (categorySlug: string): Subcategory[] => {
-  const category = getCategoryBySlug(categorySlug);
-  return category?.subcategories || [];
+export const getCategoryById = (id: string): Category | undefined => {
+  return categories.find(cat => cat.id === id);
 };
 
-// Función para obtener categorías relacionadas
-export const getRelatedCategories = (categorySlug: string): Category[] => {
-  const category = getCategoryBySlug(categorySlug);
-  if (!category) return [];
-  
-  return CATEGORIES.filter(cat => 
-    category.relatedCategories.includes(cat.slug)
-  );
+export const getAllCategories = (): Category[] => {
+  return categories.sort((a, b) => a.priority - b.priority);
 };
 
-// Función para buscar categorías por keyword
-export const searchCategories = (query: string): Category[] => {
-  const lowerQuery = query.toLowerCase();
-  return CATEGORIES.filter(cat =>
-    cat.name.toLowerCase().includes(lowerQuery) ||
-    cat.description.toLowerCase().includes(lowerQuery) ||
-    cat.keywords.some(keyword => keyword.toLowerCase().includes(lowerQuery))
-  );
+export const getMainCategories = (): Category[] => {
+  return categories.filter(cat => cat.priority <= 6);
 };
 
-// Estadísticas de categorías
-export const getCategoryStats = () => {
-  return CATEGORIES.map(cat => ({
-    name: cat.name,
-    slug: cat.slug,
-    totalArticles: cat.subcategories.reduce((sum, sub) => sum + sub.articleCount, 0),
-    subcategoryCount: cat.subcategories.length
-  }));
+export const getSecondaryCategories = (): Category[] => {
+  return categories.filter(cat => cat.priority > 6);
 };
-

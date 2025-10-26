@@ -46,7 +46,7 @@ function App() {
   return (
     <HelmetProvider>
       <div className="App">
-        <Switch>
+      <Switch>
           {/* Home routes - TODOS LOS IDIOMAS */}
           <Route path="/" component={HomeSimple} />
           {supportedLanguages.filter(l => l.code !== 'es').map(lang => (
@@ -130,7 +130,7 @@ function App() {
           
           {/* Fallback */}
           <Route path="/:rest*" component={HomeSimple} />
-        </Switch>
+      </Switch>
       </div>
     </HelmetProvider>
   );
