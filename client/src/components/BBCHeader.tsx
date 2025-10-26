@@ -3,6 +3,7 @@ import { Link, useLocation } from 'wouter';
 import { Menu, X, Globe, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { supportedLanguages } from '../lib/i18n';
+import { ThemeToggle } from './ThemeToggle';
 
 export const BBCHeader = () => {
   const { t, i18n } = useTranslation();
@@ -67,7 +68,10 @@ export const BBCHeader = () => {
                 })}
               </span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              {/* Theme Toggle */}
+              <ThemeToggle />
+              
               {/* Language Selector */}
               <div className="relative group">
                 <button className="flex items-center gap-2 text-white text-xs md:text-sm hover:text-blue-400 transition-colors">

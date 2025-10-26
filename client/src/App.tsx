@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Switch, useLocation } from 'wouter';
 import { useTranslation } from 'react-i18next';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { HomeSimple } from './pages/HomeSimple';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageWorking } from './pages/CategoryPageWorking';
@@ -21,6 +22,7 @@ import './styles/globals.css';
 import './styles/bbc-style.css';
 import './styles/dashboard-premium.css';
 import './styles/categories-optimized.css';
+import './styles/dark-mode.css';
 
 // Inicializar i18n
 import './lib/i18n';
@@ -45,8 +47,9 @@ function App() {
   }, [location, i18n]);
 
   return (
-    <HelmetProvider>
-      <div className="App">
+    <ThemeProvider>
+      <HelmetProvider>
+        <div className="App">
       <Switch>
           {/* Home routes - TODOS LOS IDIOMAS */}
           <Route path="/" component={HomeSimple} />
@@ -131,9 +134,10 @@ function App() {
           
           {/* Fallback */}
           <Route path="/:rest*" component={HomeSimple} />
-      </Switch>
-      </div>
-    </HelmetProvider>
+        </Switch>
+        </div>
+      </HelmetProvider>
+    </ThemeProvider>
   );
 }
 
