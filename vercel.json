@@ -1,8 +1,9 @@
 {
   "version": 2,
+  "framework": null,
   "buildCommand": "pnpm install && pnpm build",
   "outputDirectory": "public",
-  "devCommand": "pnpm dev",
+  "devCommand": "pnpm dev:client",
   "installCommand": "pnpm install",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
