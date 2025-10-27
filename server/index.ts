@@ -49,6 +49,10 @@ app.get('/health', (req, res) => {
 // RSS Proxy endpoint
 app.use('/api', rssProxyRouter);
 
+// Sitemap endpoints
+import sitemapRouter from './routes/sitemap';
+app.use('/', sitemapRouter);
+
 // tRPC endpoint
 app.use(
   '/api/trpc',
