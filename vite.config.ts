@@ -22,5 +22,8 @@ export default defineConfig({
     sourcemap: false,
     minify: false,
     target: "es2020",
+    rollupOptions: {
+      input: path.resolve(__dirname, "client/index.html"),
+    },
   },
 });
