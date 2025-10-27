@@ -10,6 +10,7 @@ import compression from 'compression';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from './routers';
 import { createContext } from './context';
+import TelegramBotService from './services/TelegramBotService';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -54,6 +55,16 @@ app.use(
   })
 );
 
+// Inicializar Telegram Bot
+let telegramBot: TelegramBotService | null = null;
+
+try {
+  telegramBot = new TelegramBotService();
+  console.log('✅ Telegram Bot iniciado correctamente');
+} catch (error) {
+  console.error('❌ Error iniciando Telegram Bot:', error);
+}
+
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error('❌ Error:', err);
@@ -63,6 +74,23 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
       status: err.status || 500,
     },
   });
+});
+
+// Graceful shutdown
+process.on('SIGINT', () => {
+  console.log('🛑 Cerrando servidor...');
+  if (telegramBot) {
+    telegramBot.stop();
+  }
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  console.log('🛑 Cerrando servidor...');
+  if (telegramBot) {
+    telegramBot.stop();
+  }
+  process.exit(0);
 });
 
 // Start server
@@ -76,6 +104,7 @@ app.listen(PORT, () => {
 ║   🔌 API:         http://localhost:${PORT}/api/trpc           ║
 ║   ❤️  Health:      http://localhost:${PORT}/health            ║
 ║   🌍 Environment: ${process.env.NODE_ENV || 'development'}                    ║
+║   🤖 Telegram Bot: @capitansparrowia_bot                   ║
 ║                                                            ║
 ╚════════════════════════════════════════════════════════════╝
   `);

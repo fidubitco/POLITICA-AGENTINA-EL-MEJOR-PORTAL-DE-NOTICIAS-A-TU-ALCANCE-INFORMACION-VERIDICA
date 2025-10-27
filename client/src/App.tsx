@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { HomeWorldClass } from './pages/HomeWorldClass';
 import { HomeSimple } from './pages/HomeSimple';
+import { TelegramBotAdmin } from './pages/admin/TelegramBotAdmin';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageWorking } from './pages/CategoryPageWorking';
 import { Login } from './pages/admin/Login';
@@ -134,6 +135,13 @@ function App() {
             {() => (
               <ProtectedRoute>
                 <RealTimeAnalytics />
+              </ProtectedRoute>
+            )}
+          </Route>
+          <Route path="/admin/telegram-bot">
+            {() => (
+              <ProtectedRoute>
+                <TelegramBotAdmin />
               </ProtectedRoute>
             )}
           </Route>
