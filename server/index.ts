@@ -53,6 +53,10 @@ app.use('/api', rssProxyRouter);
 import sitemapRouter from './routes/sitemap';
 app.use('/', sitemapRouter);
 
+// News Aggregator endpoints
+import newsAggregatorRouter from './routes/news-aggregator';
+app.use('/api/news', newsAggregatorRouter);
+
 // tRPC endpoint
 app.use(
   '/api/trpc',

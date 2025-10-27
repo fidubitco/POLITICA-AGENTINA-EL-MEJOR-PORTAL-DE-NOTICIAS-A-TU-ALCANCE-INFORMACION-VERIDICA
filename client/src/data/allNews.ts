@@ -3,6 +3,8 @@
  * Sistema de noticias real con contenido completo
  */
 
+import { currentNews } from './currentNews';
+
 export interface Article {
   id: number;
   title: string;
@@ -27,7 +29,8 @@ export interface Article {
 
 const now = Date.now();
 
-export const allArticles: Article[] = [
+// Combinar noticias actuales (trending) con el resto
+const baseArticles: Article[] = [
   // ==================== POLÍTICA (15 artículos) ====================
   {
     id: 1,
@@ -397,6 +400,9 @@ export const allArticles: Article[] = [
     tags: ["Cine", "Festival", "Cultura"],
   },
 ];
+
+// Exportar todas las noticias (actuales + base)
+export const allArticles: Article[] = [...currentNews, ...baseArticles];
 
 // Funciones helper
 export const getArticlesByCategory = (categorySlug: string): Article[] => {
