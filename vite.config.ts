@@ -4,8 +4,8 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  root: "./client",
-  publicDir: "public",
+  root: ".",
+  publicDir: "client/public",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./client/src"),
@@ -16,14 +16,11 @@ export default defineConfig({
     host: true,
   },
   build: {
-    outDir: "../public",
+    outDir: "public",
     assetsDir: "assets",
     emptyOutDir: true,
     sourcemap: false,
     minify: false,
     target: "es2020",
-    rollupOptions: {
-      input: path.resolve(__dirname, "client/index.html"),
-    },
   },
 });
