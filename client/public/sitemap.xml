@@ -1,90 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
-  <!-- Homepage - Multi-language -->
+  <!-- Homepage -->
   <url>
     <loc>https://politicaargentina.com/</loc>
     <lastmod>2025-10-27</lastmod>
-    <changefreq>hourly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://politicaargentina.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://politicaargentina.com/en/" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://politicaargentina.com/pt/" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://politicaargentina.com/fr/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://politicaargentina.com/de/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://politicaargentina.com/it/" />
-    <xhtml:link rel="alternate" hreflang="zh" href="https://politicaargentina.com/zh/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://politicaargentina.com/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://politicaargentina.com/ko/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://politicaargentina.com/ar/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://politicaargentina.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://politicaargentina.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://politicaargentina.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://politicaargentina.com/pt/"/>
   </url>
-  
-  <!-- Categories -->
+
+  <!-- Language versions -->
   <url>
-    <loc>https://politicaargentina.com/categoria/politica</loc>
+    <loc>https://politicaargentina.com/en/</loc>
     <lastmod>2025-10-27</lastmod>
-    <changefreq>hourly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
+  
   <url>
-    <loc>https://politicaargentina.com/categoria/economia</loc>
+    <loc>https://politicaargentina.com/pt/</loc>
     <lastmod>2025-10-27</lastmod>
-    <changefreq>hourly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-  <url>
-    <loc>https://politicaargentina.com/categoria/internacional</loc>
-    <lastmod>2025-10-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://politicaargentina.com/categoria/sociedad</loc>
-    <lastmod>2025-10-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://politicaargentina.com/categoria/deportes</loc>
-    <lastmod>2025-10-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://politicaargentina.com/categoria/cultura</loc>
-    <lastmod>2025-10-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Special Pages -->
+
+  <!-- Political sections -->
   <url>
     <loc>https://politicaargentina.com/candidatos</loc>
     <lastmod>2025-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
   <url>
     <loc>https://politicaargentina.com/encuestas</loc>
     <lastmod>2025-10-27</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
+  
   <url>
     <loc>https://politicaargentina.com/resultados</loc>
     <lastmod>2025-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
   <url>
     <loc>https://politicaargentina.com/finanzas</loc>
     <lastmod>2025-10-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
 </urlset>

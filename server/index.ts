@@ -11,23 +11,22 @@ import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from './routers';
 import { createContext } from './context';
 import TelegramBotService from './services/TelegramBotService';
+import { 
+  handle404, 
+  handle403, 
+  handleErrors, 
+  requestLogger, 
+  corsHandler, 
+  securityHeaders 
+} from './middleware/errorHandler';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware de seguridad
-app.use(helmet({
-  contentSecurityPolicy: false,
-  crossOriginEmbedderPolicy: false,
-}));
-
-// CORS
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://politicaargentina.com', 'https://www.politicaargentina.com']
-    : ['http://localhost:3000', 'http://localhost:5173'],
-  credentials: true,
-}));
+// Middleware de seguridad y logging
+app.use(requestLogger);
+app.use(securityHeaders);
+app.use(corsHandler);
 
 // Compression
 app.use(compression());
@@ -66,15 +65,10 @@ try {
 }
 
 // Error handler
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error('❌ Error:', err);
-  res.status(err.status || 500).json({
-    error: {
-      message: err.message || 'Internal Server Error',
-      status: err.status || 500,
-    },
-  });
-});
+// Error handling middleware
+app.use(handle404);
+app.use(handle403);
+app.use(handleErrors);
 
 // Graceful shutdown
 process.on('SIGINT', () => {

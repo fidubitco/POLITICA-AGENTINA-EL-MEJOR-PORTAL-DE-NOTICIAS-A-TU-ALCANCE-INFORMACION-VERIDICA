@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { HomeWorldClass } from './pages/HomeWorldClass';
 import { HomeSimple } from './pages/HomeSimple';
+import NotFoundPage from './pages/NotFoundPage';
+import ForbiddenPage from './pages/ForbiddenPage';
 import { TelegramBotAdmin } from './pages/admin/TelegramBotAdmin';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageWorking } from './pages/CategoryPageWorking';
@@ -165,7 +167,12 @@ function App() {
           ))}
           
           {/* Fallback - Fixed HomeSimple import */}
-          <Route path="/:rest*" component={HomeSimple} />
+          {/* Error pages */}
+      <Route path="/404" component={NotFoundPage} />
+      <Route path="/403" component={ForbiddenPage} />
+      
+      {/* Catch-all route */}
+      <Route path="/:rest*" component={NotFoundPage} />
       </Switch>
         </div>
       </HelmetProvider>
