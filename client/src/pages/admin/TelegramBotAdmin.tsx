@@ -21,21 +21,24 @@ import {
 interface TelegramStats {
   subscribers: number;
   botUsername: string;
+  channelId: string;
   isActive: boolean;
 }
 
 const TelegramBotAdmin: React.FC = () => {
   const [stats, setStats] = useState<TelegramStats>({
     subscribers: 0,
-    botUsername: '@capitansparrowia_bot',
+    botUsername: '@portaldenoticias_bot',
+    channelId: '-3116123281',
     isActive: false
   });
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const botUrl = 'https://t.me/capitansparrowia_bot';
-  const botToken = '8403562309:AAHSqxvWRWhhjHfQi4qBV6pm0_Fpv45v_5Q';
+  const botUrl = 'https://t.me/portaldenoticias_bot';
+  const botToken = '8260637487:AAF7pnwUFHI6XJdnrClXoYg4dxSl6OqUW-Y';
+  const channelUrl = 'https://web.telegram.org/k/#-3116123281';
 
   useEffect(() => {
     // Simular carga de estadísticas
@@ -121,13 +124,13 @@ const TelegramBotAdmin: React.FC = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Estado</CardTitle>
-            <CheckCircle className="h-4 w-4 text-green-500" />
+            <CardTitle className="text-sm font-medium">Canal</CardTitle>
+            <MessageSquare className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold text-green-600">Conectado</div>
+            <div className="text-lg font-bold">-3116123281</div>
             <p className="text-xs text-muted-foreground">
-              Bot funcionando correctamente
+              Canal de noticias automáticas
             </p>
           </CardContent>
         </Card>
@@ -188,6 +191,32 @@ const TelegramBotAdmin: React.FC = () => {
                   onClick={() => copyToClipboard(botToken)}
                 >
                   {copied ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                </Button>
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="channel-url">Canal de Telegram</Label>
+              <div className="flex gap-2">
+                <Input 
+                  id="channel-url" 
+                  value={channelUrl} 
+                  readOnly 
+                  className="font-mono text-sm"
+                />
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => copyToClipboard(channelUrl)}
+                >
+                  {copied ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => window.open(channelUrl, '_blank')}
+                >
+                  <ExternalLink className="h-4 w-4" />
                 </Button>
               </div>
             </div>

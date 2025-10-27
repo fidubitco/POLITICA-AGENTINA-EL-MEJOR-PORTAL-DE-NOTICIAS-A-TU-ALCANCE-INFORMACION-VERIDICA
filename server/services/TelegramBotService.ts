@@ -3,7 +3,8 @@ import { db } from '../api/database';
 import { articles, users } from '../db/schema';
 import { eq, desc } from 'drizzle-orm';
 
-const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8403562309:AAHSqxvWRWhhjHfQi4qBV6pm0_Fpv45v_5Q';
+const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8260637487:AAF7pnwUFHI6XJdnrClXoYg4dxSl6OqUW-Y';
+const TELEGRAM_CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID || '-3116123281';
 
 class TelegramBotService {
   private bot: TelegramBot;
@@ -13,7 +14,7 @@ class TelegramBotService {
     this.bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
     this.setupCommands();
     this.setupHandlers();
-    console.log('🤖 Telegram Bot iniciado: @capitansparrowia_bot');
+    console.log('🤖 Telegram Bot iniciado: @portaldenoticias_bot');
   }
 
   private setupCommands() {
@@ -21,7 +22,7 @@ class TelegramBotService {
     this.bot.onText(/\/start/, (msg) => {
       const chatId = msg.chat.id;
       const welcomeMessage = `
-🇦🇷 *Bienvenido a Política Argentina Bot* 🇦🇷
+🇦🇷 *Bienvenido a Portal de Noticias Argentina* 🇦🇷
 
 ¡Recibe las últimas noticias políticas de Argentina directamente en Telegram!
 
@@ -33,7 +34,8 @@ class TelegramBotService {
 /ayuda - Ayuda y comandos
 
 🌐 *Sitio web:* https://politicaargentina.com
-📱 *Bot:* @capitansparrowia_bot
+📱 *Bot:* @portaldenoticias_bot
+📢 *Canal:* https://t.me/portaldenoticias_bot
 
 ¡Mantente informado con las noticias más importantes de Argentina!
       `;
@@ -161,6 +163,35 @@ Si tienes problemas, contacta al administrador del bot.
     } catch (error) {
       console.error('Error fetching news:', error);
       return [];
+    }
+  }
+
+  // Método para enviar noticias al canal
+  public async sendNewsToChannel(article: any) {
+    try {
+      const message = `
+🔥 *¡Nueva Noticia Importante!* 🔥
+
+📰 *${article.title}*
+
+📅 ${new Date(article.created_at).toLocaleDateString('es-AR')}
+
+🔗 [Leer noticia completa](${article.url})
+
+🌐 *Más noticias en:* https://politicaargentina.com
+
+---
+🇦🇷 *Portal de Noticias Argentina* - Mantente informado
+      `;
+
+      await this.bot.sendMessage(TELEGRAM_CHANNEL_ID, message, { 
+        parse_mode: 'Markdown',
+        disable_web_page_preview: true 
+      });
+
+      console.log(`📢 Noticia enviada al canal: ${article.title}`);
+    } catch (error) {
+      console.error('Error enviando noticia al canal:', error);
     }
   }
 
