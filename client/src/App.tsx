@@ -156,7 +156,7 @@ function App() {
             <Route key={`finance-${lang.code}`} path={`/${lang.code}/finanzas`} component={Finanzas} />
           ))}
           
-          {/* Fallback */}
+          {/* Fallback - Fixed HomeSimple import */}
           <Route path="/:rest*" component={HomeSimple} />
       </Switch>
         </div>
