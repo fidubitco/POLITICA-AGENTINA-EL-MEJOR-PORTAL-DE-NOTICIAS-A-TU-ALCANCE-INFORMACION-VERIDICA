@@ -321,18 +321,19 @@ export const AdminDashboardFull: React.FC = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex items-center space-x-2">
                           <Link href={`/noticia/${article.id}`}>
-                            <a className="text-blue-600 hover:text-blue-900">
+                            <a className="text-blue-600 hover:text-blue-900" title="Ver noticia">
                               <Eye className="w-5 h-5" />
                             </a>
                           </Link>
-                          <Link href={`/admin/editar/${article.id}`}>
-                            <a className="text-green-600 hover:text-green-900">
+                          <Link href={`/admin/editor/${article.id}`}>
+                            <a className="text-green-600 hover:text-green-900" title="Editar noticia">
                               <Edit className="w-5 h-5" />
                             </a>
                           </Link>
                           <button
                             onClick={() => handleDelete(article.id)}
                             className="text-red-600 hover:text-red-900"
+                            title="Eliminar noticia"
                           >
                             <Trash2 className="w-5 h-5" />
                           </button>

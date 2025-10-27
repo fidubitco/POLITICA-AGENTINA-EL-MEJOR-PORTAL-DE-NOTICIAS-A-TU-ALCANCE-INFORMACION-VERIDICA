@@ -314,12 +314,17 @@ export const AdminDashboardEnterprise = () => {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
-                          <Link href={`/admin/editar/${article.id}`}>
-                            <Button variant="ghost" size="sm">
+                          <Link href={`/admin/editor/${article.id}`}>
+                            <Button variant="ghost" size="sm" title="Editar noticia">
                               <Edit size={16} />
                             </Button>
                           </Link>
-                          <Button variant="ghost" size="sm" className="text-red-600">
+                          <Link href={`/noticia/${article.id}`}>
+                            <Button variant="ghost" size="sm" title="Ver noticia">
+                              <Eye size={16} />
+                            </Button>
+                          </Link>
+                          <Button variant="ghost" size="sm" className="text-red-600" title="Eliminar noticia">
                             <Trash2 size={16} />
                           </Button>
                         </div>

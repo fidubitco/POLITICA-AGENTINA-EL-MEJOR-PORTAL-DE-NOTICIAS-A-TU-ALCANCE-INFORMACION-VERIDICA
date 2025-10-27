@@ -14,6 +14,7 @@ import { NewsArticlePage } from './pages/NewsArticlePage';
 import { Login } from './pages/admin/Login';
 import { AdminDashboardEnterprise } from './pages/admin/AdminDashboardEnterprise';
 import { EditArticle } from './pages/admin/EditArticle';
+import NewsEditor from './pages/admin/NewsEditor';
 import { CMSEditor } from './pages/admin/CMSEditor';
 import { AINewsCreator } from './pages/admin/AINewsCreator';
 import { SEOAuditor } from './pages/admin/SEOAuditor';
@@ -112,6 +113,13 @@ function App() {
             {() => (
               <ProtectedRoute>
                 <EditArticle />
+              </ProtectedRoute>
+            )}
+          </Route>
+          <Route path="/admin/editor/:id">
+            {() => (
+              <ProtectedRoute>
+                <NewsEditor />
               </ProtectedRoute>
             )}
           </Route>

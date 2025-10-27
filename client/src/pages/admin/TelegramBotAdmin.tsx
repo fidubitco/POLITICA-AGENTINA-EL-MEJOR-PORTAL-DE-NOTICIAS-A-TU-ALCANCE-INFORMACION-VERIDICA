@@ -36,9 +36,9 @@ const TelegramBotAdmin: React.FC = () => {
   const [isSending, setIsSending] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const botUrl = 'https://t.me/portaldenoticias_bot';
-  const botToken = '8260637487:AAF7pnwUFHI6XJdnrClXoYg4dxSl6OqUW-Y';
-  const channelUrl = 'https://web.telegram.org/k/#-3116123281';
+  const botUrl = process.env.VITE_TELEGRAM_BOT_URL || 'https://t.me/your_bot';
+  const botToken = '••••••••••••••••••••••••••••••••••••••••'; // Hidden for security
+  const channelUrl = process.env.VITE_TELEGRAM_CHANNEL_URL || 'https://t.me/your_channel';
 
   useEffect(() => {
     // Simular carga de estadísticas
