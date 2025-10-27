@@ -102,8 +102,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@babel/plugin-transform-react-constant-elements": "^7.23.3",
-    "@babel/plugin-transform-react-inline-elements": "^7.23.3",
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
@@ -129,12 +127,10 @@
     "postcss": "^8.4.32",
     "prettier": "^3.1.1",
     "redis": "^5.9.0",
-    "rollup-plugin-visualizer": "^5.12.0",
     "tailwindcss": "^3.4.0",
     "terser": "^5.44.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
-    "vite-plugin-compression": "^0.5.1",
     "vitest": "^1.1.0",
     "web-push": "^3.6.7"
   },
