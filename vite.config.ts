@@ -29,7 +29,7 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: false,
     minify: "terser",
-    target: "es2015",
+    target: "es2020",
     cssCodeSplit: true,
     chunkSizeWarningLimit: 1000,
     terserOptions: {
