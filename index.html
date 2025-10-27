@@ -80,9 +80,7 @@
   <link rel="dns-prefetch" href="//www.google-analytics.com" />
   <link rel="dns-prefetch" href="//www.googletagmanager.com" />
   
-  <!-- Preload Critical Assets -->
-  <link rel="preload" as="style" href="/src/index.css" />
-  <link rel="preload" as="script" href="/src/main.tsx" />
+  <!-- Preload Critical Assets - Vite will inject these automatically -->
   
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -293,8 +291,7 @@
     });
     </script>
     
-  <!-- Main Application Script -->
-  <script type="module" src="/client/src/main.tsx"></script>
+  <!-- Main Application Script - Vite will inject this automatically -->
   
   <!-- Service Worker Registration (PWA) -->
   <script>
