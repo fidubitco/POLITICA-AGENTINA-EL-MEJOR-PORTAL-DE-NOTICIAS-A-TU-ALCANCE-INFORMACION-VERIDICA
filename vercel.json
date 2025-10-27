@@ -1,11 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "client/index.html",
-      "use": "@vercel/static"
-    }
-  ],
+  "buildCommand": "pnpm build",
+  "outputDirectory": "public",
+  "framework": null,
   "routes": [
     {
       "src": "/robots.txt",
@@ -16,35 +13,64 @@
       "dest": "/sitemap.xml"
     },
     {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "dest": "/apple-touch-icon.png"
-    },
-    {
-      "src": "/favicon-16x16.png",
-      "dest": "/favicon-16x16.png"
-    },
-    {
-      "src": "/favicon-32x32.png",
-      "dest": "/favicon-32x32.png"
-    },
-    {
       "src": "/manifest.json",
       "dest": "/manifest.json"
     },
     {
-      "src": "/sw.js",
-      "dest": "/sw.js"
+      "src": "/error-fix.js",
+      "dest": "/error-fix.js",
+      "headers": {
+        "Content-Type": "application/javascript; charset=utf-8"
+      }
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|json))",
+      "dest": "/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/client/index.html"
+      "dest": "/index.html"
     }
   ],
   "headers": [
+    {
+      "source": "/assets/(.*\\.js)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.js)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.css)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/css; charset=utf-8"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [
@@ -63,73 +89,8 @@
         {
           "key": "Referrer-Policy",
           "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
         }
       ]
-    },
-    {
-      "source": "/assets/(.*\\.js)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript; charset=utf-8"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/error-fix.js",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript; charset=utf-8"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400"
-        }
-      ]
-    },
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://politicaargentina.com"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, PUT, DELETE, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
-        }
-      ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/admin/:path*",
-      "destination": "/client/index.html"
-    },
-    {
-      "source": "/articulo/:path*",
-      "destination": "/client/index.html"
-    },
-    {
-      "source": "/categoria/:path*",
-      "destination": "/client/index.html"
-    },
-    {
-      "source": "/:lang(en|pt|fr|de|it|ru|zh|ja|ko|ar)/:path*",
-      "destination": "/client/index.html"
     }
   ]
 }

@@ -325,4 +325,5 @@ const TelegramBotAdmin: React.FC = () => {
   );
 };
 
+export { TelegramBotAdmin };
 export default TelegramBotAdmin;
