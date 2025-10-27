@@ -4,6 +4,7 @@ import { Route, Switch, useLocation } from 'wouter';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { HomeWorldClass } from './pages/HomeWorldClass';
+import HomeWorldClassPremium from './pages/HomeWorldClassPremium';
 import { HomeSimple } from './pages/HomeSimple';
 import NotFoundPage from './pages/NotFoundPage';
 import ForbiddenPage from './pages/ForbiddenPage';
@@ -60,9 +61,9 @@ function App() {
         <div className="App">
       <Switch>
           {/* Home routes - TODOS LOS IDIOMAS */}
-          <Route path="/" component={HomeWorldClass} />
+          <Route path="/" component={HomeWorldClassPremium} />
           {supportedLanguages.filter(l => l.code !== 'es').map(lang => (
-            <Route key={`home-${lang.code}`} path={`/${lang.code}`} component={HomeWorldClass} />
+            <Route key={`home-${lang.code}`} path={`/${lang.code}`} component={HomeWorldClassPremium} />
           ))}
           
           {/* Article detail routes - TODOS LOS IDIOMAS */}

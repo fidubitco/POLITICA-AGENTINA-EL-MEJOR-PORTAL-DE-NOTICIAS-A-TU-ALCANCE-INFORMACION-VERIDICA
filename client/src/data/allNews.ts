@@ -4,6 +4,7 @@
  */
 
 import { currentNews } from './currentNews';
+import { moreCurrentNews } from './moreCurrentNews';
 
 export interface Article {
   id: number;
@@ -401,8 +402,8 @@ const baseArticles: Article[] = [
   },
 ];
 
-// Exportar todas las noticias (actuales + base)
-export const allArticles: Article[] = [...currentNews, ...baseArticles];
+// Exportar todas las noticias (actuales + más actuales + base)
+export const allArticles: Article[] = [...currentNews, ...moreCurrentNews, ...baseArticles];
 
 // Funciones helper
 export const getArticlesByCategory = (categorySlug: string): Article[] => {
