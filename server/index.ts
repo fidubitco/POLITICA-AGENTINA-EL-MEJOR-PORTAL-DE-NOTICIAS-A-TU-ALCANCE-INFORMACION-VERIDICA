@@ -10,6 +10,7 @@ import compression from 'compression';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from './routers';
 import { createContext } from './context';
+import rssProxyRouter from './routes/rss-proxy';
 import TelegramBotService from './services/TelegramBotService';
 import { 
   handle404, 
@@ -44,6 +45,9 @@ app.get('/health', (req, res) => {
     environment: process.env.NODE_ENV || 'development',
   });
 });
+
+// RSS Proxy endpoint
+app.use('/api', rssProxyRouter);
 
 // tRPC endpoint
 app.use(

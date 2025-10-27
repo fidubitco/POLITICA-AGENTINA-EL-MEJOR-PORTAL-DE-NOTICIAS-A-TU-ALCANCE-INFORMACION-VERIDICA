@@ -101,6 +101,7 @@
     "tailwind-merge": "^2.2.0",
     "three": "^0.180.0",
     "wouter": "^3.7.1",
+    "xml2js": "^0.6.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -111,6 +112,7 @@
     "@types/pdfkit": "^0.17.3",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@types/xml2js": "^0.4.14",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-react": "^4.2.1",

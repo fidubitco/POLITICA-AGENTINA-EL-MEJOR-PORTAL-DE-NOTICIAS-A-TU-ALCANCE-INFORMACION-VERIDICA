@@ -1,5 +1,6 @@
 /**
- * 📂 CATEGORÍAS COMPLETAS - 12 Categorías Principales
+ * 🗂️ SISTEMA DE CATEGORÍAS - ENTERPRISE GRADE
+ * Estructura completa de categorías y subcategorías
  */
 
 export interface Category {
@@ -7,145 +8,152 @@ export interface Category {
   name: string;
   slug: string;
   description: string;
-  color: string;
   icon: string;
-  subcategories: string[];
-  keywords: string[];
-  priority: number;
+  color: string;
+  subcategories?: Subcategory[];
+  seoKeywords: string[];
+}
+
+export interface Subcategory {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
 }
 
 export const categories: Category[] = [
   {
-    id: '1',
+    id: 'politica',
     name: 'Política',
     slug: 'politica',
-    description: 'Últimas noticias sobre política argentina, gobierno, congreso, elecciones y partidos políticos',
+    description: 'Noticias políticas de Argentina, gobierno, congreso y elecciones',
+    icon: 'Building2',
     color: '#3B82F6',
-    icon: '🏛️',
-    subcategories: ['Gobierno', 'Congreso', 'Partidos Políticos', 'Elecciones', 'Provincias'],
-    keywords: ['política argentina', 'gobierno', 'congreso', 'elecciones', 'milei', 'casa rosada', 'senado', 'diputados'],
-    priority: 1,
+    seoKeywords: ['política argentina', 'gobierno', 'congreso', 'elecciones', 'presidente'],
+    subcategories: [
+      { id: 'nacional', name: 'Nacional', slug: 'nacional', description: 'Política nacional argentina' },
+      { id: 'provincial', name: 'Provincial', slug: 'provincial', description: 'Política provincial' },
+      { id: 'municipal', name: 'Municipal', slug: 'municipal', description: 'Política municipal' },
+      { id: 'partidos', name: 'Partidos Políticos', slug: 'partidos', description: 'Noticias de partidos políticos' },
+      { id: 'elecciones', name: 'Elecciones', slug: 'elecciones', description: 'Cobertura electoral' },
+      { id: 'congreso', name: 'Congreso', slug: 'congreso', description: 'Senado y Diputados' },
+    ]
   },
   {
-    id: '2',
+    id: 'economia',
     name: 'Economía',
     slug: 'economia',
-    description: 'Análisis económico, mercados, dólar, inflación, empresas y finanzas personales',
+    description: 'Economía argentina, dólar, inflación, mercados y finanzas',
+    icon: 'TrendingUp',
     color: '#10B981',
-    icon: '💰',
-    subcategories: ['Mercados', 'Dólar', 'Inflación', 'Empresas', 'Finanzas Personales'],
-    keywords: ['economía argentina', 'dólar', 'inflación', 'mercados', 'bolsa', 'finanzas', 'inversiones'],
-    priority: 2,
+    seoKeywords: ['economía argentina', 'dólar', 'inflación', 'mercados', 'finanzas'],
+    subcategories: [
+      { id: 'macroeconomia', name: 'Macroeconomía', slug: 'macroeconomia', description: 'Indicadores macroeconómicos' },
+      { id: 'dolar', name: 'Dólar', slug: 'dolar', description: 'Cotización del dólar' },
+      { id: 'inflacion', name: 'Inflación', slug: 'inflacion', description: 'Índices de inflación' },
+      { id: 'mercados', name: 'Mercados', slug: 'mercados', description: 'Bolsa y mercados financieros' },
+      { id: 'empresas', name: 'Empresas', slug: 'empresas', description: 'Noticias empresariales' },
+      { id: 'comercio', name: 'Comercio', slug: 'comercio', description: 'Comercio exterior e interior' },
+    ]
   },
   {
-    id: '3',
-    name: 'Internacional',
-    slug: 'internacional',
-    description: 'Noticias internacionales de América Latina, Estados Unidos, Europa, Asia y Medio Oriente',
-    color: '#EF4444',
-    icon: '🌎',
-    subcategories: ['América Latina', 'Estados Unidos', 'Europa', 'Asia', 'Medio Oriente'],
-    keywords: ['noticias internacionales', 'mundo', 'américa latina', 'eeuu', 'europa', 'asia'],
-    priority: 3,
+    id: 'judicial',
+    name: 'Judicial',
+    slug: 'judicial',
+    description: 'Noticias judiciales, causas, sentencias y justicia argentina',
+    icon: 'Scale',
+    color: '#8B5CF6',
+    seoKeywords: ['justicia argentina', 'causas judiciales', 'sentencias', 'corte suprema', 'fiscalía'],
+    subcategories: [
+      { id: 'corte-suprema', name: 'Corte Suprema', slug: 'corte-suprema', description: 'Fallos de la Corte Suprema' },
+      { id: 'causas', name: 'Causas Judiciales', slug: 'causas', description: 'Causas en curso' },
+      { id: 'sentencias', name: 'Sentencias', slug: 'sentencias', description: 'Sentencias judiciales' },
+      { id: 'fiscalia', name: 'Fiscalía', slug: 'fiscalia', description: 'Noticias de fiscalías' },
+      { id: 'derechos-humanos', name: 'Derechos Humanos', slug: 'derechos-humanos', description: 'Causas de DDHH' },
+      { id: 'corrupcion', name: 'Corrupción', slug: 'corrupcion', description: 'Casos de corrupción' },
+    ]
   },
   {
-    id: '4',
+    id: 'sociedad',
     name: 'Sociedad',
     slug: 'sociedad',
-    description: 'Noticias de sociedad, educación, salud, seguridad, medio ambiente y derechos humanos',
+    description: 'Noticias sociales, educación, salud y cultura argentina',
+    icon: 'Users',
     color: '#F59E0B',
-    icon: '👥',
-    subcategories: ['Educación', 'Salud', 'Seguridad', 'Medio Ambiente', 'Derechos Humanos'],
-    keywords: ['sociedad argentina', 'educación', 'salud', 'seguridad', 'medio ambiente', 'derechos'],
-    priority: 4,
+    seoKeywords: ['sociedad argentina', 'educación', 'salud', 'cultura', 'derechos'],
+    subcategories: [
+      { id: 'educacion', name: 'Educación', slug: 'educacion', description: 'Sistema educativo' },
+      { id: 'salud', name: 'Salud', slug: 'salud', description: 'Salud pública' },
+      { id: 'cultura', name: 'Cultura', slug: 'cultura', description: 'Cultura y arte' },
+      { id: 'derechos', name: 'Derechos', slug: 'derechos', description: 'Derechos civiles' },
+      { id: 'medio-ambiente', name: 'Medio Ambiente', slug: 'medio-ambiente', description: 'Ecología y ambiente' },
+      { id: 'seguridad', name: 'Seguridad', slug: 'seguridad', description: 'Seguridad ciudadana' },
+    ]
   },
   {
-    id: '5',
-    name: 'Deportes',
-    slug: 'deportes',
-    description: 'Fútbol, básquet, tenis, rugby, olimpiadas y todas las disciplinas deportivas',
-    color: '#8B5CF6',
-    icon: '⚽',
-    subcategories: ['Fútbol', 'Básquet', 'Tenis', 'Rugby', 'Olimpiadas'],
-    keywords: ['deportes argentina', 'fútbol', 'messi', 'selección', 'boca', 'river', 'tenis', 'básquet'],
-    priority: 5,
+    id: 'internacional',
+    name: 'Internacional',
+    slug: 'internacional',
+    description: 'Noticias internacionales y relaciones exteriores de Argentina',
+    icon: 'Globe',
+    color: '#EF4444',
+    seoKeywords: ['internacional', 'relaciones exteriores', 'diplomacia', 'comercio exterior'],
+    subcategories: [
+      { id: 'latinoamerica', name: 'Latinoamérica', slug: 'latinoamerica', description: 'Noticias de la región' },
+      { id: 'mercosur', name: 'Mercosur', slug: 'mercosur', description: 'Bloque regional' },
+      { id: 'usa', name: 'Estados Unidos', slug: 'usa', description: 'Relaciones con EEUU' },
+      { id: 'europa', name: 'Europa', slug: 'europa', description: 'Noticias europeas' },
+      { id: 'asia', name: 'Asia', slug: 'asia', description: 'Noticias asiáticas' },
+      { id: 'organismos', name: 'Organismos Internacionales', slug: 'organismos', description: 'ONU, FMI, etc.' },
+    ]
   },
   {
-    id: '6',
-    name: 'Cultura',
-    slug: 'cultura',
-    description: 'Cine, música, teatro, literatura, arte y todas las expresiones culturales',
-    color: '#EC4899',
-    icon: '🎭',
-    subcategories: ['Cine', 'Música', 'Teatro', 'Literatura', 'Arte'],
-    keywords: ['cultura argentina', 'cine', 'música', 'teatro', 'literatura', 'arte', 'espectáculos'],
-    priority: 6,
-  },
-  {
-    id: '7',
-    name: 'Tecnología',
-    slug: 'tecnologia',
-    description: 'Startups, innovación, ciencia, gadgets, inteligencia artificial y tecnología',
+    id: 'opinion',
+    name: 'Opinión',
+    slug: 'opinion',
+    description: 'Columnas de opinión, análisis político y editorial',
+    icon: 'MessageSquare',
     color: '#06B6D4',
-    icon: '💻',
-    subcategories: ['Startups', 'Innovación', 'Ciencia', 'Gadgets', 'IA'],
-    keywords: ['tecnología', 'startups', 'innovación', 'ciencia', 'ia', 'inteligencia artificial', 'gadgets'],
-    priority: 7,
+    seoKeywords: ['opinión política', 'análisis', 'editorial', 'columnistas'],
+    subcategories: [
+      { id: 'columnistas', name: 'Columnistas', slug: 'columnistas', description: 'Columnas de opinión' },
+      { id: 'analisis', name: 'Análisis', slug: 'analisis', description: 'Análisis político' },
+      { id: 'editorial', name: 'Editorial', slug: 'editorial', description: 'Línea editorial' },
+      { id: 'entrevistas', name: 'Entrevistas', slug: 'entrevistas', description: 'Entrevistas exclusivas' },
+    ]
   },
   {
-    id: '8',
-    name: 'Negocios',
-    slug: 'negocios',
-    description: 'Empresas, emprendedores, inversiones, startups y mercado laboral',
+    id: 'elecciones',
+    name: 'Elecciones',
+    slug: 'elecciones',
+    description: 'Cobertura electoral, encuestas y resultados',
+    icon: 'Vote',
+    color: '#EC4899',
+    seoKeywords: ['elecciones argentina', 'encuestas', 'resultados electorales', 'candidatos'],
+    subcategories: [
+      { id: 'presidenciales', name: 'Presidenciales', slug: 'presidenciales', description: 'Elecciones presidenciales' },
+      { id: 'legislativas', name: 'Legislativas', slug: 'legislativas', description: 'Elecciones legislativas' },
+      { id: 'provinciales', name: 'Provinciales', slug: 'provinciales', description: 'Elecciones provinciales' },
+      { id: 'encuestas', name: 'Encuestas', slug: 'encuestas', description: 'Encuestas electorales' },
+      { id: 'resultados', name: 'Resultados', slug: 'resultados', description: 'Resultados en vivo' },
+    ]
+  },
+  {
+    id: 'provincias',
+    name: 'Provincias',
+    slug: 'provincias',
+    description: 'Noticias de las provincias argentinas',
+    icon: 'Map',
     color: '#14B8A6',
-    icon: '🏢',
-    subcategories: ['Empresas', 'Emprendedores', 'Inversiones', 'Startups', 'Mercado Laboral'],
-    keywords: ['negocios', 'empresas', 'emprendedores', 'inversiones', 'startups', 'trabajo'],
-    priority: 8,
-  },
-  {
-    id: '9',
-    name: 'Espectáculos',
-    slug: 'espectaculos',
-    description: 'TV, streaming, celebridades, eventos, premios y entretenimiento',
-    color: '#F97316',
-    icon: '🎬',
-    subcategories: ['TV', 'Streaming', 'Celebridades', 'Eventos', 'Premios'],
-    keywords: ['espectáculos', 'tv', 'streaming', 'celebridades', 'famosos', 'entretenimiento'],
-    priority: 9,
-  },
-  {
-    id: '10',
-    name: 'Salud',
-    slug: 'salud',
-    description: 'Medicina, bienestar, nutrición, fitness y salud mental',
-    color: '#84CC16',
-    icon: '🏥',
-    subcategories: ['Medicina', 'Bienestar', 'Nutrición', 'Fitness', 'Salud Mental'],
-    keywords: ['salud', 'medicina', 'bienestar', 'nutrición', 'fitness', 'salud mental'],
-    priority: 10,
-  },
-  {
-    id: '11',
-    name: 'Lifestyle',
-    slug: 'lifestyle',
-    description: 'Gastronomía, viajes, moda, decoración y tendencias',
-    color: '#A855F7',
-    icon: '🏠',
-    subcategories: ['Gastronomía', 'Viajes', 'Moda', 'Decoración', 'Tendencias'],
-    keywords: ['lifestyle', 'gastronomía', 'viajes', 'moda', 'decoración', 'tendencias'],
-    priority: 11,
-  },
-  {
-    id: '12',
-    name: 'Ciencia',
-    slug: 'ciencia',
-    description: 'Investigación, descubrimientos, espacio, tecnología y medio ambiente',
-    color: '#6366F1',
-    icon: '🔬',
-    subcategories: ['Investigación', 'Descubrimientos', 'Espacio', 'Tecnología', 'Medio Ambiente'],
-    keywords: ['ciencia', 'investigación', 'descubrimientos', 'espacio', 'astronomía', 'medio ambiente'],
-    priority: 12,
+    seoKeywords: ['provincias argentina', 'noticias provinciales', 'gobernadores'],
+    subcategories: [
+      { id: 'buenos-aires', name: 'Buenos Aires', slug: 'buenos-aires', description: 'Provincia de Buenos Aires' },
+      { id: 'caba', name: 'CABA', slug: 'caba', description: 'Ciudad de Buenos Aires' },
+      { id: 'cordoba', name: 'Córdoba', slug: 'cordoba', description: 'Provincia de Córdoba' },
+      { id: 'santa-fe', name: 'Santa Fe', slug: 'santa-fe', description: 'Provincia de Santa Fe' },
+      { id: 'mendoza', name: 'Mendoza', slug: 'mendoza', description: 'Provincia de Mendoza' },
+      { id: 'otras', name: 'Otras Provincias', slug: 'otras', description: 'Resto del país' },
+    ]
   },
 ];
 
@@ -153,18 +161,16 @@ export const getCategoryBySlug = (slug: string): Category | undefined => {
   return categories.find(cat => cat.slug === slug);
 };
 
-export const getCategoryById = (id: string): Category | undefined => {
-  return categories.find(cat => cat.id === id);
+export const getSubcategoryBySlug = (categorySlug: string, subcategorySlug: string): Subcategory | undefined => {
+  const category = getCategoryBySlug(categorySlug);
+  return category?.subcategories?.find(sub => sub.slug === subcategorySlug);
 };
 
-export const getAllCategories = (): Category[] => {
-  return categories.sort((a, b) => a.priority - b.priority);
-};
-
-export const getMainCategories = (): Category[] => {
-  return categories.filter(cat => cat.priority <= 6);
-};
-
-export const getSecondaryCategories = (): Category[] => {
-  return categories.filter(cat => cat.priority > 6);
+export const getAllSubcategories = (): Array<Subcategory & { categorySlug: string }> => {
+  return categories.flatMap(cat => 
+    (cat.subcategories || []).map(sub => ({
+      ...sub,
+      categorySlug: cat.slug
+    }))
+  );
 };
