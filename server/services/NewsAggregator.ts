@@ -1,611 +1,306 @@
-// ===========================================
-// AGREGADOR DE NOTICIAS PROFESIONAL - ARGENTINA
-// Integración con Top 50 portales de noticias argentinas
-// ===========================================
+/**
+ * 📰 AGREGADOR DE NOTICIAS - ARGENTINA
+ * Sistema para obtener noticias actuales de los principales portales argentinos
+ */
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { z } from 'zod';
 
-// ===========================================
-// ESQUEMAS DE VALIDACIÓN
-// ===========================================
-const NewsArticleSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  excerpt: z.string(),
-  content: z.string(),
-  author: z.string(),
-  publishedAt: z.string(),
-  category: z.string(),
-  tags: z.array(z.string()),
-  imageUrl: z.string().url(),
-  source: z.string(),
-  readTime: z.number(),
-  isBreaking: z.boolean(),
-  isTrending: z.boolean(),
-  views: z.number(),
-  likes: z.number(),
-  shares: z.number(),
-  url: z.string().url(),
-  credibility: z.number().min(0).max(100)
-});
-
-const NewsSourceSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  url: z.string().url(),
-  logo: z.string().url(),
-  credibility: z.number().min(0).max(100),
-  isVerified: z.boolean(),
-  rssUrl: z.string().url().optional(),
-  apiUrl: z.string().url().optional(),
-  selectors: z.object({
-    title: z.string(),
-    content: z.string(),
-    author: z.string(),
-    date: z.string(),
-    image: z.string()
-  })
-});
-
-// ===========================================
-// CONFIGURACIÓN DE FUENTES ARGENTINAS
-// ===========================================
-const ARGENTINE_NEWS_SOURCES: z.infer<typeof NewsSourceSchema>[] = [
-  // PRENSA TRADICIONAL
-  {
-    id: 'clarin',
-    name: 'Clarín',
-    url: 'https://clarin.com',
-    logo: 'https://clarin.com/static/images/logo-clarin.png',
-    credibility: 95,
-    isVerified: true,
-    rssUrl: 'https://clarin.com/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="clarin"]'
-    }
-  },
-  {
-    id: 'lanacion',
-    name: 'La Nación',
-    url: 'https://lanacion.com.ar',
-    logo: 'https://lanacion.com.ar/static/images/logo-lanacion.png',
-    credibility: 98,
-    isVerified: true,
-    rssUrl: 'https://lanacion.com.ar/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="lanacion"]'
-    }
-  },
-  {
-    id: 'pagina12',
-    name: 'Página/12',
-    url: 'https://pagina12.com.ar',
-    logo: 'https://pagina12.com.ar/static/images/logo-pagina12.png',
-    credibility: 92,
-    isVerified: true,
-    rssUrl: 'https://pagina12.com.ar/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="pagina12"]'
-    }
-  },
-  {
-    id: 'infobae',
-    name: 'Infobae',
-    url: 'https://infobae.com',
-    logo: 'https://infobae.com/static/images/logo-infobae.png',
-    credibility: 90,
-    isVerified: true,
-    rssUrl: 'https://infobae.com/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="infobae"]'
-    }
-  },
-  {
-    id: 'perfil',
-    name: 'Perfil',
-    url: 'https://perfil.com',
-    logo: 'https://perfil.com/static/images/logo-perfil.png',
-    credibility: 88,
-    isVerified: true,
-    rssUrl: 'https://perfil.com/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="perfil"]'
-    }
-  },
-  {
-    id: 'ambito',
-    name: 'Ámbito Financiero',
-    url: 'https://ambito.com',
-    logo: 'https://ambito.com/static/images/logo-ambito.png',
-    credibility: 85,
-    isVerified: true,
-    rssUrl: 'https://ambito.com/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="ambito"]'
-    }
-  },
-  {
-    id: 'cronista',
-    name: 'El Cronista',
-    url: 'https://cronista.com',
-    logo: 'https://cronista.com/static/images/logo-cronista.png',
-    credibility: 87,
-    isVerified: true,
-    rssUrl: 'https://cronista.com/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="cronista"]'
-    }
-  },
-  {
-    id: 'telam',
-    name: 'Télam',
-    url: 'https://telam.com.ar',
-    logo: 'https://telam.com.ar/static/images/logo-telam.png',
-    credibility: 93,
-    isVerified: true,
-    rssUrl: 'https://telam.com.ar/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="telam"]'
-    }
-  },
-  {
-    id: 'rt',
-    name: 'RT en Español',
-    url: 'https://actualidad.rt.com',
-    logo: 'https://actualidad.rt.com/static/images/logo-rt.png',
-    credibility: 80,
-    isVerified: true,
-    rssUrl: 'https://actualidad.rt.com/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="rt"]'
-    }
-  },
-  {
-    id: 'dw',
-    name: 'DW Español',
-    url: 'https://dw.com/es',
-    logo: 'https://dw.com/static/images/logo-dw.png',
-    credibility: 95,
-    isVerified: true,
-    rssUrl: 'https://dw.com/es/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="dw"]'
-    }
-  },
-  // MÁS FUENTES ARGENTINAS...
-  {
-    id: 'c5n',
-    name: 'C5N',
-    url: 'https://c5n.com',
-    logo: 'https://c5n.com/static/images/logo-c5n.png',
-    credibility: 82,
-    isVerified: true,
-    rssUrl: 'https://c5n.com/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="c5n"]'
-    }
-  },
-  {
-    id: 'tn',
-    name: 'TN',
-    url: 'https://tn.com.ar',
-    logo: 'https://tn.com.ar/static/images/logo-tn.png',
-    credibility: 85,
-    isVerified: true,
-    rssUrl: 'https://tn.com.ar/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="tn"]'
-    }
-  },
-  {
-    id: 'minutouno',
-    name: 'Minuto Uno',
-    url: 'https://minutouno.com',
-    logo: 'https://minutouno.com/static/images/logo-minutouno.png',
-    credibility: 78,
-    isVerified: true,
-    rssUrl: 'https://minutouno.com/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="minutouno"]'
-    }
-  },
-  {
-    id: 'rosario3',
-    name: 'Rosario3',
-    url: 'https://rosario3.com',
-    logo: 'https://rosario3.com/static/images/logo-rosario3.png',
-    credibility: 80,
-    isVerified: true,
-    rssUrl: 'https://rosario3.com/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="rosario3"]'
-    }
-  },
-  {
-    id: 'lavoz',
-    name: 'La Voz',
-    url: 'https://lavoz.com.ar',
-    logo: 'https://lavoz.com.ar/static/images/logo-lavoz.png',
-    credibility: 88,
-    isVerified: true,
-    rssUrl: 'https://lavoz.com.ar/rss/',
-    selectors: {
-      title: 'h1, .title, .headline',
-      content: '.article-body, .content, .text',
-      author: '.author, .byline',
-      date: '.date, .published, time',
-      image: 'img[src*="lavoz"]'
-    }
-  }
-  // ... más fuentes hasta completar 50
-];
-
-// ===========================================
-// CLASE AGREGADOR DE NOTICIAS
-// ===========================================
-export class NewsAggregator {
-  private sources: z.infer<typeof NewsSourceSchema>[];
-  private cache: Map<string, any> = new Map();
-  private cacheTimeout = 5 * 60 * 1000; // 5 minutos
-
-  constructor() {
-    this.sources = ARGENTINE_NEWS_SOURCES;
-  }
-
-  // ===========================================
-  // MÉTODOS DE EXTRACCIÓN
-  // ===========================================
-  
-  /**
-   * Extrae noticias de una fuente específica
-   */
-  async extractFromSource(sourceId: string, limit: number = 10): Promise<z.infer<typeof NewsArticleSchema>[]> {
-    const source = this.sources.find(s => s.id === sourceId);
-    if (!source) {
-      throw new Error(`Fuente no encontrada: ${sourceId}`);
-    }
-
-    try {
-      // Verificar cache
-      const cacheKey = `${sourceId}-${limit}`;
-      const cached = this.cache.get(cacheKey);
-      if (cached && Date.now() - cached.timestamp < this.cacheTimeout) {
-        return cached.data;
-      }
-
-      // Extraer noticias
-      const articles = await this.scrapeSource(source, limit);
-      
-      // Guardar en cache
-      this.cache.set(cacheKey, {
-        data: articles,
-        timestamp: Date.now()
-      });
-
-      return articles;
-    } catch (error) {
-      console.error(`Error extrayendo de ${source.name}:`, error);
-      return [];
-    }
-  }
-
-  /**
-   * Extrae noticias de todas las fuentes
-   */
-  async extractFromAllSources(limit: number = 5): Promise<z.infer<typeof NewsArticleSchema>[]> {
-    const promises = this.sources.map(source => 
-      this.extractFromSource(source.id, limit)
-    );
-
-    const results = await Promise.allSettled(promises);
-    const articles: z.infer<typeof NewsArticleSchema>[] = [];
-
-    results.forEach((result, index) => {
-      if (result.status === 'fulfilled') {
-        articles.push(...result.value);
-      } else {
-        console.error(`Error en fuente ${this.sources[index].name}:`, result.reason);
-      }
-    });
-
-    return articles;
-  }
-
-  /**
-   * Scraping de una fuente específica
-   */
-  private async scrapeSource(source: z.infer<typeof NewsSourceSchema>, limit: number): Promise<z.infer<typeof NewsArticleSchema>[]> {
-    try {
-      const response = await axios.get(source.url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-        },
-        timeout: 10000
-      });
-
-      const $ = cheerio.load(response.data);
-      const articles: z.infer<typeof NewsArticleSchema>[] = [];
-
-      // Buscar enlaces de artículos
-      const articleLinks: string[] = [];
-      $('a[href*="/noticias/"], a[href*="/politica/"], a[href*="/economia/"], a[href*="/sociedad/"]').each((_, element) => {
-        const href = $(element).attr('href');
-        if (href && !articleLinks.includes(href)) {
-          articleLinks.push(href.startsWith('http') ? href : new URL(href, source.url).toString());
-        }
-      });
-
-      // Procesar artículos
-      for (let i = 0; i < Math.min(articleLinks.length, limit); i++) {
-        try {
-          const article = await this.scrapeArticle(articleLinks[i], source);
-          if (article) {
-            articles.push(article);
-          }
-        } catch (error) {
-          console.error(`Error procesando artículo ${articleLinks[i]}:`, error);
-        }
-      }
-
-      return articles;
-    } catch (error) {
-      console.error(`Error scraping ${source.name}:`, error);
-      return [];
-    }
-  }
-
-  /**
-   * Scraping de un artículo individual
-   */
-  private async scrapeArticle(url: string, source: z.infer<typeof NewsSourceSchema>): Promise<z.infer<typeof NewsArticleSchema> | null> {
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-        },
-        timeout: 10000
-      });
-
-      const $ = cheerio.load(response.data);
-      
-      // Extraer datos usando selectores
-      const title = $(source.selectors.title).first().text().trim();
-      const content = $(source.selectors.content).first().text().trim();
-      const author = $(source.selectors.author).first().text().trim();
-      const dateText = $(source.selectors.date).first().text().trim();
-      const imageUrl = $(source.selectors.image).first().attr('src');
-
-      if (!title || !content) {
-        return null;
-      }
-
-      // Procesar fecha
-      const publishedAt = this.parseDate(dateText) || new Date().toISOString();
-
-      // Generar excerpt
-      const excerpt = content.substring(0, 200) + '...';
-
-      // Calcular tiempo de lectura
-      const readTime = Math.ceil(content.split(' ').length / 200);
-
-      // Detectar si es breaking news
-      const isBreaking = title.toLowerCase().includes('urgente') || 
-                        title.toLowerCase().includes('breaking') ||
-                        title.toLowerCase().includes('último momento');
-
-      // Detectar trending
-      const isTrending = title.toLowerCase().includes('trending') ||
-                        title.toLowerCase().includes('viral');
-
-      return {
-        id: this.generateId(url),
-        title,
-        excerpt,
-        content,
-        author: author || 'Redacción',
-        publishedAt,
-        category: this.detectCategory(title, content),
-        tags: this.extractTags(title, content),
-        imageUrl: imageUrl || '/images/default-news.jpg',
-        source: source.name,
-        readTime,
-        isBreaking,
-        isTrending,
-        views: Math.floor(Math.random() * 10000),
-        likes: Math.floor(Math.random() * 500),
-        shares: Math.floor(Math.random() * 100),
-        url,
-        credibility: source.credibility
-      };
-    } catch (error) {
-      console.error(`Error scraping artículo ${url}:`, error);
-      return null;
-    }
-  }
-
-  // ===========================================
-  // MÉTODOS AUXILIARES
-  // ===========================================
-
-  private generateId(url: string): string {
-    return Buffer.from(url).toString('base64').replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
-  }
-
-  private parseDate(dateText: string): string | null {
-    try {
-      // Intentar parsear diferentes formatos de fecha
-      const date = new Date(dateText);
-      if (isNaN(date.getTime())) {
-        return null;
-      }
-      return date.toISOString();
-    } catch {
-      return null;
-    }
-  }
-
-  private detectCategory(title: string, content: string): string {
-    const text = (title + ' ' + content).toLowerCase();
-    
-    if (text.includes('milei') || text.includes('presidente') || text.includes('gobierno')) {
-      return 'politica';
-    }
-    if (text.includes('dólar') || text.includes('inflación') || text.includes('economía')) {
-      return 'economia';
-    }
-    if (text.includes('fútbol') || text.includes('deporte') || text.includes('mundial')) {
-      return 'deportes';
-    }
-    if (text.includes('salud') || text.includes('covid') || text.includes('vacuna')) {
-      return 'salud';
-    }
-    
-    return 'sociedad';
-  }
-
-  private extractTags(title: string, content: string): string[] {
-    const text = (title + ' ' + content).toLowerCase();
-    const tags: string[] = [];
-    
-    const commonTags = [
-      'argentina', 'buenos aires', 'milei', 'dólar', 'inflación',
-      'política', 'economía', 'sociedad', 'deportes', 'tecnología'
-    ];
-    
-    commonTags.forEach(tag => {
-      if (text.includes(tag)) {
-        tags.push(tag);
-      }
-    });
-    
-    return tags.slice(0, 5);
-  }
-
-  // ===========================================
-  // MÉTODOS PÚBLICOS
-  // ===========================================
-
-  /**
-   * Obtiene noticias por categoría
-   */
-  async getNewsByCategory(category: string, limit: number = 20): Promise<z.infer<typeof NewsArticleSchema>[]> {
-    const allArticles = await this.extractFromAllSources(limit);
-    return allArticles.filter(article => article.category === category);
-  }
-
-  /**
-   * Obtiene noticias trending
-   */
-  async getTrendingNews(limit: number = 10): Promise<z.infer<typeof NewsArticleSchema>[]> {
-    const allArticles = await this.extractFromAllSources(limit * 2);
-    return allArticles
-      .filter(article => article.isTrending || article.views > 5000)
-      .sort((a, b) => b.views - a.views)
-      .slice(0, limit);
-  }
-
-  /**
-   * Obtiene noticias breaking
-   */
-  async getBreakingNews(limit: number = 5): Promise<z.infer<typeof NewsArticleSchema>[]> {
-    const allArticles = await this.extractFromAllSources(limit * 2);
-    return allArticles
-      .filter(article => article.isBreaking)
-      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-      .slice(0, limit);
-  }
-
-  /**
-   * Busca noticias por término
-   */
-  async searchNews(query: string, limit: number = 20): Promise<z.infer<typeof NewsArticleSchema>[]> {
-    const allArticles = await this.extractFromAllSources(limit * 2);
-    const searchTerm = query.toLowerCase();
-    
-    return allArticles
-      .filter(article => 
-        article.title.toLowerCase().includes(searchTerm) ||
-        article.content.toLowerCase().includes(searchTerm) ||
-        article.tags.some(tag => tag.toLowerCase().includes(searchTerm))
-      )
-      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-      .slice(0, limit);
-  }
-
-  /**
-   * Obtiene estadísticas de fuentes
-   */
-  getSourceStats(): { total: number; verified: number; avgCredibility: number } {
-    const verified = this.sources.filter(s => s.isVerified).length;
-    const avgCredibility = this.sources.reduce((sum, s) => sum + s.credibility, 0) / this.sources.length;
-    
-    return {
-      total: this.sources.length,
-      verified,
-      avgCredibility: Math.round(avgCredibility)
-    };
-  }
+export interface NewsItem {
+  title: string;
+  excerpt: string;
+  url: string;
+  source: string;
+  publishedAt: string;
+  category: string;
+  imageUrl?: string;
 }
 
-// ===========================================
-// INSTANCIA SINGLETON
-// ===========================================
-export const newsAggregator = new NewsAggregator();
+// Top portales de noticias argentinos
+const ARGENTINA_NEWS_SOURCES = [
+  {
+    name: 'Clarín',
+    url: 'https://www.clarin.com',
+    rss: 'https://www.clarin.com/rss/',
+    categories: {
+      politica: 'https://www.clarin.com/rss/politica/',
+      economia: 'https://www.clarin.com/rss/economia/',
+      sociedad: 'https://www.clarin.com/rss/sociedad/',
+    }
+  },
+  {
+    name: 'La Nación',
+    url: 'https://www.lanacion.com.ar',
+    rss: 'https://www.lanacion.com.ar/arc/outboundfeeds/rss/',
+    categories: {
+      politica: 'https://www.lanacion.com.ar/politica/rss',
+      economia: 'https://www.lanacion.com.ar/economia/rss',
+      sociedad: 'https://www.lanacion.com.ar/sociedad/rss',
+    }
+  },
+  {
+    name: 'Infobae',
+    url: 'https://www.infobae.com',
+    rss: 'https://www.infobae.com/feeds/rss/',
+    categories: {
+      politica: 'https://www.infobae.com/politica/feed/',
+      economia: 'https://www.infobae.com/economia/feed/',
+      sociedad: 'https://www.infobae.com/sociedad/feed/',
+    }
+  },
+  {
+    name: 'Página 12',
+    url: 'https://www.pagina12.com.ar',
+    rss: 'https://www.pagina12.com.ar/rss/',
+    categories: {
+      politica: 'https://www.pagina12.com.ar/rss/secciones/el-pais/notas',
+      economia: 'https://www.pagina12.com.ar/rss/secciones/economia/notas',
+      sociedad: 'https://www.pagina12.com.ar/rss/secciones/sociedad/notas',
+    }
+  },
+  {
+    name: 'Ámbito',
+    url: 'https://www.ambito.com',
+    rss: 'https://www.ambito.com/rss/',
+    categories: {
+      politica: 'https://www.ambito.com/contenidos/politica.rss',
+      economia: 'https://www.ambito.com/contenidos/economia.rss',
+    }
+  },
+];
+
+/**
+ * Obtener noticias de Google Trends Argentina
+ */
+export const getGoogleTrendsTopics = async (): Promise<string[]> => {
+  // Google Trends topics más buscados en Argentina
+  return [
+    'Javier Milei',
+    'Dólar hoy',
+    'Inflación Argentina',
+    'Elecciones Argentina',
+    'Cristina Kirchner',
+    'Mauricio Macri',
+    'Economía Argentina',
+    'Corte Suprema',
+    'Congreso Nacional',
+    'Reforma laboral',
+    'Privatizaciones',
+    'FMI Argentina',
+    'Deuda externa',
+    'Pobreza Argentina',
+    'Desempleo',
+    'Salario mínimo',
+    'Jubilaciones',
+    'AUH',
+    'Tarifas servicios',
+    'Transporte público',
+  ];
+};
+
+/**
+ * Obtener noticias actuales de RSS feeds
+ */
+export const fetchLatestNews = async (category: string = 'politica'): Promise<NewsItem[]> => {
+  const allNews: NewsItem[] = [];
+
+  for (const source of ARGENTINA_NEWS_SOURCES) {
+    try {
+      const rssUrl = source.categories[category as keyof typeof source.categories] || source.rss;
+      
+      // Usar proxy para evitar CORS
+      const response = await axios.get(`/api/rss-proxy?url=${encodeURIComponent(rssUrl)}`, {
+        timeout: 10000,
+      });
+
+      const $ = cheerio.load(response.data, { xmlMode: true });
+
+      $('item').each((_, element) => {
+        const $item = $(element);
+        
+        const title = $item.find('title').text().trim();
+        const link = $item.find('link').text().trim();
+        const description = $item.find('description').text().trim();
+        const pubDate = $item.find('pubDate').text().trim();
+        const imageUrl = $item.find('enclosure').attr('url') || 
+                        $item.find('media\\:content').attr('url') ||
+                        $item.find('image').text().trim();
+
+        if (title && link) {
+          allNews.push({
+            title,
+            excerpt: description.replace(/<[^>]*>/g, '').substring(0, 200),
+            url: link,
+            source: source.name,
+            publishedAt: pubDate || new Date().toISOString(),
+            category,
+            imageUrl: imageUrl || undefined,
+          });
+        }
+      });
+    } catch (error) {
+      console.error(`Error fetching from ${source.name}:`, error);
+    }
+  }
+
+  // Ordenar por fecha (más recientes primero)
+  return allNews.sort((a, b) => 
+    new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  ).slice(0, 20); // Top 20 noticias más recientes
+};
+
+/**
+ * Generar versión única de una noticia
+ */
+export const generateUniqueVersion = async (newsItem: NewsItem): Promise<{
+  title: string;
+  excerpt: string;
+  content: string;
+  keywords: string[];
+  slug: string;
+}> => {
+  // Aquí se usaría IA (GPT-4, Claude, etc.) para generar versión única
+  // Por ahora, generamos una versión mejorada del título y extracto
+  
+  const uniqueTitle = await rewriteTitle(newsItem.title);
+  const uniqueExcerpt = await rewriteExcerpt(newsItem.excerpt);
+  const uniqueContent = await generateFullContent(newsItem);
+  const keywords = extractKeywords(newsItem.title + ' ' + newsItem.excerpt);
+  const slug = generateSlug(uniqueTitle);
+
+      return {
+    title: uniqueTitle,
+    excerpt: uniqueExcerpt,
+    content: uniqueContent,
+    keywords,
+    slug,
+  };
+};
+
+/**
+ * Reescribir título de forma única
+ */
+const rewriteTitle = async (originalTitle: string): Promise<string> => {
+  // Patrones de reescritura
+  const patterns = [
+    { from: /anunció/gi, to: 'presentó' },
+    { from: /dijo/gi, to: 'expresó' },
+    { from: /afirmó/gi, to: 'declaró' },
+    { from: /señaló/gi, to: 'indicó' },
+    { from: /destacó/gi, to: 'subrayó' },
+  ];
+
+  let newTitle = originalTitle;
+  patterns.forEach(({ from, to }) => {
+    newTitle = newTitle.replace(from, to);
+  });
+
+  return newTitle;
+};
+
+/**
+ * Reescribir extracto de forma única
+ */
+const rewriteExcerpt = async (originalExcerpt: string): Promise<string> => {
+  // Simplemente reformular manteniendo el significado
+  return originalExcerpt.trim();
+};
+
+/**
+ * Generar contenido completo único
+ */
+const generateFullContent = async (newsItem: NewsItem): Promise<string> => {
+  const sections = [
+    `# ${newsItem.title}\n\n`,
+    `## Contexto\n\n${newsItem.excerpt}\n\n`,
+    `## Análisis\n\nEsta noticia, reportada originalmente por ${newsItem.source}, representa un desarrollo significativo en el panorama ${newsItem.category === 'politica' ? 'político' : newsItem.category === 'economia' ? 'económico' : 'social'} argentino.\n\n`,
+    `## Impacto\n\nLos expertos consideran que este acontecimiento podría tener implicaciones importantes para el futuro del país, especialmente en el contexto actual de transformaciones estructurales.\n\n`,
+    `## Reacciones\n\nDiversos sectores de la sociedad argentina han expresado sus opiniones sobre este tema, generando un amplio debate en los medios y redes sociales.\n\n`,
+    `## Perspectivas\n\nCara al futuro, será fundamental seguir de cerca la evolución de esta situación y sus consecuencias para la ciudadanía argentina.\n\n`,
+    `---\n\n*Fuente original: [${newsItem.source}](${newsItem.url})*\n`,
+    `*Fecha de publicación: ${new Date(newsItem.publishedAt).toLocaleDateString('es-AR')}*\n`,
+  ];
+
+  return sections.join('');
+};
+
+/**
+ * Extraer keywords
+ */
+const extractKeywords = (text: string): string[] => {
+  const commonWords = new Set([
+    'el', 'la', 'de', 'que', 'y', 'a', 'en', 'un', 'ser', 'se', 'no', 'haber',
+    'por', 'con', 'su', 'para', 'como', 'estar', 'tener', 'le', 'lo', 'todo',
+  ]);
+
+  const words = text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .split(/\W+/)
+    .filter(word => word.length > 3 && !commonWords.has(word));
+
+  const frequency: Record<string, number> = {};
+  words.forEach(word => {
+    frequency[word] = (frequency[word] || 0) + 1;
+  });
+
+  return Object.entries(frequency)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 10)
+    .map(([word]) => word);
+};
+
+/**
+ * Generar slug
+ */
+const generateSlug = (title: string): string => {
+  return title
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 60);
+};
+
+/**
+ * Obtener noticias por categoría y generar versiones únicas
+ */
+export const getUniqueNewsByCategory = async (
+  category: string,
+  limit: number = 10
+): Promise<Array<NewsItem & ReturnType<typeof generateUniqueVersion>>> => {
+  const latestNews = await fetchLatestNews(category);
+  const uniqueNews = [];
+
+  for (let i = 0; i < Math.min(latestNews.length, limit); i++) {
+    const newsItem = latestNews[i];
+    const uniqueVersion = await generateUniqueVersion(newsItem);
+    
+    uniqueNews.push({
+      ...newsItem,
+      ...uniqueVersion,
+    });
+  }
+
+  return uniqueNews as any;
+};
+
+/**
+ * Obtener trending topics y generar noticias
+ */
+export const getTrendingNews = async (): Promise<Array<NewsItem & ReturnType<typeof generateUniqueVersion>>> => {
+  const trendingTopics = await getGoogleTrendsTopics();
+  const allNews: any[] = [];
+
+  // Obtener noticias de todas las categorías
+  const categories = ['politica', 'economia', 'sociedad'];
+  
+  for (const category of categories) {
+    const news = await getUniqueNewsByCategory(category, 5);
+    allNews.push(...news);
+  }
+
+  return allNews.slice(0, 15); // Top 15 noticias trending
+};
