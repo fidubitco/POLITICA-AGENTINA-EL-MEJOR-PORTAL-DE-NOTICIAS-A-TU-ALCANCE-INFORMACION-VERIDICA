@@ -29,9 +29,7 @@
     "noImplicitOverride": false,
     "noPropertyAccessFromIndexSignature": false,
     "allowUnusedLabels": true,
-    "allowUnreachableCode": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "suppressExcessPropertyErrors": true
+    "allowUnreachableCode": true
   },
   "include": [
     "client/src/**/*",
