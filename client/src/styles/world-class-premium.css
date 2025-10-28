@@ -8,18 +8,31 @@
    VARIABLES GLOBALES
    ======================================== */
 :root {
-  /* Colores BBC/NYT Style */
-  --color-primary: #1a1a1a;
-  --color-secondary: #2c2c2c;
-  --color-accent: #bb1919;
-  --color-accent-hover: #990000;
-  --color-text: #1a1a1a;
-  --color-text-secondary: #4a4a4a;
-  --color-text-muted: #767676;
+  /* Colores Profesionales - Inspirado en BBC/NYT/The Guardian */
+  --color-primary: #121212;
+  --color-secondary: #1e1e1e;
+  --color-accent: #c41e3a;
+  --color-accent-hover: #a01729;
+  --color-accent-light: #e63950;
+  --color-text: #121212;
+  --color-text-secondary: #3c3c3c;
+  --color-text-muted: #6b6b6b;
   --color-background: #ffffff;
-  --color-background-alt: #f5f5f5;
-  --color-border: #e0e0e0;
-  --color-border-light: #f0f0f0;
+  --color-background-alt: #f8f8f8;
+  --color-background-dark: #f3f3f3;
+  --color-border: #dcdcdc;
+  --color-border-light: #ebebeb;
+  --color-border-dark: #c8c8c8;
+  
+  /* Colores de Categorías */
+  --color-politica: #1e40af;
+  --color-economia: #059669;
+  --color-sociedad: #7c3aed;
+  --color-judicial: #dc2626;
+  --color-internacional: #0891b2;
+  --color-deportes: #ea580c;
+  --color-cultura: #db2777;
+  --color-tecnologia: #4f46e5;
   
   /* Typography */
   --font-primary: 'Georgia', 'Times New Roman', serif;
