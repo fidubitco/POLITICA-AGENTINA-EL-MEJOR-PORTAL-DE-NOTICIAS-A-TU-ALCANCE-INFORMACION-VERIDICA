@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { HomeWorldClass } from './pages/HomeWorldClass';
 import HomeWorldClassPremium from './pages/HomeWorldClassPremium';
+import HomeProfessional from './pages/HomeProfessional';
 import { HomeSimple } from './pages/HomeSimple';
 import NotFoundPage from './pages/NotFoundPage';
 import ForbiddenPage from './pages/ForbiddenPage';
@@ -61,9 +62,9 @@ function App() {
         <div className="App">
       <Switch>
           {/* Home routes - TODOS LOS IDIOMAS */}
-          <Route path="/" component={HomeWorldClassPremium} />
+          <Route path="/" component={HomeProfessional} />
           {supportedLanguages.filter(l => l.code !== 'es').map(lang => (
-            <Route key={`home-${lang.code}`} path={`/${lang.code}`} component={HomeWorldClassPremium} />
+            <Route key={`home-${lang.code}`} path={`/${lang.code}`} component={HomeProfessional} />
           ))}
           
           {/* Article detail routes - TODOS LOS IDIOMAS */}

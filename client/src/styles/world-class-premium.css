@@ -9,30 +9,30 @@
    ======================================== */
 :root {
   /* Colores Profesionales - Inspirado en BBC/NYT/The Guardian */
-  --color-primary: #121212;
-  --color-secondary: #1e1e1e;
-  --color-accent: #c41e3a;
-  --color-accent-hover: #a01729;
-  --color-accent-light: #e63950;
-  --color-text: #121212;
-  --color-text-secondary: #3c3c3c;
-  --color-text-muted: #6b6b6b;
+  --color-primary: #1a1a1a;
+  --color-secondary: #2d2d2d;
+  --color-accent: #bb1e10;
+  --color-accent-hover: #8b1710;
+  --color-accent-light: #d32f2f;
+  --color-text: #1a1a1a;
+  --color-text-secondary: #4a4a4a;
+  --color-text-muted: #767676;
   --color-background: #ffffff;
-  --color-background-alt: #f8f8f8;
-  --color-background-dark: #f3f3f3;
-  --color-border: #dcdcdc;
-  --color-border-light: #ebebeb;
-  --color-border-dark: #c8c8c8;
+  --color-background-alt: #f5f5f5;
+  --color-background-dark: #eeeeee;
+  --color-border: #e0e0e0;
+  --color-border-light: #f0f0f0;
+  --color-border-dark: #d0d0d0;
   
-  /* Colores de Categorías */
-  --color-politica: #1e40af;
-  --color-economia: #059669;
-  --color-sociedad: #7c3aed;
-  --color-judicial: #dc2626;
-  --color-internacional: #0891b2;
-  --color-deportes: #ea580c;
-  --color-cultura: #db2777;
-  --color-tecnologia: #4f46e5;
+  /* Colores de Categorías - Profesionales y Distintivos */
+  --color-politica: #1565c0;
+  --color-economia: #2e7d32;
+  --color-sociedad: #6a1b9a;
+  --color-judicial: #c62828;
+  --color-internacional: #00838f;
+  --color-deportes: #e65100;
+  --color-cultura: #ad1457;
+  --color-tecnologia: #283593;
   
   /* Typography */
   --font-primary: 'Georgia', 'Times New Roman', serif;
