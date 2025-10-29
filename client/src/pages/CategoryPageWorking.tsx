@@ -11,12 +11,14 @@ import { getArticlesByCategory, allArticles } from '../data/allNews';
 import { MegaExtremeSEO } from '../components/MegaExtremeSEO';
 
 const categories = {
-  politica: { name: 'Política', color: '#3B82F6', description: 'Últimas noticias sobre política argentina' },
-  economia: { name: 'Economía', color: '#10B981', description: 'Análisis económico y financiero' },
-  sociedad: { name: 'Sociedad', color: '#F59E0B', description: 'Noticias de la sociedad argentina' },
-  internacional: { name: 'Internacional', color: '#EF4444', description: 'Noticias internacionales' },
-  deportes: { name: 'Deportes', color: '#8B5CF6', description: 'Deportes y competiciones' },
-  cultura: { name: 'Cultura', color: '#EC4899', description: 'Arte, cultura y entretenimiento' },
+  politica: { name: 'Política', color: '#1565c0', description: 'Últimas noticias sobre política argentina' },
+  economia: { name: 'Economía', color: '#2e7d32', description: 'Análisis económico y financiero' },
+  judicial: { name: 'Judicial', color: '#c62828', description: 'Causas judiciales y justicia argentina' },
+  sociedad: { name: 'Sociedad', color: '#6a1b9a', description: 'Noticias de la sociedad argentina' },
+  internacional: { name: 'Internacional', color: '#00838f', description: 'Noticias internacionales' },
+  deportes: { name: 'Deportes', color: '#e65100', description: 'Deportes y competiciones' },
+  cultura: { name: 'Cultura', color: '#ad1457', description: 'Arte, cultura y entretenimiento' },
+  tecnologia: { name: 'Tecnología', color: '#283593', description: 'Tecnología e innovación' },
 };
 
 export const CategoryPageWorking: React.FC = () => {
