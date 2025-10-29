@@ -25,16 +25,19 @@ export const ArticleCardProfessional: React.FC<ArticleCardProfessionalProps> = (
 }) => {
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
-      politica: 'text-blue-700 bg-blue-50',
-      economia: 'text-green-700 bg-green-50',
-      sociedad: 'text-purple-700 bg-purple-50',
-      judicial: 'text-red-700 bg-red-50',
-      internacional: 'text-cyan-700 bg-cyan-50',
-      deportes: 'text-orange-700 bg-orange-50',
-      cultura: 'text-pink-700 bg-pink-50',
-      tecnologia: 'text-indigo-700 bg-indigo-50',
+      politica: 'text-[#0d47a1] bg-[#e3f2fd] hover:bg-[#bbdefb]',
+      economia: 'text-[#1b5e20] bg-[#e8f5e9] hover:bg-[#c8e6c9]',
+      sociedad: 'text-[#4a148c] bg-[#f3e5f5] hover:bg-[#e1bee7]',
+      judicial: 'text-[#b71c1c] bg-[#ffebee] hover:bg-[#ffcdd2]',
+      internacional: 'text-[#006064] bg-[#e0f7fa] hover:bg-[#b2ebf2]',
+      deportes: 'text-[#bf360c] bg-[#fff3e0] hover:bg-[#ffe0b2]',
+      cultura: 'text-[#880e4f] bg-[#fce4ec] hover:bg-[#f8bbd0]',
+      tecnologia: 'text-[#1a237e] bg-[#e8eaf6] hover:bg-[#c5cae9]',
+      opinion: 'text-[#01579b] bg-[#e1f5fe] hover:bg-[#b3e5fc]',
+      elecciones: 'text-[#880e4f] bg-[#fce4ec] hover:bg-[#f8bbd0]',
+      provincias: 'text-[#004d40] bg-[#e0f2f1] hover:bg-[#b2dfdb]',
     };
-    return colors[category] || 'text-gray-700 bg-gray-50';
+    return colors[category] || 'text-gray-700 bg-gray-50 hover:bg-gray-100';
   };
 
   const formatDate = (dateString: string) => {

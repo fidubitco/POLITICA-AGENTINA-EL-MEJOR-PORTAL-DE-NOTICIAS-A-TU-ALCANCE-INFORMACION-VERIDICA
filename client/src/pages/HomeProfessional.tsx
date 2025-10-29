@@ -10,6 +10,7 @@ import { allArticles } from '../data/allNews';
 import { SupremeSEO } from '../components/SupremeSEO';
 import DolarWidget from '../components/DolarWidget';
 import ArticleCardProfessional from '../components/ArticleCardProfessional';
+import ExploreCategoriesSection from '../components/ExploreCategoriesSection';
 
 export const HomeProfessional: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -279,6 +280,9 @@ export const HomeProfessional: React.FC = () => {
             </div>
           </section>
         </main>
+
+        {/* Explore Categories Section */}
+        <ExploreCategoriesSection />
 
         {/* Footer */}
         <footer className="bg-gray-900 text-white py-12 border-t border-gray-800">
