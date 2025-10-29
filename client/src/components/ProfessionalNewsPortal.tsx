@@ -477,7 +477,6 @@ const ProfessionalNewsPortal: React.FC = () => {
 
   const loadMore = useCallback(() => {
     // Implementar carga infinita
-    console.log('Cargando más artículos...');
   }, []);
 
   useInfiniteScroll(loadMore, hasMore);

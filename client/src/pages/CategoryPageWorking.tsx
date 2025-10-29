@@ -26,15 +26,10 @@ export const CategoryPageWorking: React.FC = () => {
   const { i18n } = useTranslation();
   const categorySlug = (params.category || 'politica').toLowerCase();
   
-  console.log('CategoryPageWorking - categorySlug:', categorySlug);
-  console.log('CategoryPageWorking - params:', params);
-  
   const category = categories[categorySlug as keyof typeof categories] || categories.politica;
   
   // Obtener artículos de esta categoría
   const articles = getArticlesByCategory(categorySlug);
-  
-  console.log('CategoryPageWorking - articles found:', articles.length);
 
   // Formatear fecha
   const formatDate = (dateString: string) => {
