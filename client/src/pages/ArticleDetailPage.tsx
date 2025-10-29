@@ -1,7 +1,7 @@
 import { useRoute } from 'wouter';
 import { BBCHeader } from '../components/BBCHeader';
 import { MegaSEO } from '../components/MegaSEO';
-import { newsData } from '../data/newsData';
+import { allArticles } from '../data/allNews';
 import { Clock, Share2, Facebook, Twitter, Linkedin, Mail, ArrowLeft } from 'lucide-react';
 import { Link } from 'wouter';
 import '../styles/bbc-style.css';
@@ -10,8 +10,8 @@ export const ArticleDetailPage = () => {
   const [, params] = useRoute('/noticia/:id');
   const articleId = params?.id ? parseInt(params.id) : null;
   
-  const article = newsData.find(a => a.id === articleId);
-  const relatedArticles = newsData
+  const article = allArticles.find(a => a.id === articleId);
+  const relatedArticles = allArticles
     .filter(a => a.category === article?.category && a.id !== articleId)
     .slice(0, 3);
 

@@ -302,6 +302,34 @@
           .catch(function(err) { console.log('SW registration failed:', err); });
       });
     }
+    
+    // Suprimir errores de extensiones de Web3/Ethereum
+    window.addEventListener('error', function(e) {
+      // Ignorar errores de extensiones del navegador
+      if (e.filename && (
+        e.filename.includes('inpage.js') ||
+        e.filename.includes('injected.js') ||
+        e.filename.includes('chrome-extension://') ||
+        e.filename.includes('moz-extension://')
+      )) {
+        e.preventDefault();
+        e.stopPropagation();
+        return true;
+      }
+    }, true);
+    
+    window.addEventListener('unhandledrejection', function(e) {
+      // Ignorar promesas rechazadas de extensiones
+      const reason = e.reason?.toString() || '';
+      if (reason.includes('ethereum') || 
+          reason.includes('tronlink') ||
+          reason.includes('chrome-extension') ||
+          reason.includes('Cannot redefine property')) {
+        e.preventDefault();
+        e.stopPropagation();
+        return true;
+      }
+    });
   </script>
   </body>
 </html>
