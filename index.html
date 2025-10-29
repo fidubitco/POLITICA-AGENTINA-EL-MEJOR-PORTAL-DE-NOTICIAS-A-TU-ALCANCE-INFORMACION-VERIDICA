@@ -292,9 +292,10 @@
   <!-- Main Application Script -->
   <script type="module" src="/client/src/main.tsx"></script>
   
-  <!-- Service Worker Registration (PWA) -->
+  <!-- Service Worker Registration (PWA) - DESACTIVADO TEMPORALMENTE -->
   <script>
-    if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+    // Service Worker desactivado para evitar conflictos con extensiones del navegador
+    if ('serviceWorker' in navigator && false) {
       window.addEventListener('load', function() {
         navigator.serviceWorker.register('/sw.js')
           .then(function(reg) { console.log('SW registered:', reg.scope); })
