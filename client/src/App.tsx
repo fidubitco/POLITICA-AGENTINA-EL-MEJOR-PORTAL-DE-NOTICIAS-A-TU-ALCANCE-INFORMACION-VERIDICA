@@ -16,6 +16,7 @@ import CategoryPageProfessional from './pages/CategoryPageProfessional';
 import { NewsArticlePage } from './pages/NewsArticlePage';
 import { Login } from './pages/admin/Login';
 import { AdminDashboardEnterprise } from './pages/admin/AdminDashboardEnterprise';
+import AdminDashboardProfessional from './pages/admin/AdminDashboardProfessional';
 import { EditArticle } from './pages/admin/EditArticle';
 import NewsEditor from './pages/admin/NewsEditor';
 import { CMSEditor } from './pages/admin/CMSEditor';
@@ -88,14 +89,14 @@ function App() {
           <Route path="/admin">
             {() => (
               <ProtectedRoute>
-                <AdminDashboardEnterprise />
+                <AdminDashboardProfessional />
               </ProtectedRoute>
             )}
           </Route>
           <Route path="/admin/dashboard">
             {() => (
               <ProtectedRoute>
-                <AdminDashboardEnterprise />
+                <AdminDashboardProfessional />
               </ProtectedRoute>
             )}
           </Route>
