@@ -4,6 +4,7 @@ import { MegaSEO } from '../components/MegaSEO';
 import { allArticles } from '../data/allNews';
 import { Clock, Share2, Facebook, Twitter, Linkedin, Mail, ArrowLeft } from 'lucide-react';
 import { Link } from 'wouter';
+import { NewsImage } from '../components/NewsImage';
 import '../styles/bbc-style.css';
 
 export const ArticleDetailPage = () => {
@@ -114,11 +115,14 @@ export const ArticleDetailPage = () => {
             {/* Featured Image */}
             {article.imageUrl && (
               <figure className="mb-8">
-                <img 
-                  src={article.imageUrl} 
-                  alt={article.title}
-                  className="w-full aspect-video object-cover rounded"
-                />
+                <div className="w-full aspect-video rounded overflow-hidden">
+                  <NewsImage
+                    src={article.imageUrl} 
+                    alt={article.title}
+                    category={article.categorySlug || article.category}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <figcaption className="text-sm text-gray-600 mt-2">
                   {article.title}
                 </figcaption>

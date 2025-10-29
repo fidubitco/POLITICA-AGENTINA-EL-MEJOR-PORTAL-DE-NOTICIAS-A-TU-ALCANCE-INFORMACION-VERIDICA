@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Calendar, Eye, ThumbsUp, Share2 } from 'lucide-react';
 import { getArticlesByCategory, allArticles } from '../data/allNews';
 import { MegaExtremeSEO } from '../components/MegaExtremeSEO';
+import { NewsImage } from '../components/NewsImage';
 
 const categories = {
   politica: { name: 'Política', color: '#1565c0', description: 'Últimas noticias sobre política argentina' },
@@ -105,18 +106,19 @@ export const CategoryPageWorking: React.FC = () => {
                     <article className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                       {/* Image */}
                       <div className="relative h-48 overflow-hidden">
-                        <img
+                        <NewsImage
                           src={article.imageUrl}
                           alt={article.title}
+                          category={categorySlug}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
                         {article.breaking && (
-                          <div className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                          <div className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold z-10">
                             URGENTE
                           </div>
                         )}
                         {article.featured && (
-                          <div className="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                          <div className="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10">
                             DESTACADO
                           </div>
                         )}
