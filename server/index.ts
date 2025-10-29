@@ -11,7 +11,6 @@ import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from './routers';
 import { createContext } from './context';
 import rssProxyRouter from './routes/rss-proxy';
-import TelegramBotService from './services/TelegramBotService';
 import { 
   handle404, 
   handle403, 
@@ -66,17 +65,6 @@ app.use(
   })
 );
 
-// Inicializar Telegram Bot
-let telegramBot: TelegramBotService | null = null;
-
-try {
-  telegramBot = new TelegramBotService();
-  console.log('✅ Telegram Bot iniciado correctamente');
-} catch (error) {
-  console.error('❌ Error iniciando Telegram Bot:', error);
-}
-
-// Error handler
 // Error handling middleware
 app.use(handle404);
 app.use(handle403);
@@ -85,17 +73,11 @@ app.use(handleErrors);
 // Graceful shutdown
 process.on('SIGINT', () => {
   console.log('🛑 Cerrando servidor...');
-  if (telegramBot) {
-    telegramBot.stop();
-  }
   process.exit(0);
 });
 
 process.on('SIGTERM', () => {
   console.log('🛑 Cerrando servidor...');
-  if (telegramBot) {
-    telegramBot.stop();
-  }
   process.exit(0);
 });
 
