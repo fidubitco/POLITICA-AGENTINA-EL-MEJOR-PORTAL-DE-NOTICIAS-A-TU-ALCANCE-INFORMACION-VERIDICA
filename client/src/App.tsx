@@ -34,6 +34,7 @@ import './styles/dashboard-premium.css';
 import './styles/categories-optimized.css';
 import './styles/dark-mode.css';
 import './styles/world-class-design.css';
+import './styles/world-class-premium.css';
 
 // Inicializar i18n
 import './lib/i18n';
