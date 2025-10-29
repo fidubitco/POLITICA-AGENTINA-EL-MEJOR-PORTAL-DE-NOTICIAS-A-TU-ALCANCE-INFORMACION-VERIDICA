@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
+import { getImageWithFallback } from '../utils/imageUtils';
 
 interface OptimizedImageProps {
   src: string;
@@ -12,6 +13,7 @@ interface OptimizedImageProps {
   width?: number;
   height?: number;
   priority?: boolean;
+  category?: string;
   onLoad?: () => void;
   onError?: () => void;
 }
@@ -23,6 +25,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   width,
   height,
   priority = false,
+  category = 'politica',
   onLoad,
   onError,
 }) => {
@@ -30,6 +33,9 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const [hasError, setHasError] = useState(false);
   const [isInView, setIsInView] = useState(priority);
   const imgRef = useRef<HTMLImageElement>(null);
+  
+  // Obtener URL optimizada con fallback
+  const optimizedSrc = getImageWithFallback(src, category);
 
   useEffect(() => {
     if (priority || !imgRef.current) return;
@@ -119,7 +125,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
       {/* Imagen real */}
       {isInView && (
         <img
-          src={src}
+          src={optimizedSrc}
           alt={alt}
           className={`${className} transition-opacity duration-300 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
@@ -130,6 +136,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
           decoding="async"
           onLoad={handleLoad}
           onError={handleError}
+          crossOrigin="anonymous"
         />
       )}
 
