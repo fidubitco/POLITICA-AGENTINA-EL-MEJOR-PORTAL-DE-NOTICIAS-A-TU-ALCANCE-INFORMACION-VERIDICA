@@ -103,7 +103,7 @@ export default function Header() {
                   <DropdownMenuItem onClick={() => changeLanguage('pt')}>
                     <span className="font-medium">Português</span>
                     <span className="ml-2 text-muted-foreground text-xs">(pt)</span>
-                  </DropdownMenuItem>
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -116,7 +116,7 @@ export default function Header() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
             {/* Logo - Estilo NYT */}
-            <Link href="/">
+          <Link href="/">
               <div className="flex flex-col cursor-pointer group">
                 <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight leading-none transition-colors group-hover:text-red-700">
                   Política Argentina
@@ -129,55 +129,55 @@ export default function Header() {
 
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
+            <Button
+              variant="ghost"
+              size="icon"
                 className="hover:bg-gray-100"
-                onClick={() => setSearchOpen(!searchOpen)}
-              >
-                <Search className="h-5 w-5" />
-              </Button>
+              onClick={() => setSearchOpen(!searchOpen)}
+            >
+              <Search className="h-5 w-5" />
+            </Button>
 
-              {isAuthenticated ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="hover:bg-gray-100">
-                      <User className="h-5 w-5" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>
-                      <div className="flex flex-col">
-                        <span>{user?.name || "Usuario"}</span>
-                        <span className="text-xs text-muted-foreground">{user?.email}</span>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
+                    <User className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>
+                    <div className="flex flex-col">
+                      <span>{user?.name || "Usuario"}</span>
+                      <span className="text-xs text-muted-foreground">{user?.email}</span>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile">
+                      <span className="cursor-pointer">{t("profile")}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  {(user?.role === "admin" || user?.role === "editor" || user?.role === "author") && (
                     <DropdownMenuItem asChild>
-                      <Link href="/profile">
-                        <span className="cursor-pointer">{t("profile")}</span>
+                      <Link href="/admin">
+                        <span className="cursor-pointer">{t("admin")}</span>
                       </Link>
                     </DropdownMenuItem>
-                    {(user?.role === "admin" || user?.role === "editor" || user?.role === "author") && (
-                      <DropdownMenuItem asChild>
-                        <Link href="/admin">
-                          <span className="cursor-pointer">{t("admin")}</span>
-                        </Link>
-                      </DropdownMenuItem>
-                    )}
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout}>{t("logout")}</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>{t("logout")}</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
                 <Button 
                   asChild 
                   size="sm" 
                   className="bg-red-700 hover:bg-red-800 text-white font-medium px-4"
                 >
                   <a href={getLoginUrl()}>Iniciar Sesión</a>
-                </Button>
-              )}
+              </Button>
+            )}
             </div>
 
             {/* Mobile Menu Toggle */}
@@ -189,26 +189,26 @@ export default function Header() {
             >
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
-          </div>
+        </div>
 
-          {/* Search Bar */}
-          {searchOpen && (
-            <div className="pb-4 animate-in slide-in-from-top">
-              <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
-                <div className="relative">
+        {/* Search Bar */}
+        {searchOpen && (
+          <div className="pb-4 animate-in slide-in-from-top">
+            <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
+              <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <Input
-                    type="search"
+                <Input
+                  type="search"
                     placeholder="Buscar noticias..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10 pr-4 border-gray-300 focus:border-red-700 focus:ring-red-700"
-                    autoFocus
-                  />
-                </div>
-              </form>
-            </div>
-          )}
+                  autoFocus
+                />
+              </div>
+            </form>
+          </div>
+        )}
         </div>
       </div>
 
