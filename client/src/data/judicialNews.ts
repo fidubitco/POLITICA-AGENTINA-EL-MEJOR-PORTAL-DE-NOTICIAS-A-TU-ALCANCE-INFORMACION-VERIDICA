@@ -8,81 +8,9 @@ import { Article } from './allNews';
 const now = Date.now();
 
 export const judicialNews: Article[] = [
-  // NOTICIA PRINCIPAL - FISCAL JULIANA COMPANYS
-  {
-    id: 201,
-    title: 'Fiscal Juliana Companys Investiga Megacausa de Corrupción en Obra Pública',
-    slug: 'fiscal-juliana-companys-investiga-megacausa-corrupcion-obra-publica',
-    excerpt: 'La fiscal federal Juliana Companys avanza en una compleja investigación sobre presuntas irregularidades en contratos de obra pública por más de USD 500 millones. La causa involucra a empresarios y ex funcionarios.',
-    content: `<p>La fiscal federal Juliana Companys, reconocida por su trabajo en casos de alta complejidad, lidera una investigación que podría convertirse en una de las causas de corrupción más importantes de los últimos años en Argentina.</p>
-
-<h2>La Investigación</h2>
-
-<h3>Alcance de la Causa</h3>
-<p>La fiscal Companys investiga presuntas irregularidades en la adjudicación y ejecución de contratos de obra pública durante el período 2015-2019, con un monto involucrado que supera los USD 500 millones.</p>
-
-<h3>Elementos Bajo Investigación</h3>
-<p>La causa se centra en:</p>
-<ul>
-<li><strong>Sobreprecios:</strong> Aumentos injustificados en costos de obras</li>
-<li><strong>Empresas fantasma:</strong> Sociedades creadas para desviar fondos</li>
-<li><strong>Sobornos:</strong> Pagos irregulares a funcionarios</li>
-<li><strong>Documentación falsa:</strong> Certificaciones de obras no realizadas</li>
-</ul>
-
-<h2>Perfil de la Fiscal</h2>
-
-<h3>Trayectoria Profesional</h3>
-<p>Juliana Companys se ha destacado por:</p>
-<ul>
-<li>15 años de carrera en el Ministerio Público Fiscal</li>
-<li>Especialización en delitos económicos y corrupción</li>
-<li>Casos emblemáticos de lavado de dinero y asociación ilícita</li>
-<li>Reconocimientos por su labor en transparencia judicial</li>
-</ul>
-
-<h2>Avances de la Investigación</h2>
-
-<h3>Pruebas Recopiladas</h3>
-<p>Hasta el momento se han reunido más de 50,000 documentos analizados, 200 testimonios de testigos y peritos, peritajes contables de empresas involucradas, registros bancarios de cuentas sospechosas y comunicaciones interceptadas con autorización judicial.</p>
-
-<h3>Allanamientos Realizados</h3>
-<p>En los últimos meses se efectuaron 15 allanamientos simultáneos en CABA y provincia de Buenos Aires, con secuestro de documentación contable, incautación de dispositivos electrónicos y bloqueo preventivo de cuentas bancarias.</p>
-
-<h2>Imputados y Procesados</h2>
-
-<p>La causa involucra a empresarios titulares de constructoras de primer nivel, empresarios con vínculos políticos, directivos de empresas contratistas y testaferros. También están bajo investigación ex secretarios de Obras Públicas, funcionarios de áreas de contrataciones, inspectores de obra y personal administrativo clave.</p>
-
-<h3>Estado Procesal</h3>
-<ul>
-<li>8 personas procesadas con prisión preventiva</li>
-<li>15 imputados con restricciones de salida del país</li>
-<li>Embargos por más de USD 300 millones</li>
-<li>Inhibición general de bienes</li>
-</ul>
-
-<h2>Impacto y Próximos Pasos</h2>
-
-<p>Se estima que el daño patrimonial alcanza los USD 500 millones en fondos públicos desviados. La fiscalía trabaja en la identificación de bienes adquiridos con fondos ilícitos, rastreo de cuentas offshore y decomiso preventivo de propiedades.</p>
-
-<p>El cronograma judicial prevé la finalización de peritajes pendientes en marzo de 2025, con elevación a juicio oral en abril y audiencias preliminares en mayo. El inicio del juicio oral está estimado para junio de 2025.</p>`,
-    category: 'judicial',
-    categorySlug: 'judicial',
-    author: 'Dr. Roberto Martínez - Redacción Judicial',
-    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&h=675&fit=crop&q=80&auto=format',
-    status: 'published',
-    featured: true,
-    breaking: true,
-    views: 32450,
-    likes: 2876,
-    shares: 1543,
-    publishedAt: new Date(now - 1800000).toISOString(),
-    createdAt: new Date(now - 1800000).toISOString(),
-    updatedAt: new Date(now - 1800000).toISOString(),
-    tags: ['fiscal', 'Juliana Companys', 'corrupción', 'obra pública', 'justicia', 'investigación'],
-  },
-
-  // BATCH 1 - 10 NOTICIAS JUDICIALES ACTUALES
+  // ARTÍCULO 201 ELIMINADO POR CONTENER INFORMACIÓN FALSA Y DIFAMATORIA
+  
+  // BATCH 1 - NOTICIAS JUDICIALES ACTUALES
   {
     id: 202,
     title: 'Juez Ordena Prisión Preventiva para Acusados de Estafa Piramidal',
