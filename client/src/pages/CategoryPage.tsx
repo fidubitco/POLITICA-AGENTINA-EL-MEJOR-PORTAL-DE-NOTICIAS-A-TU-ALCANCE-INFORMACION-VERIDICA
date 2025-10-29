@@ -58,7 +58,7 @@ export const CategoryPage: React.FC = () => {
       <Helmet>
         <title>{category.name} - Noticias y Actualidad | Política Argentina</title>
         <meta name="description" content={category.description} />
-        <meta name="keywords" content={category.keywords.join(', ')} />
+        <meta name="keywords" content={category.seoKeywords?.join(', ') || category.name} />
         <link rel="canonical" href={`https://politicaargentina.com/${category.slug}`} />
         
         {/* Open Graph */}
