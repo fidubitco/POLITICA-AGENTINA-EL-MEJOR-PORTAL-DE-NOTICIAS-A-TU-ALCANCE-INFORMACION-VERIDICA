@@ -66,10 +66,10 @@ export const judicialNews: Article[] = [
 <p>Se estima que el daño patrimonial alcanza los USD 500 millones en fondos públicos desviados. La fiscalía trabaja en la identificación de bienes adquiridos con fondos ilícitos, rastreo de cuentas offshore y decomiso preventivo de propiedades.</p>
 
 <p>El cronograma judicial prevé la finalización de peritajes pendientes en marzo de 2025, con elevación a juicio oral en abril y audiencias preliminares en mayo. El inicio del juicio oral está estimado para junio de 2025.</p>`,
-    category: 'Judicial',
+    category: 'judicial',
     categorySlug: 'judicial',
     author: 'Dr. Roberto Martínez - Redacción Judicial',
-    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&h=675&fit=crop&q=80&auto=format',
     status: 'published',
     featured: true,
     breaking: true,
@@ -112,10 +112,10 @@ export const judicialNews: Article[] = [
 <h2>Recupero de Fondos</h2>
 
 <p>Se incautaron USD 15 millones en cuentas bancarias, criptomonedas valuadas en USD 8 millones, propiedades inmobiliarias y vehículos de alta gama. La justicia trabaja en la identificación de todos los damnificados y el mecanismo de distribución proporcional.</p>`,
-    category: 'Judicial',
+    category: 'judicial',
     categorySlug: 'judicial',
     author: 'Redacción Judicial',
-    imageUrl: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&h=675&fit=crop&q=80&auto=format',
     status: 'published',
     featured: true,
     breaking: false,
@@ -145,10 +145,10 @@ export const judicialNews: Article[] = [
 <h2>Contexto de Violencia de Género</h2>
 
 <p>En Argentina se registra un femicidio cada 35 horas (promedio 2024). Para víctimas de violencia están disponibles la Línea 144 (atención 24/7), centros de atención especializados, asesoramiento legal gratuito y refugios y casas de protección.</p>`,
-    category: 'Judicial',
+    category: 'judicial',
     categorySlug: 'judicial',
     author: 'Redacción Judicial',
-    imageUrl: 'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=1200&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=1200&h=675&fit=crop&q=80&auto=format',
     status: 'published',
     featured: true,
     breaking: false,
@@ -182,10 +182,10 @@ export const judicialNews: Article[] = [
 <h2>Impacto Regional</h2>
 
 <p>Este caso representa un golpe significativo al narcotráfico regional, la desarticulación de una ruta de ingreso de drogas, cooperación internacional efectiva y un mensaje disuasivo a otras organizaciones.</p>`,
-    category: 'Judicial',
+    category: 'judicial',
     categorySlug: 'judicial',
     author: 'Redacción Judicial',
-    imageUrl: 'https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=1200&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=1200&h=675&fit=crop&q=80&auto=format',
     status: 'published',
     featured: false,
     breaking: false,
@@ -219,10 +219,10 @@ export const judicialNews: Article[] = [
 <h2>Protección de Víctimas</h2>
 
 <p>Durante el juicio se implementaron declaraciones sin presencia del acusado, uso de Cámara Gesell, prohibición de difusión de identidades y acompañamiento permanente.</p>`,
-    category: 'Judicial',
+    category: 'judicial',
     categorySlug: 'judicial',
     author: 'Redacción Judicial',
-    imageUrl: 'https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?w=1200&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?w=1200&h=675&fit=crop&q=80&auto=format',
     status: 'published',
     featured: true,
     breaking: false,
