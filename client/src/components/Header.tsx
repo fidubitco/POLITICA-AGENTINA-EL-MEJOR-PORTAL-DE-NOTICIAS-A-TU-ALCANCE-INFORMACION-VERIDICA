@@ -25,8 +25,9 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  const { data: categories } = trpc.categories.getActive.useQuery();
-  const { data: languages } = trpc.languages.getActive.useQuery();
+  // Usar categorías estáticas para mejor performance
+  // const { data: categories } = trpc.categories.getActive.useQuery();
+  // const { data: languages } = trpc.languages.getActive.useQuery();
   const logoutMutation = trpc.auth.logout.useMutation();
 
   useEffect(() => {
@@ -91,12 +92,18 @@ export default function Header() {
                 <DropdownMenuContent align="end" className="max-h-96 overflow-y-auto">
                   <DropdownMenuLabel>Idiomas / Languages</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  {languages?.map((lang) => (
-                    <DropdownMenuItem key={lang.code} onClick={() => changeLanguage(lang.code)}>
-                      <span className="font-medium">{lang.nativeName}</span>
-                      <span className="ml-2 text-muted-foreground text-xs">({lang.code})</span>
-                    </DropdownMenuItem>
-                  ))}
+                  <DropdownMenuItem onClick={() => changeLanguage('es')}>
+                    <span className="font-medium">Español</span>
+                    <span className="ml-2 text-muted-foreground text-xs">(es)</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => changeLanguage('en')}>
+                    <span className="font-medium">English</span>
+                    <span className="ml-2 text-muted-foreground text-xs">(en)</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => changeLanguage('pt')}>
+                    <span className="font-medium">Português</span>
+                    <span className="ml-2 text-muted-foreground text-xs">(pt)</span>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
