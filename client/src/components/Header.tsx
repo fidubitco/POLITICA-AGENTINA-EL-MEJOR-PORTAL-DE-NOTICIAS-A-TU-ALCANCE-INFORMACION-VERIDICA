@@ -208,7 +208,7 @@ export default function Header() {
       {/* Navigation Bar - Estilo BBC */}
       <div className="bg-gray-900 text-white">
         <div className="container mx-auto px-4">
-          <nav className="hidden lg:flex items-center h-12 gap-8">
+          <nav className="hidden lg:flex items-center h-12 gap-6">
             <Link href="/">
               <span className={`text-sm font-medium hover:text-red-400 transition-colors cursor-pointer border-b-2 ${
                 location === "/" ? "border-red-500" : "border-transparent"
@@ -216,17 +216,55 @@ export default function Header() {
                 Inicio
               </span>
             </Link>
-            {categories?.slice(0, 7).map((category) => (
-              <Link key={category.id} href={`/category/${category.slug}`}>
-                <span
-                  className={`text-sm font-medium hover:text-red-400 transition-colors cursor-pointer border-b-2 ${
-                    location === `/category/${category.slug}` ? "border-red-500" : "border-transparent"
-                  } h-12 flex items-center capitalize`}
-                >
-                  {category.slug}
-                </span>
-              </Link>
-            ))}
+            <Link href="/politica">
+              <span className={`text-sm font-medium hover:text-red-400 transition-colors cursor-pointer border-b-2 ${
+                location.includes("/politica") ? "border-red-500" : "border-transparent"
+              } h-12 flex items-center`}>
+                Política
+              </span>
+            </Link>
+            <Link href="/economia">
+              <span className={`text-sm font-medium hover:text-red-400 transition-colors cursor-pointer border-b-2 ${
+                location.includes("/economia") ? "border-red-500" : "border-transparent"
+              } h-12 flex items-center`}>
+                Economía
+              </span>
+            </Link>
+            <Link href="/judicial">
+              <span className={`text-sm font-medium hover:text-red-400 transition-colors cursor-pointer border-b-2 ${
+                location.includes("/judicial") ? "border-red-500" : "border-transparent"
+              } h-12 flex items-center`}>
+                Judicial
+              </span>
+            </Link>
+            <Link href="/sociedad">
+              <span className={`text-sm font-medium hover:text-red-400 transition-colors cursor-pointer border-b-2 ${
+                location.includes("/sociedad") ? "border-red-500" : "border-transparent"
+              } h-12 flex items-center`}>
+                Sociedad
+              </span>
+            </Link>
+            <Link href="/internacional">
+              <span className={`text-sm font-medium hover:text-red-400 transition-colors cursor-pointer border-b-2 ${
+                location.includes("/internacional") ? "border-red-500" : "border-transparent"
+              } h-12 flex items-center`}>
+                Internacional
+              </span>
+            </Link>
+            <Link href="/opinion">
+              <span className={`text-sm font-medium hover:text-red-400 transition-colors cursor-pointer border-b-2 ${
+                location.includes("/opinion") ? "border-red-500" : "border-transparent"
+              } h-12 flex items-center`}>
+                Opinión
+              </span>
+            </Link>
+            <Link href="/elecciones">
+              <span className={`text-sm font-medium hover:text-red-400 transition-colors cursor-pointer border-b-2 ${
+                location.includes("/elecciones") ? "border-red-500" : "border-transparent"
+              } h-12 flex items-center`}>
+                Elecciones
+              </span>
+            </Link>
           </nav>
         </div>
       </div>
@@ -242,17 +280,62 @@ export default function Header() {
                 Inicio
               </span>
             </Link>
-            {categories?.map((category) => (
-              <Link key={category.id} href={`/category/${category.slug}`} onClick={() => setMobileMenuOpen(false)}>
-                <span
-                  className={`block py-3 px-4 text-sm font-medium hover:bg-gray-50 rounded transition-colors cursor-pointer capitalize ${
-                    location === `/category/${category.slug}` ? "bg-red-50 text-red-700" : ""
-                  }`}
-                >
-                  {category.slug}
-                </span>
-              </Link>
-            ))}
+            <Link href="/politica" onClick={() => setMobileMenuOpen(false)}>
+              <span className={`block py-3 px-4 text-sm font-medium hover:bg-gray-50 rounded transition-colors cursor-pointer ${
+                location.includes("/politica") ? "bg-red-50 text-red-700" : ""
+              }`}>
+                Política
+              </span>
+            </Link>
+            <Link href="/economia" onClick={() => setMobileMenuOpen(false)}>
+              <span className={`block py-3 px-4 text-sm font-medium hover:bg-gray-50 rounded transition-colors cursor-pointer ${
+                location.includes("/economia") ? "bg-red-50 text-red-700" : ""
+              }`}>
+                Economía
+              </span>
+            </Link>
+            <Link href="/judicial" onClick={() => setMobileMenuOpen(false)}>
+              <span className={`block py-3 px-4 text-sm font-medium hover:bg-gray-50 rounded transition-colors cursor-pointer ${
+                location.includes("/judicial") ? "bg-red-50 text-red-700" : ""
+              }`}>
+                Judicial
+              </span>
+            </Link>
+            <Link href="/sociedad" onClick={() => setMobileMenuOpen(false)}>
+              <span className={`block py-3 px-4 text-sm font-medium hover:bg-gray-50 rounded transition-colors cursor-pointer ${
+                location.includes("/sociedad") ? "bg-red-50 text-red-700" : ""
+              }`}>
+                Sociedad
+              </span>
+            </Link>
+            <Link href="/internacional" onClick={() => setMobileMenuOpen(false)}>
+              <span className={`block py-3 px-4 text-sm font-medium hover:bg-gray-50 rounded transition-colors cursor-pointer ${
+                location.includes("/internacional") ? "bg-red-50 text-red-700" : ""
+              }`}>
+                Internacional
+              </span>
+            </Link>
+            <Link href="/opinion" onClick={() => setMobileMenuOpen(false)}>
+              <span className={`block py-3 px-4 text-sm font-medium hover:bg-gray-50 rounded transition-colors cursor-pointer ${
+                location.includes("/opinion") ? "bg-red-50 text-red-700" : ""
+              }`}>
+                Opinión
+              </span>
+            </Link>
+            <Link href="/elecciones" onClick={() => setMobileMenuOpen(false)}>
+              <span className={`block py-3 px-4 text-sm font-medium hover:bg-gray-50 rounded transition-colors cursor-pointer ${
+                location.includes("/elecciones") ? "bg-red-50 text-red-700" : ""
+              }`}>
+                Elecciones
+              </span>
+            </Link>
+            <Link href="/provincias" onClick={() => setMobileMenuOpen(false)}>
+              <span className={`block py-3 px-4 text-sm font-medium hover:bg-gray-50 rounded transition-colors cursor-pointer ${
+                location.includes("/provincias") ? "bg-red-50 text-red-700" : ""
+              }`}>
+                Provincias
+              </span>
+            </Link>
             
             {/* Mobile Actions */}
             <div className="mt-4 pt-4 border-t border-gray-200 flex flex-col gap-2">

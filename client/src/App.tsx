@@ -12,6 +12,7 @@ import ForbiddenPage from './pages/ForbiddenPage';
 import { ArticleDetailPage } from './pages/ArticleDetailPage';
 import { CategoryPageWorking } from './pages/CategoryPageWorking';
 import { CategoryPage } from './pages/CategoryPage';
+import CategoryPageProfessional from './pages/CategoryPageProfessional';
 import { NewsArticlePage } from './pages/NewsArticlePage';
 import { Login } from './pages/admin/Login';
 import { AdminDashboardEnterprise } from './pages/admin/AdminDashboardEnterprise';
@@ -75,8 +76,8 @@ function App() {
           
           {/* Category routes - TODOS LOS IDIOMAS */}
           <Route path="/categoria/:category" component={CategoryPageWorking} />
-          <Route path="/:category" component={CategoryPage} />
           <Route path="/:category/:slug" component={NewsArticlePage} />
+          <Route path="/:category" component={CategoryPageProfessional} />
           {supportedLanguages.filter(l => l.code !== 'es').map(lang => (
             <Route key={`category-${lang.code}`} path={`/${lang.code}/categoria/:category`} component={CategoryPageWorking} />
           ))}
