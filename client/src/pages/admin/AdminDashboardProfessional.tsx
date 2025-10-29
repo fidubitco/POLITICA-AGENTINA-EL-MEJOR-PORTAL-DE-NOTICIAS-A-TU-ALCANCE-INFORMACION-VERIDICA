@@ -160,42 +160,57 @@ export const AdminDashboardProfessional: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30 flex">
       {/* Sidebar */}
       <aside
         className={`${
-          sidebarOpen ? 'w-64' : 'w-20'
-        } bg-white border-r border-gray-200 transition-all duration-300 fixed h-full z-30`}
+          sidebarOpen ? 'w-72' : 'w-20'
+        } bg-white/80 backdrop-blur-xl border-r border-gray-200/50 shadow-xl transition-all duration-300 fixed h-full z-30`}
       >
         {/* Logo */}
-        <div className="h-16 border-b border-gray-200 flex items-center justify-between px-4">
+        <div className="h-20 border-b border-gray-200/50 flex items-center justify-between px-6 bg-gradient-to-r from-blue-600 to-purple-600">
           {sidebarOpen && (
-            <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                <Newspaper className="text-blue-600" size={24} />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-white">Política Argentina</h1>
+                <p className="text-xs text-blue-100">Panel Administrativo</p>
+              </div>
+            </div>
           )}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-white/20 rounded-lg transition-all text-white"
           >
             {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
         {/* Menu Items */}
-        <nav className="p-4 space-y-2">
+        <nav className="p-4 space-y-1.5 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
           {menuItems.map((item) => (
             <Link key={item.href} href={item.href}>
               <a
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-gray-50 ${
+                className={`group flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:shadow-md hover:scale-[1.02] ${
                   sidebarOpen ? '' : 'justify-center'
                 }`}
               >
-                <div className={`${item.bgColor} p-2 rounded-lg`}>
+                <div className={`${item.bgColor} p-2.5 rounded-xl group-hover:scale-110 transition-transform shadow-sm`}>
                   <item.icon size={20} className={item.color} />
                 </div>
                 {sidebarOpen && (
-                  <span className="text-sm font-medium text-gray-700">
-                    {item.title}
-                  </span>
+                  <div className="flex-1">
+                    <span className="text-sm font-semibold text-gray-700 group-hover:text-gray-900">
+                      {item.title}
+                    </span>
+                  </div>
+                )}
+                {sidebarOpen && (
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+                  </div>
                 )}
               </a>
             </Link>
@@ -204,21 +219,21 @@ export const AdminDashboardProfessional: React.FC = () => {
 
         {/* User Section */}
         {sidebarOpen && (
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200/50 bg-gradient-to-t from-white to-transparent backdrop-blur-sm">
+            <div className="flex items-center gap-3 mb-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
                 {user?.name?.[0] || 'A'}
               </div>
               <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-sm font-bold text-gray-900">
                   {user?.name || 'Administrador'}
                 </p>
-                <p className="text-xs text-gray-500">{user?.email || 'admin@politicaargentina.com'}</p>
+                <p className="text-xs text-gray-600">{user?.email || 'admin@politicaargentina.com'}</p>
               </div>
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors text-sm font-medium"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all shadow-md hover:shadow-lg text-sm font-semibold"
             >
               <LogOut size={16} />
               Cerrar Sesión
@@ -228,20 +243,23 @@ export const AdminDashboardProfessional: React.FC = () => {
       </aside>
 
       {/* Main Content */}
-      <main className={`flex-1 ${sidebarOpen ? 'ml-64' : 'ml-20'} transition-all duration-300`}>
+      <main className={`flex-1 ${sidebarOpen ? 'ml-72' : 'ml-20'} transition-all duration-300`}>
         {/* Header */}
-        <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
+        <header className="h-20 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-sm flex items-center justify-between px-8 sticky top-0 z-20">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Dashboard</h2>
-            <p className="text-sm text-gray-500">Bienvenido al panel de administración</p>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Dashboard
+            </h2>
+            <p className="text-sm text-gray-600 font-medium">Bienvenido al panel de administración</p>
           </div>
-          <div className="flex items-center gap-4">
-            <button className="p-2 hover:bg-gray-100 rounded-lg relative">
-              <Bell size={20} className="text-gray-600" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+          <div className="flex items-center gap-3">
+            <button className="relative p-3 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-xl transition-all group">
+              <Bell size={20} className="text-gray-600 group-hover:text-blue-600 transition-colors" />
+              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-gradient-to-r from-red-500 to-pink-500 rounded-full animate-pulse shadow-lg"></span>
+              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></span>
             </button>
             <Link href="/">
-              <a className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors text-sm font-medium">
+              <a className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg text-sm font-semibold">
                 <Home size={16} />
                 Ver Sitio
               </a>
@@ -253,67 +271,86 @@ export const AdminDashboardProfessional: React.FC = () => {
         <div className="p-8">
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-shadow">
+            <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 hover:border-blue-300">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-blue-50 rounded-lg">
-                  <FileText className="text-blue-600" size={24} />
+                <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+                  <FileText className="text-white" size={24} />
                 </div>
-                <span className="text-sm font-medium text-gray-500">Total</span>
+                <div className="px-3 py-1 bg-blue-50 rounded-full">
+                  <span className="text-xs font-bold text-blue-600">Total</span>
+                </div>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-1">{stats.totalArticles}</h3>
-              <p className="text-sm text-gray-500">Artículos</p>
+              <h3 className="text-4xl font-black bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-1">
+                {stats.totalArticles}
+              </h3>
+              <p className="text-sm text-gray-600 font-medium">Artículos Publicados</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-shadow">
+            <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 hover:border-green-300">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-green-50 rounded-lg">
-                  <Eye className="text-green-600" size={24} />
+                <div className="p-3 bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+                  <Eye className="text-white" size={24} />
                 </div>
-                <span className="text-sm font-medium text-gray-500">Vistas</span>
+                <div className="px-3 py-1 bg-green-50 rounded-full">
+                  <span className="text-xs font-bold text-green-600">Vistas</span>
+                </div>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-1">
+              <h3 className="text-4xl font-black bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent mb-1">
                 {stats.totalViews.toLocaleString()}
               </h3>
-              <p className="text-sm text-gray-500">Visualizaciones</p>
+              <p className="text-sm text-gray-600 font-medium">Visualizaciones Totales</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-shadow">
+            <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 hover:border-pink-300">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-pink-50 rounded-lg">
-                  <ThumbsUp className="text-pink-600" size={24} />
+                <div className="p-3 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+                  <ThumbsUp className="text-white" size={24} />
                 </div>
-                <span className="text-sm font-medium text-gray-500">Likes</span>
+                <div className="px-3 py-1 bg-pink-50 rounded-full">
+                  <span className="text-xs font-bold text-pink-600">Likes</span>
+                </div>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-1">
+              <h3 className="text-4xl font-black bg-gradient-to-r from-pink-600 to-pink-800 bg-clip-text text-transparent mb-1">
                 {stats.totalLikes.toLocaleString()}
               </h3>
-              <p className="text-sm text-gray-500">Me gusta</p>
+              <p className="text-sm text-gray-600 font-medium">Me Gusta Recibidos</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-shadow">
+            <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 hover:border-purple-300">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-purple-50 rounded-lg">
-                  <Share2 className="text-purple-600" size={24} />
+                <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+                  <Share2 className="text-white" size={24} />
                 </div>
-                <span className="text-sm font-medium text-gray-500">Shares</span>
+                <div className="px-3 py-1 bg-purple-50 rounded-full">
+                  <span className="text-xs font-bold text-purple-600">Shares</span>
+                </div>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-1">
+              <h3 className="text-4xl font-black bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-1">
                 {stats.totalShares.toLocaleString()}
               </h3>
-              <p className="text-sm text-gray-500">Compartidos</p>
+              <p className="text-sm text-gray-600 font-medium">Veces Compartido</p>
             </div>
           </div>
 
           {/* Quick Actions */}
           <div className="mb-8">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Acciones Rápidas</h3>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1 h-8 bg-gradient-to-b from-blue-600 to-purple-600 rounded-full"></div>
+              <h3 className="text-2xl font-black text-gray-900">Acciones Rápidas</h3>
+              <Zap size={24} className="text-yellow-500" />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {quickActions.map((action) => (
                 <Link key={action.href} href={action.href}>
-                  <a className={`${action.color} rounded-xl p-6 text-white hover:opacity-90 transition-opacity`}>
-                    <action.icon size={32} className="mb-3" />
-                    <h4 className="text-lg font-bold mb-1">{action.title}</h4>
-                    <p className="text-sm opacity-90">{action.description}</p>
+                  <a className={`group ${action.color} rounded-2xl p-6 text-white hover:scale-[1.05] hover:shadow-2xl transition-all duration-300 relative overflow-hidden`}>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
+                    <div className="relative z-10">
+                      <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                        <action.icon size={28} />
+                      </div>
+                      <h4 className="text-xl font-black mb-2">{action.title}</h4>
+                      <p className="text-sm opacity-90 font-medium">{action.description}</p>
+                    </div>
                   </a>
                 </Link>
               ))}
@@ -323,37 +360,47 @@ export const AdminDashboardProfessional: React.FC = () => {
           {/* Tables */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Recent Articles */}
-            <div className="bg-white rounded-xl border border-gray-200">
-              <div className="p-6 border-b border-gray-200">
-                <h3 className="text-lg font-bold text-gray-900">Artículos Recientes</h3>
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-lg overflow-hidden">
+              <div className="p-6 border-b border-gray-200/50 bg-gradient-to-r from-blue-50 to-purple-50">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                    <Newspaper size={20} className="text-white" />
+                  </div>
+                  <h3 className="text-xl font-black text-gray-900">Artículos Recientes</h3>
+                </div>
               </div>
               <div className="p-6">
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {recentArticles.map((article) => (
-                    <div key={article.id} className="flex items-start gap-4 p-4 hover:bg-gray-50 rounded-lg transition-colors">
-                      <img
-                        src={article.imageUrl}
-                        alt={article.title}
-                        className="w-16 h-16 object-cover rounded-lg"
-                      />
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2">
+                    <div key={article.id} className="group flex items-start gap-4 p-4 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-xl transition-all hover:shadow-md">
+                      <div className="relative">
+                        <img
+                          src={article.imageUrl}
+                          alt={article.title}
+                          className="w-20 h-20 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform"
+                        />
+                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-lg">
+                          <span className="text-white text-xs font-bold">✓</span>
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-bold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
                           {article.title}
                         </h4>
-                        <div className="flex items-center gap-4 text-xs text-gray-500">
-                          <span className="flex items-center gap-1">
-                            <Eye size={12} />
+                        <div className="flex items-center gap-3 text-xs">
+                          <span className="flex items-center gap-1 text-gray-600 font-medium">
+                            <Eye size={14} className="text-blue-500" />
                             {article.views?.toLocaleString()}
                           </span>
-                          <span className="flex items-center gap-1">
-                            <ThumbsUp size={12} />
+                          <span className="flex items-center gap-1 text-gray-600 font-medium">
+                            <ThumbsUp size={14} className="text-pink-500" />
                             {article.likes?.toLocaleString()}
                           </span>
                         </div>
                       </div>
                       <Link href={`/admin/editor/${article.id}`}>
-                        <a className="p-2 hover:bg-gray-100 rounded-lg">
-                          <Edit size={16} className="text-gray-600" />
+                        <a className="p-2.5 hover:bg-white rounded-xl transition-all shadow-sm hover:shadow-md">
+                          <Edit size={18} className="text-gray-600 group-hover:text-blue-600 transition-colors" />
                         </a>
                       </Link>
                     </div>
@@ -363,28 +410,32 @@ export const AdminDashboardProfessional: React.FC = () => {
             </div>
 
             {/* Top Articles */}
-            <div className="bg-white rounded-xl border border-gray-200">
-              <div className="p-6 border-b border-gray-200">
-                <h3 className="text-lg font-bold text-gray-900">Más Leídos</h3>
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-lg overflow-hidden">
+              <div className="p-6 border-b border-gray-200/50 bg-gradient-to-r from-orange-50 to-red-50">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center shadow-md">
+                    <TrendingUp size={20} className="text-white" />
+                  </div>
+                  <h3 className="text-xl font-black text-gray-900">Más Leídos</h3>
+                </div>
               </div>
               <div className="p-6">
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {topArticles.map((article, index) => (
-                    <div key={article.id} className="flex items-start gap-4 p-4 hover:bg-gray-50 rounded-lg transition-colors">
-                      <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                    <div key={article.id} className="group flex items-start gap-4 p-4 hover:bg-gradient-to-r hover:from-orange-50 hover:to-red-50 rounded-xl transition-all hover:shadow-md">
+                      <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-lg group-hover:scale-110 transition-transform">
                         {index + 1}
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-bold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors">
                           {article.title}
                         </h4>
-                        <div className="flex items-center gap-4 text-xs text-gray-500">
-                          <span className="flex items-center gap-1">
-                            <Eye size={12} />
+                        <div className="flex items-center gap-3 text-xs">
+                          <span className="flex items-center gap-1 text-gray-600 font-medium">
+                            <Eye size={14} className="text-orange-500" />
                             {article.views?.toLocaleString()}
                           </span>
-                          <span className="flex items-center gap-1">
-                            <TrendingUp size={12} />
+                          <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded-full font-bold">
                             {article.category}
                           </span>
                         </div>
