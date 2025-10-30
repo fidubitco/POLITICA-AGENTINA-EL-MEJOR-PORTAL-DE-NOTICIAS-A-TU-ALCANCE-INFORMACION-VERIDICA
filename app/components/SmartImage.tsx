@@ -13,6 +13,7 @@ interface SmartImageProps {
   category: string;
   categorySlug: string;
   tags: string[];
+  content?: string;
   articleId?: string;
   width?: number;
   height?: number;
@@ -31,6 +32,7 @@ export function SmartImage({
   category,
   categorySlug,
   tags,
+  content,
   articleId,
   width = 1200,
   height = 675,
@@ -61,7 +63,7 @@ export function SmartImage({
 
         // Si no hay imagen específica, usar el sistema optimizado
         if (!imageToUse && categorySlug && title) {
-          const optimizedImage = getOptimizedImageForArticle(categorySlug, title, tags);
+          const optimizedImage = getOptimizedImageForArticle(categorySlug, title, tags, content);
           if (optimizedImage) {
             imageToUse = optimizedImage.url;
             console.log(`🎯 Imagen optimizada automática para "${title}": ${optimizedImage.title}`);
@@ -100,7 +102,7 @@ export function SmartImage({
           }
         } else {
           // Fallback si no hay imagen
-          const fallbackImage = getOptimizedImageForArticle(categorySlug, title, tags);
+          const fallbackImage = getOptimizedImageForArticle(categorySlug, title, tags, content);
           const fallbackUrl = fallbackImage ? fallbackImage.url : fallbackSrc || '';
           setCurrentSrc(fallbackUrl);
           console.log(`📋 Usando imagen de fallback para: "${title}"`);
@@ -109,7 +111,7 @@ export function SmartImage({
       } catch (error) {
         console.error('Error optimizing image:', error);
         // Usar fallback seguro
-        const fallbackImage = getOptimizedImageForArticle(categorySlug, title, tags);
+        const fallbackImage = getOptimizedImageForArticle(categorySlug, title, tags, content);
         setCurrentSrc(fallbackImage ? fallbackImage.url : (src || fallbackSrc || ''));
       } finally {
         setIsOptimizing(false);
@@ -256,6 +258,7 @@ export function ArticleImage({
     category: string;
     categorySlug: string;
     tags: string[];
+    content?: string;
     imageUrl?: string;
   };
   className?: string;
@@ -271,6 +274,7 @@ export function ArticleImage({
       category={article.category}
       categorySlug={article.categorySlug}
       tags={article.tags}
+      content={article.content}
       articleId={article.id?.toString()}
       width={width}
       height={height}

@@ -5,6 +5,8 @@
  * Todas las URLs apuntan a imágenes reales y apropiadas para el contenido
  */
 
+import { getPoliticalImage, selectBestPoliticalImage, detectPoliticalFigures } from './politicalImages';
+
 export interface OptimizedImage {
   url: string;
   alt: string;
@@ -238,22 +240,72 @@ export const categoryImages: Record<string, OptimizedImage[]> = {
 
 /**
  * Obtiene una imagen optimizada para una noticia específica
+ * Prioriza figuras políticas sobre imágenes genéricas de categoría
  */
 export function getOptimizedImageForArticle(
   categorySlug: string,
   title: string,
-  tags: string[] = []
+  tags: string[] = [],
+  content?: string
 ): OptimizedImage | null {
+  // 1. PRIMERO: Buscar figuras políticas en el contenido
+  const politicalFigures = detectPoliticalFigures(`${title} ${content || ''} ${tags.join(' ')}`);
+  if (politicalFigures.length > 0) {
+    const politicalImage = selectBestPoliticalImage(title, content || '', tags);
+    if (politicalImage) {
+      // Convertir PoliticalImage a OptimizedImage
+      return {
+        url: politicalImage.url,
+        alt: politicalImage.alt,
+        title: politicalImage.title,
+        category: categorySlug,
+        tags: politicalFigures,
+        width: 1200,
+        height: 675,
+        source: politicalImage.source as any
+      };
+    }
+  }
+
+  // 2. SEGUNDO: Buscar imágenes específicas por contenido político
+  const titleLower = title.toLowerCase();
+  const contentLower = content?.toLowerCase() || '';
+  const tagsLower = tags.map(tag => tag.toLowerCase());
+
+  // Casos específicos políticos
+  if (titleLower.includes('milei') && (titleLower.includes('congreso') || titleLower.includes('diputados'))) {
+    return {
+      url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&h=675&fit=crop&q=80&auto=format',
+      alt: 'Milei en el Congreso Nacional',
+      title: 'Milei en sesión legislativa',
+      category: categorySlug,
+      tags: ['Milei', 'Congreso', 'Política'],
+      width: 1200,
+      height: 675,
+      source: 'news'
+    };
+  }
+
+  if (titleLower.includes('cristina') && (titleLower.includes('acto') || titleLower.includes('discurso'))) {
+    return {
+      url: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=1200&h=675&fit=crop&q=80&auto=format',
+      alt: 'Cristina Kirchner en acto político',
+      title: 'CFK en actividad política',
+      category: categorySlug,
+      tags: ['Cristina Kirchner', 'Peronismo', 'Política'],
+      width: 1200,
+      height: 675,
+      source: 'news'
+    };
+  }
+
+  // 3. TERCERO: Usar imágenes genéricas de categoría
   const categoryImagesList = categoryImages[categorySlug];
   if (!categoryImagesList || categoryImagesList.length === 0) {
     return null;
   }
 
-  // Buscar imagen que coincida mejor con el contenido
-  const titleLower = title.toLowerCase();
-  const tagsLower = tags.map(tag => tag.toLowerCase());
-
-  // Buscar coincidencias por tags primero
+  // Buscar coincidencias por tags
   for (const image of categoryImagesList) {
     const imageTagsLower = image.tags.map(tag => tag.toLowerCase());
     const hasTagMatch = tagsLower.some(tag =>
