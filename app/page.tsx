@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
-import { HeroSection } from './components/HeroSection';
-import { FeaturedNews } from './components/FeaturedNews';
-import { CategorySections } from './components/CategorySections';
-import { SidebarWidgets } from './components/SidebarWidgets';
+import { HeroSection } from '@/components/HeroSection';
+import { FeaturedNews } from '@/components/FeaturedNews';
+import { CategorySections } from '@/components/CategorySections';
+import { SidebarWidgets } from '@/components/SidebarWidgets';
 import { allArticles, getFeaturedArticles, getBreakingNews } from '@/data/allNews';
 
 export const metadata: Metadata = {
@@ -19,8 +19,8 @@ export default function HomePage() {
   const breakingNews = getBreakingNews();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section con Three.js */}
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
       <HeroSection breakingNews={breakingNews} />
 
       {/* Contenido Principal */}

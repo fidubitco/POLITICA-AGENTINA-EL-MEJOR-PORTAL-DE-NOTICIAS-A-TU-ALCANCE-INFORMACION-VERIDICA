@@ -1,80 +1,16 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Article } from '@/data/allNews';
 import { NewsImage } from '@/components/NewsImage';
-
-gsap.registerPlugin(ScrollTrigger);
+import { Article } from '@/data/allNews';
 
 interface HeroSectionProps {
   breakingNews: Article[];
 }
 
 export function HeroSection({ breakingNews }: HeroSectionProps) {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const newsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!heroRef.current) return;
-
-    const tl = gsap.timeline();
-
-    // Animación del título principal
-    tl.fromTo(
-      titleRef.current,
-      {
-        opacity: 0,
-        y: 50,
-        scale: 0.9,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 1.2,
-        ease: 'power2.out',
-      }
-    );
-
-    // Animación de las noticias de última hora
-    tl.fromTo(
-      newsRef.current?.children || [],
-      {
-        opacity: 0,
-        x: -30,
-      },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power1.out',
-      },
-      '-=0.5'
-    );
-
-    // Scroll animations
-    ScrollTrigger.create({
-      trigger: heroRef.current,
-      start: 'top center',
-      end: 'bottom center',
-      animation: tl,
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
-
   return (
-    <section
-      ref={heroRef}
-      className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden"
-    >
-      {/* Background con Three.js placeholder */}
+    <section className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+      {/* Background con gradiente */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-slate-900/40" />
 
       {/* Contenido principal */}
@@ -82,10 +18,7 @@ export function HeroSection({ breakingNews }: HeroSectionProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Columna izquierda - Título y descripción */}
           <div className="text-white space-y-8">
-            <h1
-              ref={titleRef}
-              className="text-5xl lg:text-7xl font-bold leading-tight"
-            >
+            <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
               Política
               <span className="block text-blue-400">Argentina</span>
             </h1>
@@ -106,10 +39,7 @@ export function HeroSection({ breakingNews }: HeroSectionProps) {
           </div>
 
           {/* Columna derecha - Última hora */}
-          <div
-            ref={newsRef}
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
               <div className="w-2 h-8 bg-red-500 rounded-full animate-pulse" />
               ÚLTIMA HORA

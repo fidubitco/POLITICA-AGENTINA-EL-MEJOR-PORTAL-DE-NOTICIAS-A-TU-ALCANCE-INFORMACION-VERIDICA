@@ -10,124 +10,228 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String
-  role      String   @default("editor") // admin, editor, journalist
-  avatar    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  articles  Article[]
-  sessions  Session[]
-
-  @@map("users")
-}
-
-model Session {
-  id        String   @id @default(cuid())
-  userId    String
-  token     String   @unique
-  expiresAt DateTime
-  createdAt DateTime @default(now())
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("sessions")
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(VIEWER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+  articles Article[]
+  comments Comment[]
+  likes    Like[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Article {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   title       String
-  slug        String   @unique
+  slug        String      @unique
   excerpt     String
-  content     String   @db.Text
+  content     String
   category    String
   categorySlug String
   authorId    String
-  imageUrl    String
-  status      String   @default("draft") // draft, published, archived
-  featured    Boolean  @default(false)
-  breaking    Boolean  @default(false)
-  views       Int      @default(0)
-  likes       Int      @default(0)
-  shares      Int      @default(0)
+  imageUrl    String?
+  status      ArticleStatus @default(DRAFT)
+  featured    Boolean     @default(false)
+  breaking    Boolean     @default(false)
+  views       Int         @default(0)
+  likes       Int         @default(0)
+  shares      Int         @default(0)
   publishedAt DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
-  author User @relation(fields: [authorId], references: [id])
-  tags   ArticleTag[]
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments Comment[]
+  likes    Like[]
+  tags     Tag[]
 
-  @@map("articles")
+  // Translations
+  translations ArticleTranslation[]
+
+  // SEO
+  seoTitle       String?
+  seoDescription String?
+  keywords       String[]
+
+  @@index([categorySlug])
+  @@index([status])
+  @@index([publishedAt])
+  @@index([featured])
 }
 
-model ArticleTag {
-  id        String @id @default(cuid())
-  articleId String
-  tagId     String
+model ArticleTranslation {
+  id         String @id @default(cuid())
+  articleId  String
+  language   String
+  title      String
+  excerpt    String
+  content    String
+  seoTitle   String?
+  seoDescription String?
 
   article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
-  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
-  @@unique([articleId, tagId])
-  @@map("article_tags")
+  @@unique([articleId, language])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  authorId  String
+  articleId String
+  parentId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author  User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  article Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  replies Comment[] @relation("CommentReplies")
+  parent  Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  articleId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, articleId])
 }
 
 model Tag {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  slug      String   @unique
-  createdAt DateTime @default(now())
+  id    String @id @default(cuid())
+  name  String @unique
+  slug  String @unique
 
-  articles ArticleTag[]
-
-  @@map("tags")
+  articles Article[]
 }
 
 model Category {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  slug        String   @unique
-  description String?
-  icon        String?
-  color       String?
+  id          String @id @default(cuid())
+  name        String
+  slug        String @unique
+  description String
+  icon        String
+  color       String
+  order       Int    @default(0)
+  active      Boolean @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@map("categories")
+  subcategories Subcategory[]
 }
 
-model KnowledgeBase {
-  id          String   @id @default(cuid())
+model Subcategory {
+  id          String @id @default(cuid())
+  name        String
+  slug        String @unique
+  description String
+  categoryId  String
+  order       Int    @default(0)
+  active      Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model KnowledgeBaseEntry {
+  id          String @id @default(cuid())
   title       String
-  content     String   @db.Text
-  type        String   // text, pdf, audio, video, link
-  url         String?  // for external links or file URLs
-  tags        String[] // for AI search
+  content     String
+  type        KnowledgeType
+  category    String
+  tags        String[]
+  metadata    Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@map("knowledge_base")
+  @@index([type])
+  @@index([category])
 }
 
-model Analytics {
+model AnalyticsEvent {
   id        String   @id @default(cuid())
   event     String
-  data      Json
+  category  String
+  action    String
+  label     String?
+  value     Int?
   userId    String?
-  articleId String?
-  createdAt DateTime @default(now())
+  sessionId String?
+  page      String?
+  referrer  String?
+  userAgent String?
+  ip        String?
+  timestamp DateTime @default(now())
 
-  @@map("analytics")
+  @@index([event])
+  @@index([category])
+  @@index([timestamp])
 }
 
-model Settings {
-  id    String @id @default(cuid())
-  key   String @unique
-  value Json
+enum Role {
+  VIEWER
+  EDITOR
+  ADMIN
+}
 
-  @@map("settings")
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum KnowledgeType {
+  TEXT
+  PDF
+  AUDIO
+  VIDEO
+  LINK
 }

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
+import { LanguageSelector } from '@/components/LanguageSelector';
 import { categories } from '@/data/categories';
 import {
   Globe,
@@ -24,7 +25,6 @@ import {
   TrendingUp,
   Scale,
   Users,
-  Globe as GlobeIcon,
   MessageSquare,
   Vote,
   Map,
@@ -36,36 +36,29 @@ const categoryIcons: Record<string, any> = {
   economia: TrendingUp,
   judicial: Scale,
   sociedad: Users,
-  internacional: GlobeIcon,
+  internacional: Globe,
   opinion: MessageSquare,
   elecciones: Vote,
   provincias: Map,
 };
 
 export default function Header() {
+  const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const router = useRouter();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
-    return () => clearInterval(timer);
-  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/buscar?q=${encodeURIComponent(searchQuery)}`);
+      window.location.href = `/buscar?q=${encodeURIComponent(searchQuery)}`;
       setSearchOpen(false);
       setSearchQuery('');
     }
   };
 
   const formatTime = () => {
-    return currentTime.toLocaleTimeString('es-AR', {
+    return new Date().toLocaleTimeString('es-AR', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false
@@ -73,17 +66,12 @@ export default function Header() {
   };
 
   const formatDate = () => {
-    return currentTime.toLocaleDateString('es-AR', {
+    return new Date().toLocaleDateString('es-AR', {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
       year: 'numeric'
     });
-  };
-
-  const changeLanguage = (langCode: string) => {
-    // Implementar cambio de idioma
-    console.log('Cambiando idioma a:', langCode);
   };
 
   return (
@@ -106,34 +94,7 @@ export default function Header() {
                 <span className="font-medium">Dólar: $1,200</span>
               </div>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-xs hover:bg-gray-200">
-                    <Globe className="h-3.5 w-3.5" />
-                    <span>ES</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="max-h-96 overflow-y-auto">
-                  <DropdownMenuLabel>Idiomas / Languages</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => changeLanguage('es')}>
-                    <span className="font-medium">Español</span>
-                    <span className="ml-2 text-muted-foreground text-xs">(es)</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => changeLanguage('en')}>
-                    <span className="font-medium">English</span>
-                    <span className="ml-2 text-muted-foreground text-xs">(en)</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => changeLanguage('pt')}>
-                    <span className="font-medium">Português</span>
-                    <span className="ml-2 text-muted-foreground text-xs">(pt)</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => changeLanguage('fr')}>
-                    <span className="font-medium">Français</span>
-                    <span className="ml-2 text-muted-foreground text-xs">(fr)</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <LanguageSelector />
             </div>
           </div>
         </div>
@@ -148,8 +109,8 @@ export default function Header() {
               <Building2 className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Política</h1>
-              <p className="text-xs text-gray-600">Argentina</p>
+              <h1 className="text-xl font-bold text-gray-900">{t('hero.title')}</h1>
+              <p className="text-xs text-gray-600">{t('hero.subtitle')}</p>
             </div>
           </Link>
 
@@ -157,20 +118,15 @@ export default function Header() {
           <nav className="hidden lg:flex items-center space-x-1">
             {categories.slice(0, 6).map((category) => {
               const IconComponent = categoryIcons[category.slug] || Building2;
-              const isActive = pathname === `/categoria/${category.slug}`;
 
               return (
                 <Link
                   key={category.slug}
                   href={`/categoria/${category.slug}`}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    isActive
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
-                  }`}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
                 >
                   <IconComponent className="w-4 h-4" />
-                  <span>{category.name}</span>
+                  <span>{t(`categories.${category.slug}.name`, category.name)}</span>
                 </Link>
               );
             })}
@@ -184,7 +140,7 @@ export default function Header() {
                 <form onSubmit={handleSearch} className="flex items-center gap-2">
                   <Input
                     type="text"
-                    placeholder="Buscar noticias..."
+                    placeholder={t('common.search', 'Buscar noticias...')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-64"
@@ -224,16 +180,16 @@ export default function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
+                <DropdownMenuLabel>{t('nav.profile', 'Mi Cuenta')}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Link href="/perfil">Perfil</Link>
+                  <Link href="/perfil">{t('nav.profile', 'Perfil')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href="/admin">Panel Admin</Link>
+                  <Link href="/admin">{t('nav.admin', 'Panel Admin')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Cerrar Sesión</DropdownMenuItem>
+                <DropdownMenuItem>{t('nav.logout', 'Cerrar Sesión')}</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -257,21 +213,16 @@ export default function Header() {
             <nav className="space-y-2">
               {categories.slice(0, 6).map((category) => {
                 const IconComponent = categoryIcons[category.slug] || Building2;
-                const isActive = pathname === `/categoria/${category.slug}`;
 
                 return (
                   <Link
                     key={category.slug}
                     href={`/categoria/${category.slug}`}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                      isActive
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-700 hover:bg-gray-100'
-                    }`}
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-700 hover:bg-gray-100"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <IconComponent className="w-5 h-5" />
-                    <span className="font-medium">{category.name}</span>
+                    <span className="font-medium">{t(`categories.${category.slug}.name`, category.name)}</span>
                   </Link>
                 );
               })}
@@ -284,7 +235,7 @@ export default function Header() {
                   className="block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Panel Administrativo
+                  {t('nav.admin', 'Panel Administrativo')}
                 </Link>
               </div>
             </div>

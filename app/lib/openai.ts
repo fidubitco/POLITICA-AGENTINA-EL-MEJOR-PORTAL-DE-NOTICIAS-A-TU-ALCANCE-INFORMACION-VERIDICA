@@ -1,327 +1,254 @@
 import OpenAI from 'openai';
 
-// Configuración de OpenAI
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY || '',
 });
 
-// Tipos para generación de contenido
-export interface ArticleGenerationOptions {
-  topic: string;
+export interface NewsGenerationOptions {
   category: string;
-  tone?: 'formal' | 'neutral' | 'informative';
+  keywords?: string[];
   length?: 'short' | 'medium' | 'long';
-  includeSources?: boolean;
-  targetAudience?: 'general' | 'experts' | 'students';
+  tone?: 'neutral' | 'formal' | 'informative';
+  language?: 'es' | 'en' | 'pt' | 'fr' | 'it' | 'de';
 }
 
-export interface ImageValidationResult {
-  isValid: boolean;
-  description: string;
-  relevanceScore: number;
-  suggestedTags: string[];
-  contentWarnings?: string[];
+export interface GeneratedNews {
+  title: string;
+  excerpt: string;
+  content: string;
+  tags: string[];
+  seoTitle: string;
+  seoDescription: string;
+  keywords: string[];
+  suggestedImage: string;
+  category: string;
 }
 
-export interface TranslationOptions {
-  text: string;
-  targetLanguage: string;
-  context?: string;
-  preserveFormatting?: boolean;
-}
+/**
+ * Genera una noticia completa usando OpenAI GPT-4
+ */
+export async function generateNews(options: NewsGenerationOptions): Promise<GeneratedNews> {
+  const {
+    category,
+    keywords = [],
+    length = 'medium',
+    tone = 'informative',
+    language = 'es'
+  } = options;
 
-// Sistema de IA para generación de artículos
-export class ArticleGeneratorAI {
-  private static readonly SYSTEM_PROMPT = `Eres un periodista político especializado en Argentina con más de 20 años de experiencia.
-  Tu tarea es generar artículos de alta calidad, objetivos y bien fundamentados sobre política argentina.
+  const lengthMap = {
+    short: '400-600 palabras',
+    medium: '800-1200 palabras',
+    long: '1500-2000 palabras'
+  };
 
-  REGLAS IMPORTANTES:
-  - Mantén absoluta neutralidad política
-  - Usa fuentes confiables y datos verificables
-  - Estructura los artículos con introducción, desarrollo y conclusión
-  - Incluye contexto histórico cuando sea relevante
-  - Usa un lenguaje profesional pero accesible
-  - Evita sensacionalismo y mantén el rigor periodístico
-  - Siempre incluye fecha de publicación y actualización`;
+  const toneMap = {
+    neutral: 'neutral e imparcial',
+    formal: 'formal y profesional',
+    informative: 'informativo y detallado'
+  };
 
-  static async generateArticle(options: ArticleGenerationOptions): Promise<{
-    title: string;
-    excerpt: string;
-    content: string;
-    tags: string[];
-    seoTitle: string;
-    seoDescription: string;
-    sources: string[];
-  }> {
-    try {
-      const prompt = this.buildArticlePrompt(options);
+  const prompt = `
+Eres un periodista profesional especializado en política argentina. Genera una noticia completa y original sobre ${category} en Argentina.
 
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
-        messages: [
-          {
-            role: 'system',
-            content: this.SYSTEM_PROMPT
-          },
-          {
-            role: 'user',
-            content: prompt
-          }
-        ],
-        temperature: 0.7,
-        max_tokens: 4000,
-        response_format: { type: 'json_object' }
-      });
-
-      const response = completion.choices[0]?.message?.content;
-      if (!response) {
-        throw new Error('No se recibió respuesta de OpenAI');
-      }
-
-      return JSON.parse(response);
-    } catch (error) {
-      console.error('Error generando artículo con IA:', error);
-      throw new Error('Error al generar el artículo. Por favor, inténtalo de nuevo.');
-    }
-  }
-
-  private static buildArticlePrompt(options: ArticleGenerationOptions): string {
-    const { topic, category, tone = 'neutral', length = 'medium', includeSources = true, targetAudience = 'general' } = options;
-
-    return `Genera un artículo completo sobre: "${topic}"
-
-INFORMACIÓN REQUERIDA:
+REQUISITOS:
+- Idioma: ${language === 'es' ? 'Español de Argentina' : language}
+- Longitud: ${lengthMap[length]}
+- Tono: ${toneMap[tone]}
 - Categoría: ${category}
-- Tono: ${tone}
-- Longitud: ${length} (${length === 'short' ? '800-1200 palabras' : length === 'medium' ? '1200-1800 palabras' : '1800-2500 palabras'})
-- Audiencia: ${targetAudience}
-- Incluir fuentes: ${includeSources ? 'Sí' : 'No'}
+- Palabras clave a incluir: ${keywords.join(', ') || 'actualidad política argentina'}
 
-FORMATO DE RESPUESTA (JSON):
+La noticia debe incluir:
+1. Título atractivo y SEO-friendly
+2. Bajada (excerpt) de 2-3 líneas
+3. Contenido completo con introducción, desarrollo y conclusión
+4. Tags relevantes
+5. Meta título y descripción SEO optimizados
+6. Palabras clave SEO
+7. Descripción de imagen sugerida (para búsqueda en Unsplash)
+
+IMPORTANTE:
+- Debe ser completamente original
+- Información verídica y actual
+- Lenguaje periodístico profesional
+- Optimizado para SEO
+- Enfocado en Argentina
+
+Formato de respuesta JSON:
 {
-  "title": "Título atractivo y SEO-friendly",
-  "excerpt": "Resumen de 150-200 caracteres",
-  "content": "Artículo completo en HTML con párrafos <p>, encabezados <h2>, <h3> si es necesario",
-  "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
-  "seoTitle": "Título SEO optimizado (50-60 caracteres)",
-  "seoDescription": "Meta description (150-160 caracteres)",
-  "sources": ["Fuente 1", "Fuente 2", "Fuente 3"]
+  "title": "Título de la noticia",
+  "excerpt": "Bajada de la noticia",
+  "content": "Contenido completo en HTML",
+  "tags": ["tag1", "tag2", "tag3"],
+  "seoTitle": "Título SEO",
+  "seoDescription": "Descripción SEO",
+  "keywords": ["palabra", "clave", "seo"],
+  "suggestedImage": "descripción de imagen para Unsplash",
+  "category": "${category}"
+}
+`;
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4-turbo-preview',
+      messages: [
+        {
+          role: 'system',
+          content: 'Eres un periodista profesional argentino especializado en generar contenido periodístico de alta calidad.'
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      temperature: 0.7,
+      max_tokens: 4000,
+      response_format: { type: 'json_object' }
+    });
+
+    const response = completion.choices[0]?.message?.content;
+    if (!response) {
+      throw new Error('No se recibió respuesta de OpenAI');
+    }
+
+    const generatedNews = JSON.parse(response) as GeneratedNews;
+    return generatedNews;
+
+  } catch (error) {
+    console.error('Error generating news with OpenAI:', error);
+    throw new Error('Error al generar la noticia');
+  }
 }
 
-El artículo debe ser completamente original, informativo y mantener los estándares periodísticos más altos.`;
-  }
+/**
+ * Traduce una noticia a múltiples idiomas
+ */
+export async function translateNews(
+  content: string,
+  targetLanguages: string[]
+): Promise<Record<string, string>> {
+  const translations: Record<string, string> = {};
 
-  static async validateImage(imageUrl: string, context: string): Promise<ImageValidationResult> {
+  for (const lang of targetLanguages) {
     try {
-      const prompt = `Analiza esta imagen en el contexto de un artículo sobre: "${context}"
-
-Evalúa:
-1. Relevancia con el tema (0-100)
-2. Calidad y nitidez de la imagen
-3. Adecuación para contenido periodístico
-4. Posibles problemas (contenido sensible, derechos de autor, etc.)
-
-Responde en formato JSON:
-{
-  "isValid": boolean,
-  "description": "Descripción detallada de la imagen",
-  "relevanceScore": number (0-100),
-  "suggestedTags": ["tag1", "tag2"],
-  "contentWarnings": ["advertencia1"] (opcional)
-}`;
-
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-4-vision-preview',
-        messages: [
-          {
-            role: 'user',
-            content: [
-              { type: 'text', text: prompt },
-              {
-                type: 'image_url',
-                image_url: { url: imageUrl }
-              }
-            ]
-          }
-        ],
-        max_tokens: 1000,
-        response_format: { type: 'json_object' }
-      });
-
-      const response = completion.choices[0]?.message?.content;
-      if (!response) {
-        throw new Error('No se recibió respuesta de validación de imagen');
-      }
-
-      return JSON.parse(response);
-    } catch (error) {
-      console.error('Error validando imagen con IA:', error);
-      return {
-        isValid: false,
-        description: 'Error al validar la imagen',
-        relevanceScore: 0,
-        suggestedTags: []
-      };
-    }
-  }
-
-  static async translateText(options: TranslationOptions): Promise<string> {
-    try {
-      const { text, targetLanguage, context, preserveFormatting = true } = options;
-
-      const prompt = `Traduce el siguiente texto al ${targetLanguage}:
-
-TEXTO ORIGINAL:
-${text}
-
-${context ? `CONTEXTO: ${context}` : ''}
-${preserveFormatting ? 'PRESERVA el formato HTML y la estructura del texto.' : 'Traduce solo el contenido, ignora el formato HTML.'}
-
-INSTRUCCIONES:
-- Mantén el tono y estilo periodístico
-- Preserva términos técnicos cuando no tengan traducción directa
-- Asegúrate de que la traducción sea natural y fluida
-- Mantén la objetividad y neutralidad del contenido original`;
-
       const completion = await openai.chat.completions.create({
         model: 'gpt-4-turbo-preview',
         messages: [
           {
             role: 'system',
-            content: 'Eres un traductor profesional especializado en contenido periodístico y político.'
+            content: `Traduce el siguiente contenido al ${lang}. Mantén el estilo periodístico profesional y la terminología política argentina apropiada.`
           },
           {
             role: 'user',
-            content: prompt
+            content: content
           }
         ],
         temperature: 0.3,
         max_tokens: 2000
       });
 
-      const translatedText = completion.choices[0]?.message?.content;
-      if (!translatedText) {
-        throw new Error('No se recibió respuesta de traducción');
+      const translation = completion.choices[0]?.message?.content;
+      if (translation) {
+        translations[lang] = translation;
       }
-
-      return translatedText.trim();
     } catch (error) {
-      console.error('Error traduciendo texto con IA:', error);
-      throw new Error('Error al traducir el contenido. Por favor, inténtalo de nuevo.');
+      console.error(`Error translating to ${lang}:`, error);
     }
   }
 
-  static async generateImageDescription(imageUrl: string): Promise<{
-    description: string;
-    altText: string;
-    caption: string;
-    tags: string[];
-  }> {
-    try {
-      const prompt = `Describe esta imagen para un artículo periodístico. Proporciona:
-
-1. Descripción detallada (2-3 oraciones)
-2. Texto alternativo SEO-friendly (una frase concisa)
-3. Pie de foto apropiado para publicación
-4. Tags relevantes separados por comas
-
-Responde en formato JSON.`;
-
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-4-vision-preview',
-        messages: [
-          {
-            role: 'user',
-            content: [
-              { type: 'text', text: prompt },
-              {
-                type: 'image_url',
-                image_url: { url: imageUrl }
-              }
-            ]
-          }
-        ],
-        max_tokens: 500,
-        response_format: { type: 'json_object' }
-      });
-
-      const response = completion.choices[0]?.message?.content;
-      if (!response) {
-        throw new Error('No se recibió respuesta de descripción de imagen');
-      }
-
-      return JSON.parse(response);
-    } catch (error) {
-      console.error('Error generando descripción de imagen:', error);
-      return {
-        description: 'Imagen relacionada con el contenido del artículo',
-        altText: 'Imagen del artículo',
-        caption: 'Imagen del artículo',
-        tags: ['imagen', 'artículo']
-      };
-    }
-  }
-
-  static async suggestRelatedTopics(mainTopic: string, category: string): Promise<string[]> {
-    try {
-      const prompt = `Sugiere 5 temas relacionados con: "${mainTopic}" en la categoría "${category}"
-
-Los temas deben ser:
-- Actuales y relevantes
-- Específicos pero no demasiado nicho
-- Atractivos para lectores interesados en política argentina
-- Variados para cubrir diferentes aspectos
-
-Responde solo con una lista JSON de strings.`;
-
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
-        messages: [
-          {
-            role: 'user',
-            content: prompt
-          }
-        ],
-        temperature: 0.8,
-        max_tokens: 300,
-        response_format: { type: 'json_object' }
-      });
-
-      const response = completion.choices[0]?.message?.content;
-      if (!response) {
-        throw new Error('No se recibió respuesta de sugerencias');
-      }
-
-      const result = JSON.parse(response);
-      return result.topics || result.suggestions || [];
-    } catch (error) {
-      console.error('Error generando sugerencias de temas:', error);
-      return [];
-    }
-  }
+  return translations;
 }
 
-// Función helper para verificar si OpenAI está configurado
-export function isOpenAIConfigured(): boolean {
-  return !!process.env.OPENAI_API_KEY;
-}
-
-// Función para obtener estadísticas de uso de la API
-export async function getOpenAIUsage(): Promise<{
-  totalRequests: number;
-  totalTokens: number;
-  estimatedCost: number;
-} | null> {
+/**
+ * Genera sugerencias de imágenes basadas en el contenido
+ */
+export async function generateImageSuggestions(content: string, count: number = 3): Promise<string[]> {
   try {
-    // En producción, implementar lógica para obtener uso real de la API
-    return {
-      totalRequests: 0,
-      totalTokens: 0,
-      estimatedCost: 0
-    };
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'system',
+          content: `Genera ${count} descripciones de imágenes optimizadas para búsqueda en Unsplash. Cada descripción debe ser específica, visual y atractiva.`
+        },
+        {
+          role: 'user',
+          content: `Analiza este contenido y genera ${count} búsquedas de imágenes apropiadas:\n\n${content.substring(0, 500)}...`
+        }
+      ],
+      temperature: 0.8,
+      max_tokens: 300
+    });
+
+    const response = completion.choices[0]?.message?.content;
+    if (!response) return [];
+
+    // Parse the response and extract image suggestions
+    const suggestions = response
+      .split('\n')
+      .filter(line => line.trim())
+      .map(line => line.replace(/^\d+\.\s*/, '').trim())
+      .slice(0, count);
+
+    return suggestions;
+
   } catch (error) {
-    console.error('Error obteniendo estadísticas de OpenAI:', error);
-    return null;
+    console.error('Error generating image suggestions:', error);
+    return [];
+  }
+}
+
+/**
+ * Optimiza el contenido para SEO
+ */
+export async function optimizeForSEO(content: string, keywords: string[]): Promise<{
+  optimizedTitle: string;
+  optimizedDescription: string;
+  optimizedContent: string;
+  keywordDensity: Record<string, number>;
+}> {
+  try {
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4-turbo-preview',
+      messages: [
+        {
+          role: 'system',
+          content: `Optimiza el contenido para SEO. Mejora títulos, meta descriptions y densidad de palabras clave. Palabras clave: ${keywords.join(', ')}`
+        },
+        {
+          role: 'user',
+          content: `Optimiza este contenido para SEO:\n\n${content}`
+        }
+      ],
+      temperature: 0.3,
+      max_tokens: 1500
+    });
+
+    const response = completion.choices[0]?.message?.content;
+    if (!response) {
+      throw new Error('No se recibió respuesta de optimización SEO');
+    }
+
+    // Parse and structure the response
+    const lines = response.split('\n');
+    const optimizedTitle = lines.find(line => line.startsWith('Título:'))?.replace('Título:', '').trim() || '';
+    const optimizedDescription = lines.find(line => line.startsWith('Descripción:'))?.replace('Descripción:', '').trim() || '';
+
+    return {
+      optimizedTitle,
+      optimizedDescription,
+      optimizedContent: content, // Would be enhanced in full implementation
+      keywordDensity: {} // Would be calculated in full implementation
+    };
+
+  } catch (error) {
+    console.error('Error optimizing for SEO:', error);
+    return {
+      optimizedTitle: '',
+      optimizedDescription: '',
+      optimizedContent: content,
+      keywordDensity: {}
+    };
   }
 }
 

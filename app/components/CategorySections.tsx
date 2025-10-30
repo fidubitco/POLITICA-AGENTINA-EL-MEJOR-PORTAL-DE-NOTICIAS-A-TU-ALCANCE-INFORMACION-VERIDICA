@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Article } from '@/data/allNews';
 import { categories } from '@/data/categories';
 import { NewsImage } from '@/components/NewsImage';
@@ -11,21 +10,14 @@ interface CategorySectionsProps {
 }
 
 export function CategorySections({ articles }: CategorySectionsProps) {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-
-  const getArticlesByCategory = (categorySlug: string, limit = 6) => {
-    return articles
-      .filter(article => article.categorySlug === categorySlug)
-      .slice(0, limit);
-  };
-
   return (
     <div className="space-y-12">
       {categories.slice(0, 6).map((category) => {
-        const categoryArticles = getArticlesByCategory(category.slug);
-        if (categoryArticles.length === 0) return null;
+        const categoryArticles = articles
+          .filter(article => article.categorySlug === category.slug)
+          .slice(0, 6);
 
-        const isExpanded = activeCategory === category.slug;
+        if (categoryArticles.length === 0) return null;
 
         return (
           <section key={category.slug} className="space-y-6">
@@ -46,27 +38,24 @@ export function CategorySections({ articles }: CategorySectionsProps) {
                 </div>
               </div>
 
-              <button
-                onClick={() => setActiveCategory(isExpanded ? null : category.slug)}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
-              >
-                {isExpanded ? 'Ver menos' : 'Ver más'}
-                <ChevronRight className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+              <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                Ver más
+                <ChevronRight className="w-4 h-4" />
               </button>
             </div>
 
             {/* Grid de artículos */}
-            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${
-              isExpanded ? '' : 'max-h-96 overflow-hidden'
-            }`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {categoryArticles.map((article, index) => (
                 <article
                   key={article.id}
                   className={`bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer group border border-gray-100 overflow-hidden ${
-                    index === 0 && !isExpanded ? 'md:col-span-2 lg:col-span-2' : ''
+                    index === 0 ? 'md:col-span-2 lg:col-span-2' : ''
                   }`}
                 >
-                  <div className="relative aspect-video overflow-hidden">
+                  <div className={`relative overflow-hidden ${
+                    index === 0 ? 'aspect-[16/9]' : 'aspect-[4/3]'
+                  }`}>
                     <NewsImage
                       src={article.imageUrl}
                       alt={article.title}
@@ -99,7 +88,9 @@ export function CategorySections({ articles }: CategorySectionsProps) {
                       </span>
                     </div>
 
-                    <h4 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                    <h4 className={`font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 ${
+                      index === 0 ? 'text-lg' : 'text-base'
+                    }`}>
                       {article.title}
                     </h4>
 
@@ -107,7 +98,7 @@ export function CategorySections({ articles }: CategorySectionsProps) {
                       {article.excerpt}
                     </p>
 
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-100">
                       <div className="flex items-center gap-3">
                         <span>{article.views} vistas</span>
                         <span>{article.likes} likes</span>
@@ -123,19 +114,6 @@ export function CategorySections({ articles }: CategorySectionsProps) {
                 </article>
               ))}
             </div>
-
-            {/* Botón ver más */}
-            {categoryArticles.length >= 6 && (
-              <div className="text-center">
-                <button
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
-                  style={{ borderColor: category.color }}
-                >
-                  Ver todas las noticias de {category.name}
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            )}
           </section>
         );
       })}
