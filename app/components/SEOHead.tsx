@@ -90,3 +90,4 @@ export function generateMetadata(props: SEOHeadProps): Metadata {
   };
 }
 
+

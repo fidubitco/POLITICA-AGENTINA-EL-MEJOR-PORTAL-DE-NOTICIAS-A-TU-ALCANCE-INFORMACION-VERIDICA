@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "politics": "Politique",
+    "economy": "Économie",
+    "judicial": "Judiciaire",
+    "society": "Société",
+    "international": "International",
+    "opinion": "Opinion",
+    "elections": "Élections",
+    "provinces": "Provinces",
+    "search": "Rechercher",
+    "admin": "Administrer"
+  },
+  "hero": {
+    "title": "Politique",
+    "subtitle": "Argentine",
+    "description": "Le portail leader des nouvelles politiques d'Argentine. Informations mises à jour 24h/24 sur le gouvernement, le congrès et l'économie.",
+    "latestNews": "Dernières Nouvelles",
+    "viewCategories": "Voir les Catégories"
+  },
+  "categories": {
+    "politics": {
+      "name": "Politique",
+      "description": "Nouvelles politiques d'Argentine, gouvernement, congrès et élections"
+    },
+    "economy": {
+      "name": "Économie",
+      "description": "Économie argentine, dollar, inflation, marchés et finances"
+    },
+    "judicial": {
+      "name": "Judiciaire",
+      "description": "Nouvelles judiciaires, affaires, sentences et justice argentine"
+    },
+    "society": {
+      "name": "Société",
+      "description": "Nouvelles sociales, éducation, santé et culture argentine"
+    },
+    "international": {
+      "name": "International",
+      "description": "Nouvelles internationales et relations extérieures d'Argentine"
+    },
+    "opinion": {
+      "name": "Opinion",
+      "description": "Colonnes d'opinion, analyse politique et éditorial"
+    },
+    "elections": {
+      "name": "Élections",
+      "description": "Couverture électorale, sondages et résultats"
+    },
+    "provinces": {
+      "name": "Provinces",
+      "description": "Nouvelles des provinces argentines"
+    }
+  },
+  "common": {
+    "readMore": "Lire plus",
+    "published": "Publié",
+    "views": "vues",
+    "likes": "j'aime",
+    "shares": "partages",
+    "breaking": "DERNIÈRE HEURE",
+    "featured": "À LA UNE",
+    "trending": "Tendances",
+    "search": "Rechercher des nouvelles...",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "page": "Page",
+    "of": "de"
+  },
+  "footer": {
+    "about": "À propos",
+    "contact": "Contact",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "followUs": "Suivez-nous",
+    "copyright": "© 2025 Política Argentina. Tous droits réservés."
+  },
+  "seo": {
+    "title": "Política Argentina - Nouvelles Politiques d'Argentine",
+    "description": "Portail leader des nouvelles politiques d'Argentine. Informations mises à jour 24h/24 sur la politique, l'économie, le judiciaire, la société et plus.",
+    "keywords": "politique argentine, nouvelles argentine, gouvernement argentin, Milei, congrès, élections"
+  }
+}

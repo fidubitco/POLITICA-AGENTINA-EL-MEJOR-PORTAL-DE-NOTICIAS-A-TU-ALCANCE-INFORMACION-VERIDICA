@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Home",
+    "politics": "Politica",
+    "economy": "Economia",
+    "judicial": "Giudiziario",
+    "society": "Società",
+    "international": "Internazionale",
+    "opinion": "Opinione",
+    "elections": "Elezioni",
+    "provinces": "Province",
+    "search": "Cerca",
+    "admin": "Amministra"
+  },
+  "hero": {
+    "title": "Politica",
+    "subtitle": "Argentina",
+    "description": "Il portale leader delle notizie politiche dell'Argentina. Informazioni aggiornate 24 ore su governo, congresso ed economia.",
+    "latestNews": "Ultime Notizie",
+    "viewCategories": "Vedi Categorie"
+  },
+  "categories": {
+    "politics": {
+      "name": "Politica",
+      "description": "Notizie politiche dall'Argentina, governo, congresso ed elezioni"
+    },
+    "economy": {
+      "name": "Economia",
+      "description": "Economia argentina, dollaro, inflazione, mercati e finanze"
+    },
+    "judicial": {
+      "name": "Giudiziario",
+      "description": "Notizie giudiziarie, casi, sentenze e giustizia argentina"
+    },
+    "society": {
+      "name": "Società",
+      "description": "Notizie sociali, educazione, salute e cultura argentina"
+    },
+    "international": {
+      "name": "Internazionale",
+      "description": "Notizie internazionali e relazioni esterne dell'Argentina"
+    },
+    "opinion": {
+      "name": "Opinione",
+      "description": "Colonne di opinione, analisi politica e editoriale"
+    },
+    "elections": {
+      "name": "Elezioni",
+      "description": "Copertura elettorale, sondaggi e risultati"
+    },
+    "provinces": {
+      "name": "Province",
+      "description": "Notizie delle province argentine"
+    }
+  },
+  "common": {
+    "readMore": "Leggi di più",
+    "published": "Pubblicato",
+    "views": "visualizzazioni",
+    "likes": "mi piace",
+    "shares": "condivisioni",
+    "breaking": "ULTIMA ORA",
+    "featured": "IN EVIDENZA",
+    "trending": "Di tendenza",
+    "search": "Cerca notizie...",
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "retry": "Riprova",
+    "back": "Indietro",
+    "next": "Successivo",
+    "previous": "Precedente",
+    "page": "Pagina",
+    "of": "di"
+  },
+  "footer": {
+    "about": "Chi siamo",
+    "contact": "Contatto",
+    "privacy": "Privacy",
+    "terms": "Termini",
+    "followUs": "Seguici",
+    "copyright": "© 2025 Política Argentina. Tutti i diritti riservati."
+  },
+  "seo": {
+    "title": "Política Argentina - Notizie Politiche dell'Argentina",
+    "description": "Portale leader delle notizie politiche dell'Argentina. Informazioni aggiornate 24 ore su politica, economia, giudiziario, società e altro.",
+    "keywords": "politica argentina, notizie argentina, governo argentino, Milei, congresso, elezioni"
+  }
+}
