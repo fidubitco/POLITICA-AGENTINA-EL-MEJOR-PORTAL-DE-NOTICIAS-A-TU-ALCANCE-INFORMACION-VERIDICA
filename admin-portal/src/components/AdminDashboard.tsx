@@ -25,7 +25,7 @@ import {
   FileText,
   Image,
   Video,
-  Audio,
+  AudioLines as Audio,
   Link as LinkIcon
 } from 'lucide-react';
 
