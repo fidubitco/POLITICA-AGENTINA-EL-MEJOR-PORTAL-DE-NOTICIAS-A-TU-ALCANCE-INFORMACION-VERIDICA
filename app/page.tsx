@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Datos de ejemplo simplificados
+// Datos de ejemplo con imágenes contextuales argentinas
 const mockArticles = [
   {
     id: '1',
@@ -19,7 +19,7 @@ const mockArticles = [
     excerpt: 'El Presidente presentó un paquete de reformas económicas que incluye reducción del gasto público y apertura comercial.',
     views: 15420,
     likes: 892,
-    imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=225&fit=crop&q=80&auto=format'
+    imageUrl: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=225&fit=crop&q=80&auto=format'
   },
   {
     id: '2',
@@ -28,7 +28,7 @@ const mockArticles = [
     excerpt: 'La Vicepresidenta propone nuevas modificaciones al sistema previsional argentino.',
     views: 12890,
     likes: 756,
-    imageUrl: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=400&h=225&fit=crop&q=80&auto=format'
+    imageUrl: 'https://images.unsplash.com/photo-1587614295999-6c1f4c4e98f5?w=400&h=225&fit=crop&q=80&auto=format'
   },
   {
     id: '3',
@@ -46,7 +46,7 @@ const mockArticles = [
     excerpt: 'El máximo tribunal evalúa denuncias sobre irregularidades en contratos del Estado.',
     views: 9320,
     likes: 567,
-    imageUrl: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=400&h=225&fit=crop&q=80&auto=format'
+    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=225&fit=crop&q=80&auto=format'
   },
   {
     id: '5',
