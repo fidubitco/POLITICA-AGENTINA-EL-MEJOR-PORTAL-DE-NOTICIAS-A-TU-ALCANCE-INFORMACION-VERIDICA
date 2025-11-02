@@ -1,8 +1,8 @@
 // Service Worker para notificaciones push
 // Política Argentina - Portal de Noticias
 
-const CACHE_NAME = 'politica-argentina-v1';
-const STATIC_CACHE = 'politica-argentina-static-v1';
+const CACHE_NAME = 'politica-argentina-v2';
+const STATIC_CACHE = 'politica-argentina-static-v2';
 
 // Archivos a cachear
 const STATIC_FILES = [
