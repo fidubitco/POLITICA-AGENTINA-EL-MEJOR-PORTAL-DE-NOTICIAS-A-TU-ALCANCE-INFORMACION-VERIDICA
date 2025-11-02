@@ -27,7 +27,7 @@ function HomePageClient() {
       excerpt: 'El Presidente presentó un paquete de reformas económicas que incluye reducción del gasto público y apertura comercial.',
       views: 15420,
       likes: 892,
-      imageUrl: 'https://images.unsplash.com/photo-1582653291997-079a1c04e5a1?w=400&h=225&fit=crop&q=80&auto=format' // Congreso Nacional Argentina
+      imageUrl: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=800&h=450&fit=crop&q=80' // Buenos Aires Obelisco
     },
     {
       id: '2',
@@ -36,7 +36,7 @@ function HomePageClient() {
       excerpt: 'La Vicepresidenta propone nuevas modificaciones al sistema previsional argentino.',
       views: 12890,
       likes: 756,
-      imageUrl: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&h=225&fit=crop&q=80&auto=format' // Casa Rosada - sede del gobierno argentino
+      imageUrl: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=800&h=450&fit=crop&q=80' // Buenos Aires Puerto Madero
     },
     {
       id: '3',
@@ -63,7 +63,7 @@ function HomePageClient() {
       excerpt: 'Argentina firma tratado de libre comercio que abre mercados europeos.',
       views: 11500,
       likes: 789,
-      imageUrl: 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=400&h=225&fit=crop&q=80&auto=format' // Bandera argentina
+      imageUrl: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=800&h=450&fit=crop&q=80' // Buenos Aires
     },
     {
       id: '6',
@@ -72,7 +72,7 @@ function HomePageClient() {
       excerpt: 'Expertos discuten cambios en el sistema educativo argentino.',
       views: 8760,
       likes: 432,
-      imageUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=225&fit=crop&q=80&auto=format' // Universidad/educación
+      imageUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=450&fit=crop&q=80' // Educación/Libros
     }
   ];
 
