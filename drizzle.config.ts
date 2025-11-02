@@ -1,9 +1,9 @@
-import { defineConfig } from 'drizzle-kit';
+import type { Config } from 'drizzle-kit';
 
-export default defineConfig({
+export default {
   schema: './drizzle/schema.ts',
   out: './drizzle/migrations',
-  dialect: 'mysql',
+  driver: 'mysql2',
   dbCredentials: {
     host: process.env.DB_HOST || 'localhost',
     port: parseInt(process.env.DB_PORT || '3306'),
@@ -13,5 +13,5 @@ export default defineConfig({
   },
   verbose: true,
   strict: true,
-});
+} as Config;
 
