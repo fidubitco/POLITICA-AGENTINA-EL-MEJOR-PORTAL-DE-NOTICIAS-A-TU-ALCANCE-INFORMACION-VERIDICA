@@ -102,6 +102,7 @@ function HomePageClient() {
             <SlideInLeft delay={0.2}>
               <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
                 El portal líder de noticias políticas de Argentina. Información actualizada las 24 horas sobre gobierno, economía y sociedad.
+                <br /><small className="text-blue-200">🔄 Última actualización: {new Date().toLocaleString('es-AR')}</small>
               </p>
             </SlideInLeft>
 
