@@ -27,7 +27,7 @@ function HomePageClient() {
       excerpt: 'El Presidente presentó un paquete de reformas económicas que incluye reducción del gasto público y apertura comercial.',
       views: 15420,
       likes: 892,
-      imageUrl: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=800&h=450&fit=crop&q=80' // Buenos Aires Obelisco
+      imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&h=450&fit=crop&q=80' // Congreso Nacional Argentina - edificio legislativo
     },
     {
       id: '2',
@@ -36,7 +36,7 @@ function HomePageClient() {
       excerpt: 'La Vicepresidenta propone nuevas modificaciones al sistema previsional argentino.',
       views: 12890,
       likes: 756,
-      imageUrl: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=800&h=450&fit=crop&q=80' // Buenos Aires Puerto Madero
+      imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop&q=80' // Documentos legales y pensiones
     },
     {
       id: '3',
@@ -45,7 +45,7 @@ function HomePageClient() {
       excerpt: 'El mercado paralelo registra un nuevo récord histórico en la cotización del dólar estadounidense.',
       views: 18750,
       likes: 1243,
-      imageUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=225&fit=crop&q=80&auto=format' // Mercado financiero
+      imageUrl: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&h=450&fit=crop&q=80' // Billetes de dólar - tipo de cambio
     },
     {
       id: '4',
@@ -54,7 +54,7 @@ function HomePageClient() {
       excerpt: 'El máximo tribunal evalúa denuncias sobre irregularidades en contratos del Estado.',
       views: 9320,
       likes: 567,
-      imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=225&fit=crop&q=80&auto=format' // Palacio de Justicia
+      imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80' // Martillo de juez - justicia
     },
     {
       id: '5',
@@ -63,7 +63,7 @@ function HomePageClient() {
       excerpt: 'Argentina firma tratado de libre comercio que abre mercados europeos.',
       views: 11500,
       likes: 789,
-      imageUrl: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=800&h=450&fit=crop&q=80' // Buenos Aires
+      imageUrl: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80' // Apretón de manos - acuerdo comercial
     },
     {
       id: '6',
@@ -72,7 +72,7 @@ function HomePageClient() {
       excerpt: 'Expertos discuten cambios en el sistema educativo argentino.',
       views: 8760,
       likes: 432,
-      imageUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=450&fit=crop&q=80' // Educación/Libros
+      imageUrl: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&h=450&fit=crop&q=80' // Estudiantes y educación
     }
   ];
 
