@@ -97,7 +97,13 @@ function HomePageClient() {
               <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
                 Política Argentina 🇦🇷
                 <div className="text-sm text-blue-200 mt-2 font-normal">
-                  🖼️ Imágenes actualizadas - Último redeploy: {new Date().toLocaleString('es-AR')}
+                  🖼️ IMÁGENES CONTEXTUALES ACTUALIZADAS - {new Date().toLocaleString('es-AR', { 
+                    day: '2-digit', 
+                    month: '2-digit', 
+                    year: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                  })}
                 </div>
               </h1>
             </FadeIn>
