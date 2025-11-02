@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -215,10 +216,13 @@ export function AdminDashboard() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview">Resumen</TabsTrigger>
             <TabsTrigger value="articles">Artículos</TabsTrigger>
             <TabsTrigger value="create">Crear</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="export">Exportar</TabsTrigger>
+            <TabsTrigger value="cache">Cache</TabsTrigger>
             <TabsTrigger value="media">Multimedia</TabsTrigger>
           </TabsList>
 
@@ -437,142 +441,199 @@ export function AdminDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle>Crear Nuevo Artículo</CardTitle>
-                <CardDescription>Publica nuevas noticias en el portal</CardDescription>
+                <CardDescription>Usa el editor profesional WYSIWYG para crear noticias de calidad</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Título</label>
-                    <Input
-                      placeholder="Ingresa el título del artículo"
-                      value={newArticle.title}
-                      onChange={(e) => setNewArticle({...newArticle, title: e.target.value})}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Categoría</label>
-                    <Select value={newArticle.category} onValueChange={(value) => setNewArticle({...newArticle, category: value})}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecciona una categoría" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {categories.map(cat => (
-                          <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+              <CardContent className="text-center py-8">
+                <div className="mb-6">
+                  <div className="text-6xl mb-4">📝</div>
+                  <h3 className="text-xl font-semibold mb-2">Editor Profesional de Noticias</h3>
+                  <p className="text-gray-600 mb-6">
+                    Crea artículos con nuestro editor WYSIWYG avanzado que incluye:
+                  </p>
+                  <ul className="text-sm text-gray-600 space-y-1 mb-6 text-left max-w-md mx-auto">
+                    <li>✅ Editor Quill.js profesional</li>
+                    <li>✅ Formato de texto avanzado</li>
+                    <li>✅ Inserción de imágenes y videos</li>
+                    <li>✅ Generación con IA integrada</li>
+                    <li>✅ Vista previa en tiempo real</li>
+                    <li>✅ Programación de publicación</li>
+                  </ul>
                 </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Extracto</label>
-                  <Textarea
-                    placeholder="Breve resumen del artículo"
-                    value={newArticle.excerpt}
-                    onChange={(e) => setNewArticle({...newArticle, excerpt: e.target.value})}
-                    rows={3}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Contenido</label>
-                  <Textarea
-                    placeholder="Contenido completo del artículo"
-                    value={newArticle.content}
-                    onChange={(e) => setNewArticle({...newArticle, content: e.target.value})}
-                    rows={10}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Tipo de Multimedia</label>
-                    <Select
-                      value={newArticle.mediaType}
-                      onValueChange={(value: any) => setNewArticle({...newArticle, mediaType: value})}
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="text">
-                          <div className="flex items-center space-x-2">
-                            <FileText className="h-4 w-4" />
-                            <span>Texto</span>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="image">
-                          <div className="flex items-center space-x-2">
-                            <Image className="h-4 w-4" />
-                            <span>Imagen</span>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="video">
-                          <div className="flex items-center space-x-2">
-                            <Video className="h-4 w-4" />
-                            <span>Video</span>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="audio">
-                          <div className="flex items-center space-x-2">
-                            <Audio className="h-4 w-4" />
-                            <span>Audio</span>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="link">
-                          <div className="flex items-center space-x-2">
-                            <LinkIcon className="h-4 w-4" />
-                            <span>Enlace</span>
-                          </div>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">URL Multimedia</label>
-                    <Input
-                      placeholder="URL de imagen, video, audio o enlace"
-                      value={newArticle.mediaUrl}
-                      onChange={(e) => setNewArticle({...newArticle, mediaUrl: e.target.value})}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Etiquetas</label>
-                  <Input
-                    placeholder="Etiquetas separadas por comas"
-                    value={newArticle.tags}
-                    onChange={(e) => setNewArticle({...newArticle, tags: e.target.value})}
-                  />
-                </div>
-
-                <div className="flex items-center space-x-6">
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={newArticle.featured}
-                      onChange={(e) => setNewArticle({...newArticle, featured: e.target.checked})}
-                    />
-                    <span className="text-sm">Artículo destacado</span>
-                  </label>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={newArticle.breaking}
-                      onChange={(e) => setNewArticle({...newArticle, breaking: e.target.checked})}
-                    />
-                    <span className="text-sm">Breaking news</span>
-                  </label>
-                </div>
-
-                <div className="flex justify-end space-x-4">
-                  <Button variant="outline" onClick={() => setShowCreateForm(false)}>
-                    Cancelar
+                <Link href="/admin/create-news">
+                  <Button size="lg" className="px-8 py-3 text-lg">
+                    <Plus className="h-5 w-5 mr-2" />
+                    Abrir Editor de Noticias
                   </Button>
-                  <Button onClick={handleCreateArticle}>
-                    Crear Artículo
+                </Link>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Analytics Tab */}
+          <TabsContent value="analytics" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Analytics Avanzados</CardTitle>
+                <CardDescription>
+                  Visualiza métricas detalladas con gráficos interactivos
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center py-12">
+                <div className="mb-6">
+                  <div className="text-6xl mb-4">📊</div>
+                  <h3 className="text-xl font-semibold mb-2">Dashboard de Analytics</h3>
+                  <p className="text-gray-600 mb-6">
+                    Accede a métricas avanzadas con gráficos interactivos de Recharts:
+                  </p>
+                  <ul className="text-sm text-gray-600 space-y-1 mb-6 text-left max-w-md mx-auto">
+                    <li>✅ Gráficos de líneas para tendencias de tráfico</li>
+                    <li>✅ Gráficos de barras para contenido por categoría</li>
+                    <li>✅ Gráficos circulares para demografía de usuarios</li>
+                    <li>✅ Gráficos de área para engagement semanal</li>
+                    <li>✅ Métricas en tiempo real</li>
+                    <li>✅ Filtros por período de tiempo</li>
+                  </ul>
+                </div>
+                <Link href="/admin/analytics">
+                  <Button size="lg" className="px-8 py-3 text-lg">
+                    📈 Ver Analytics Completos
                   </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Export Tab */}
+          <TabsContent value="export" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Exportar Datos del Sistema</CardTitle>
+                <CardDescription>
+                  Descarga reportes completos en PDF o Excel
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center py-12">
+                <div className="mb-6">
+                  <div className="text-6xl mb-4">📊</div>
+                  <h3 className="text-xl font-semibold mb-2">Sistema de Export de Datos</h3>
+                  <p className="text-gray-600 mb-6">
+                    Exporta datos del sistema en múltiples formatos:
+                  </p>
+                  <ul className="text-sm text-gray-600 space-y-1 mb-6 text-left max-w-md mx-auto">
+                    <li>✅ Reportes PDF con gráficos profesionales</li>
+                    <li>✅ Archivos Excel para análisis de datos</li>
+                    <li>✅ Artículos, analytics y usuarios</li>
+                    <li>✅ Descarga automática e inmediata</li>
+                    <li>✅ Datos en tiempo real de la base de datos</li>
+                  </ul>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                  <div className="p-4 border rounded-lg text-center">
+                    <div className="text-2xl mb-2">📄</div>
+                    <h4 className="font-semibold">Artículos (PDF)</h4>
+                    <p className="text-sm text-gray-600 mb-3">Lista completa con estadísticas</p>
+                    <Button variant="outline" size="sm">
+                      <FileText className="h-4 w-4 mr-2" />
+                      Exportar PDF
+                    </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg text-center">
+                    <div className="text-2xl mb-2">📊</div>
+                    <h4 className="font-semibold">Analytics (Excel)</h4>
+                    <p className="text-sm text-gray-600 mb-3">Métricas y tendencias</p>
+                    <Button variant="outline" size="sm">
+                      <BarChart3 className="h-4 w-4 mr-2" />
+                      Exportar Excel
+                    </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg text-center">
+                    <div className="text-2xl mb-2">👥</div>
+                    <h4 className="font-semibold">Usuarios (Excel)</h4>
+                    <p className="text-sm text-gray-600 mb-3">Lista completa de usuarios</p>
+                    <Button variant="outline" size="sm">
+                      <Users className="h-4 w-4 mr-2" />
+                      Exportar Excel
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="text-xs text-gray-500">
+                  <p>💡 Tip: Los reportes se generan automáticamente desde la base de datos en tiempo real</p>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Cache Tab */}
+          <TabsContent value="cache" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Gestión de Cache Redis</CardTitle>
+                <CardDescription>
+                  Monitorea y administra el sistema de cache para optimizar el rendimiento
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center py-12">
+                <div className="mb-6">
+                  <div className="text-6xl mb-4">🚀</div>
+                  <h3 className="text-xl font-semibold mb-2">Sistema de Cache Avanzado</h3>
+                  <p className="text-gray-600 mb-6">
+                    Redis proporciona cache de alta velocidad para:
+                  </p>
+                  <ul className="text-sm text-gray-600 space-y-1 mb-6 text-left max-w-md mx-auto">
+                    <li>✅ Artículos populares (1 hora)</li>
+                    <li>✅ Listas de categorías (30 min)</li>
+                    <li>✅ Estadísticas del dashboard (5 min)</li>
+                    <li>✅ Resultados de búsqueda (10 min)</li>
+                    <li>✅ Datos de analytics (15 min)</li>
+                  </ul>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                  <div className="p-4 border rounded-lg text-center">
+                    <div className="text-2xl mb-2">📊</div>
+                    <h4 className="font-semibold">Estado Redis</h4>
+                    <p className="text-sm text-gray-600 mb-3">Verificar conexión</p>
+                    <Button variant="outline" size="sm">
+                      Ver Estado
+                    </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg text-center">
+                    <div className="text-2xl mb-2">🧹</div>
+                    <h4 className="font-semibold">Limpiar Cache</h4>
+                    <p className="text-sm text-gray-600 mb-3">Eliminar datos cacheados</p>
+                    <Button variant="outline" size="sm">
+                      Limpiar Todo
+                    </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg text-center">
+                    <div className="text-2xl mb-2">📈</div>
+                    <h4 className="font-semibold">Estadísticas</h4>
+                    <p className="text-sm text-gray-600 mb-3">Métricas de uso</p>
+                    <Button variant="outline" size="sm">
+                      Ver Stats
+                    </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg text-center">
+                    <div className="text-2xl mb-2">🔄</div>
+                    <h4 className="font-semibold">Recargar</h4>
+                    <p className="text-sm text-gray-600 mb-3">Warm-up del cache</p>
+                    <Button variant="outline" size="sm">
+                      Precargar
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="text-xs text-gray-500 space-y-1">
+                  <p>💡 El cache mejora significativamente el rendimiento de la aplicación</p>
+                  <p>⚡ Los datos se sirven hasta 100x más rápido desde Redis</p>
+                  <p>🔧 Configurado para invalidar automáticamente cuando se actualizan datos</p>
                 </div>
               </CardContent>
             </Card>

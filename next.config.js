@@ -28,8 +28,7 @@ const nextConfig = {
   },
   experimental: {
     serverActions: {},
-  },
-  turbopack: {}
+  }
 };
 
 export default nextConfig;

@@ -1,5 +1,6 @@
 'use client';
 
+import { Metadata } from 'next';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import PushSubscribe from './components/PushSubscribe';
@@ -7,6 +8,15 @@ import PageTransition, { FadeIn, SlideInLeft, SlideInRight, ScaleIn } from './co
 import { AnimatedArticleCard, StaggeredList, ScrollReveal } from './components/animations/ArticleAnimations';
 import { FloatingParticles, BackgroundWaves, AnimatedGlassmorphism } from './components/animations/BackgroundEffects';
 import { useArticles, useStats } from './lib/api';
+
+export const metadata: Metadata = {
+  title: 'Política Argentina - Portal de Noticias Políticas',
+  description: 'Portal líder de noticias políticas de Argentina. Información actualizada las 24 horas sobre política, economía, judicial y sociedad.',
+  openGraph: {
+    title: 'Política Argentina - Noticias Políticas',
+    description: 'Portal líder de noticias políticas de Argentina',
+  },
+};
 
 // Componente cliente para la página principal
 function HomePageClient() {
@@ -27,52 +37,7 @@ function HomePageClient() {
       excerpt: 'El Presidente presentó un paquete de reformas económicas que incluye reducción del gasto público y apertura comercial.',
       views: 15420,
       likes: 892,
-      imageUrl: 'https://images.unsplash.com/photo-1582653291997-079a1c04e5a1?w=400&h=225&fit=crop&q=80&auto=format' // Congreso Nacional Argentina
-    },
-    {
-      id: '2',
-      title: 'Cristina Kirchner presenta proyecto de ley sobre pensiones',
-      category: 'Política',
-      excerpt: 'La Vicepresidenta propone nuevas modificaciones al sistema previsional argentino.',
-      views: 12890,
-      likes: 756,
-      imageUrl: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&h=225&fit=crop&q=80&auto=format' // Casa Rosada - sede del gobierno argentino
-    },
-    {
-      id: '3',
-      title: 'Dólar blue rompe barrera de los $1500',
-      category: 'Economía',
-      excerpt: 'El mercado paralelo registra un nuevo récord histórico en la cotización del dólar estadounidense.',
-      views: 18750,
-      likes: 1243,
-      imageUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=225&fit=crop&q=80&auto=format' // Mercado financiero
-    },
-    {
-      id: '4',
-      title: 'Suprema Corte analiza caso de corrupción institucional',
-      category: 'Judicial',
-      excerpt: 'El máximo tribunal evalúa denuncias sobre irregularidades en contratos del Estado.',
-      views: 9320,
-      likes: 567,
-      imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=225&fit=crop&q=80&auto=format' // Palacio de Justicia
-    },
-    {
-      id: '5',
-      title: 'Nuevo acuerdo comercial con la Unión Europea',
-      category: 'Internacional',
-      excerpt: 'Argentina firma tratado de libre comercio que abre mercados europeos.',
-      views: 11500,
-      likes: 789,
-      imageUrl: 'https://images.unsplash.com/photo-1569163139394-de4e4f43e4e3?w=400&h=225&fit=crop&q=80&auto=format' // Bandera argentina
-    },
-    {
-      id: '6',
-      title: 'Reforma educativa genera debate nacional',
-      category: 'Sociedad',
-      excerpt: 'Expertos discuten cambios en el sistema educativo argentino.',
-      views: 8760,
-      likes: 432,
-      imageUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=225&fit=crop&q=80&auto=format' // Universidad/educación
+      imageUrl: 'https://images.unsplash.com/photo-1582653291997-079a1c04e5a1?w=400&h=225&fit=crop&q=80&auto=format'
     }
   ];
 
@@ -200,3 +165,4 @@ function HomePageClient() {
 export default function HomePage() {
   return <HomePageClient />;
 }
+

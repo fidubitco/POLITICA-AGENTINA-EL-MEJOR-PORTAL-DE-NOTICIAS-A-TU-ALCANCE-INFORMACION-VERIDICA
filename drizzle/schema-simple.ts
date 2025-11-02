@@ -56,3 +56,34 @@ export const users = mysqlTable('users', {
   createdAt: datetime('createdAt').$defaultFn(() => new Date()),
   updatedAt: datetime('updatedAt').$defaultFn(() => new Date())
 });
+
+export const scrapedArticles = mysqlTable('scraped_articles', {
+  id: int('id').primaryKey().autoincrement(),
+  title: varchar('title', { length: 500 }).notNull(),
+  content: text('content').notNull(),
+  excerpt: text('excerpt'),
+  imageUrl: varchar('imageUrl', { length: 500 }),
+  category: varchar('category', { length: 100 }).notNull(),
+  author: varchar('author', { length: 100 }).notNull(),
+  source: varchar('source', { length: 100 }).notNull(),
+  sourceUrl: varchar('sourceUrl', { length: 500 }).notNull(),
+  tags: varchar('tags', { length: 500 }), // Comma-separated tags
+  status: varchar('status', { length: 20 }).default('pending'), // pending, approved, rejected
+  publishDate: datetime('publishDate').notNull(),
+  createdAt: datetime('createdAt').$defaultFn(() => new Date()),
+  updatedAt: datetime('updatedAt').$defaultFn(() => new Date())
+});
+
+export const pushSubscriptions = mysqlTable('push_subscriptions', {
+  id: int('id').primaryKey().autoincrement(),
+  endpoint: varchar('endpoint', { length: 500 }).notNull(),
+  p256dh: varchar('p256dh', { length: 200 }).notNull(),
+  auth: varchar('auth', { length: 100 }).notNull(),
+  userId: varchar('userId', { length: 100 }), // Optional user association
+  userAgent: varchar('userAgent', { length: 500 }),
+  ipAddress: varchar('ipAddress', { length: 45 }),
+  isActive: boolean('isActive').default(true),
+  lastUsed: datetime('lastUsed'),
+  createdAt: datetime('createdAt').$defaultFn(() => new Date()),
+  updatedAt: datetime('updatedAt').$defaultFn(() => new Date())
+});
