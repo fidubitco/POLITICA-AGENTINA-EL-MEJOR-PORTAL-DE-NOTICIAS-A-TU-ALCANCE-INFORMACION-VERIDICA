@@ -63,7 +63,7 @@ function HomePageClient() {
       excerpt: 'Argentina firma tratado de libre comercio que abre mercados europeos.',
       views: 11500,
       likes: 789,
-      imageUrl: 'https://images.unsplash.com/photo-1569163139394-de4e4f43e4e3?w=400&h=225&fit=crop&q=80&auto=format' // Bandera argentina
+      imageUrl: 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=400&h=225&fit=crop&q=80&auto=format' // Bandera argentina
     },
     {
       id: '6',
@@ -95,7 +95,10 @@ function HomePageClient() {
           <div className="container mx-auto px-4 text-center relative z-10">
             <FadeIn>
               <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-                Política Argentina
+                Política Argentina 🇦🇷
+                <div className="text-sm text-blue-200 mt-2 font-normal">
+                  🖼️ Imágenes actualizadas - Último redeploy: {new Date().toLocaleString('es-AR')}
+                </div>
               </h1>
             </FadeIn>
 
