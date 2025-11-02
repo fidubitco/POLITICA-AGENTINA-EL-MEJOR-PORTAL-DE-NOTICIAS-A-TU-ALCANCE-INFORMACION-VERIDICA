@@ -1,0 +1,98 @@
+{
+  "site": {
+    "name": "Política Argentina",
+    "tagline": "Informação Verdadeira e Atualizada",
+    "description": "Portal profissional de notícias políticas da Argentina. Últimas notícias, análises e tendências políticas em tempo real."
+  },
+  "nav": {
+    "home": "Início",
+    "politics": "Política",
+    "economy": "Economia",
+    "international": "Internacional",
+    "society": "Sociedade",
+    "sports": "Esportes",
+    "culture": "Cultura",
+    "technology": "Tecnologia",
+    "business": "Negócios",
+    "entertainment": "Entretenimento",
+    "health": "Saúde",
+    "lifestyle": "Estilo de Vida",
+    "science": "Ciência",
+    "judicial": "Judicial",
+    "more": "Mais",
+    "search": "Buscar",
+    "admin": "Admin"
+  },
+  "categories": {
+    "politics": "Política",
+    "economy": "Economia",
+    "international": "Internacional",
+    "society": "Sociedade",
+    "sports": "Esportes",
+    "culture": "Cultura",
+    "technology": "Tecnologia",
+    "business": "Negócios",
+    "entertainment": "Entretenimento",
+    "health": "Saúde",
+    "lifestyle": "Estilo de Vida",
+    "science": "Ciência",
+    "judicial": "Judicial"
+  },
+  "breakingNews": {
+    "title": "ÚLTIMA HORA"
+  },
+  "latestNews": {
+    "title": "Últimas Notícias"
+  },
+  "common": {
+    "readMore": "Leia mais",
+    "viewAll": "Ver tudo",
+    "share": "Compartilhar",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "date": "Data",
+    "author": "Autor",
+    "category": "Categoria",
+    "tags": "Tags",
+    "comments": "Comentários",
+    "views": "Visualizações",
+    "likes": "Curtidas",
+    "shares": "Compartilhamentos"
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados.",
+    "about": "Sobre",
+    "contact": "Contato",
+    "privacy": "Privacidade",
+    "terms": "Termos",
+    "cookies": "Cookies"
+  },
+  "seo": {
+    "home": {
+      "title": "Política Argentina - Portal de Notícias Políticas",
+      "description": "Portal profissional de notícias políticas da Argentina. Últimas notícias sobre Milei, Congresso, economia, dólar, inflação. Cobertura 24/7.",
+      "keywords": "política argentina, notícias argentina, Milei, governo argentino, eleições argentina, congresso nacional"
+    },
+    "politics": {
+      "title": "Política - Notícias Políticas da Argentina",
+      "description": "Últimas notícias sobre política argentina, governo, congresso, eleições e partidos políticos. Análise especializada e cobertura em tempo real.",
+      "keywords": "política argentina, governo, congresso, eleições, milei, casa rosada, senado, deputados"
+    },
+    "economy": {
+      "title": "Economia - Análise Econômica da Argentina",
+      "description": "Notícias de economia argentina: dólar, inflação, mercados, empresas e finanças. Análise econômica profissional e dados em tempo real.",
+      "keywords": "economia argentina, dólar, inflação, mercados, bolsa, finanças, investimentos"
+    }
+  }
+}

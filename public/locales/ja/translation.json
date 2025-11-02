@@ -1,0 +1,98 @@
+{
+  "site": {
+    "name": "アルゼンチン政治",
+    "tagline": "真実で最新の情報",
+    "description": "アルゼンチンの政治ニュース専門ポータル。最新ニュース、分析、リアルタイムの政治動向。"
+  },
+  "nav": {
+    "home": "ホーム",
+    "politics": "政治",
+    "economy": "経済",
+    "international": "国際",
+    "society": "社会",
+    "sports": "スポーツ",
+    "culture": "文化",
+    "technology": "テクノロジー",
+    "business": "ビジネス",
+    "entertainment": "エンターテイメント",
+    "health": "健康",
+    "lifestyle": "ライフスタイル",
+    "science": "科学",
+    "judicial": "司法",
+    "more": "もっと",
+    "search": "検索",
+    "admin": "管理"
+  },
+  "categories": {
+    "politics": "政治",
+    "economy": "経済",
+    "international": "国際",
+    "society": "社会",
+    "sports": "スポーツ",
+    "culture": "文化",
+    "technology": "テクノロジー",
+    "business": "ビジネス",
+    "entertainment": "エンターテイメント",
+    "health": "健康",
+    "lifestyle": "ライフスタイル",
+    "science": "科学",
+    "judicial": "司法"
+  },
+  "breakingNews": {
+    "title": "速報"
+  },
+  "latestNews": {
+    "title": "最新ニュース"
+  },
+  "common": {
+    "readMore": "続きを読む",
+    "viewAll": "すべて表示",
+    "share": "共有",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "edit": "編集",
+    "delete": "削除",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ",
+    "search": "検索",
+    "filter": "フィルター",
+    "sort": "並べ替え",
+    "date": "日付",
+    "author": "著者",
+    "category": "カテゴリー",
+    "tags": "タグ",
+    "comments": "コメント",
+    "views": "閲覧数",
+    "likes": "いいね",
+    "shares": "シェア"
+  },
+  "footer": {
+    "rights": "すべての権利予約済み。",
+    "about": "について",
+    "contact": "お問い合わせ",
+    "privacy": "プライバシー",
+    "terms": "利用規約",
+    "cookies": "クッキー"
+  },
+  "seo": {
+    "home": {
+      "title": "アルゼンチン政治 - 政治ニュースポータル",
+      "description": "アルゼンチンの政治ニュース専門ポータル。ミレイ、議会、経済、ドル、インフレに関する最新ニュース。24時間365日報道。",
+      "keywords": "アルゼンチン政治, アルゼンチンニュース, ミレイ, アルゼンチン政府, アルゼンチン選挙, 国会"
+    },
+    "politics": {
+      "title": "政治 - アルゼンチン政治ニュース",
+      "description": "アルゼンチンの政治、政府、議会、選挙、政党に関する最新ニュース。専門家による分析とリアルタイム報道。",
+      "keywords": "アルゼンチン政治, 政府, 議会, 選挙, ミレイ, カサロサダ, 上院, 下院"
+    },
+    "economy": {
+      "title": "経済 - アルゼンチン経済分析",
+      "description": "アルゼンチン経済ニュース：ドル、インフレ、市場、企業、金融。専門的な経済分析とリアルタイムデータ。",
+      "keywords": "アルゼンチン経済, ドル, インフレ, 市場, 株式市場, 金融, 投資"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://politicaargentina.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /trpc/
+
+# Allow important pages
+Allow: /
+Allow: /articulo/
+Allow: /categoria/
+Allow: /candidatos
+Allow: /encuestas
+Allow: /resultados
+Allow: /finanzas
+
+# Language versions
+Allow: /en/
+Allow: /pt/
+Allow: /fr/
+Allow: /de/
+Allow: /it/
+Allow: /ru/
+Allow: /zh/
+Allow: /ja/
+Allow: /ko/
+Allow: /ar/

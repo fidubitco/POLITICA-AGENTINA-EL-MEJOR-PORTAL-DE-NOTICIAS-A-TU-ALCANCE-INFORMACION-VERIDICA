@@ -1,0 +1,98 @@
+{
+  "site": {
+    "name": "Politik Argentinien",
+    "tagline": "Wahrheitsgetreue und aktuelle Informationen",
+    "description": "Professionelles Portal für politische Nachrichten aus Argentinien. Neueste Nachrichten, Analysen und politische Trends in Echtzeit."
+  },
+  "nav": {
+    "home": "Startseite",
+    "politics": "Politik",
+    "economy": "Wirtschaft",
+    "international": "International",
+    "society": "Gesellschaft",
+    "sports": "Sport",
+    "culture": "Kultur",
+    "technology": "Technologie",
+    "business": "Geschäft",
+    "entertainment": "Unterhaltung",
+    "health": "Gesundheit",
+    "lifestyle": "Lebensstil",
+    "science": "Wissenschaft",
+    "judicial": "Justiz",
+    "more": "Mehr",
+    "search": "Suchen",
+    "admin": "Admin"
+  },
+  "categories": {
+    "politics": "Politik",
+    "economy": "Wirtschaft",
+    "international": "International",
+    "society": "Gesellschaft",
+    "sports": "Sport",
+    "culture": "Kultur",
+    "technology": "Technologie",
+    "business": "Geschäft",
+    "entertainment": "Unterhaltung",
+    "health": "Gesundheit",
+    "lifestyle": "Lebensstil",
+    "science": "Wissenschaft",
+    "judicial": "Justiz"
+  },
+  "breakingNews": {
+    "title": "EILMELDUNG"
+  },
+  "latestNews": {
+    "title": "Neueste Nachrichten"
+  },
+  "common": {
+    "readMore": "Mehr lesen",
+    "viewAll": "Alle anzeigen",
+    "share": "Teilen",
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "sort": "Sortieren",
+    "date": "Datum",
+    "author": "Autor",
+    "category": "Kategorie",
+    "tags": "Tags",
+    "comments": "Kommentare",
+    "views": "Ansichten",
+    "likes": "Gefällt mir",
+    "shares": "Geteilt"
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten.",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "privacy": "Datenschutz",
+    "terms": "Bedingungen",
+    "cookies": "Cookies"
+  },
+  "seo": {
+    "home": {
+      "title": "Politik Argentinien - Portal für politische Nachrichten",
+      "description": "Professionelles Portal für politische Nachrichten aus Argentinien. Neueste Nachrichten über Milei, Kongress, Wirtschaft, Dollar, Inflation. 24/7 Berichterstattung.",
+      "keywords": "argentinische politik, argentinien nachrichten, Milei, argentinische regierung, argentinien wahlen, nationalkongress"
+    },
+    "politics": {
+      "title": "Politik - Politische Nachrichten aus Argentinien",
+      "description": "Neueste Nachrichten über argentinische Politik, Regierung, Kongress, Wahlen und politische Parteien. Expertenanalyse und Echtzeit-Berichterstattung.",
+      "keywords": "argentinische politik, regierung, kongress, wahlen, milei, casa rosada, senat, abgeordnete"
+    },
+    "economy": {
+      "title": "Wirtschaft - Wirtschaftsanalyse Argentiniens",
+      "description": "Nachrichten zur argentinischen Wirtschaft: Dollar, Inflation, Märkte, Unternehmen und Finanzen. Professionelle Wirtschaftsanalyse und Echtzeitdaten.",
+      "keywords": "argentinische wirtschaft, dollar, inflation, märkte, börse, finanzen, investitionen"
+    }
+  }
+}

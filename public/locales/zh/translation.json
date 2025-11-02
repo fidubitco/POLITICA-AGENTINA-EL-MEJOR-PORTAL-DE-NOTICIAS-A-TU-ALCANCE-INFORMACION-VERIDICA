@@ -1,0 +1,98 @@
+{
+  "site": {
+    "name": "阿根廷政治",
+    "tagline": "真实和更新的信息",
+    "description": "阿根廷政治新闻专业门户。实时最新新闻、分析和政治趋势。"
+  },
+  "nav": {
+    "home": "首页",
+    "politics": "政治",
+    "economy": "经济",
+    "international": "国际",
+    "society": "社会",
+    "sports": "体育",
+    "culture": "文化",
+    "technology": "科技",
+    "business": "商业",
+    "entertainment": "娱乐",
+    "health": "健康",
+    "lifestyle": "生活方式",
+    "science": "科学",
+    "judicial": "司法",
+    "more": "更多",
+    "search": "搜索",
+    "admin": "管理"
+  },
+  "categories": {
+    "politics": "政治",
+    "economy": "经济",
+    "international": "国际",
+    "society": "社会",
+    "sports": "体育",
+    "culture": "文化",
+    "technology": "科技",
+    "business": "商业",
+    "entertainment": "娱乐",
+    "health": "健康",
+    "lifestyle": "生活方式",
+    "science": "科学",
+    "judicial": "司法"
+  },
+  "breakingNews": {
+    "title": "突发新闻"
+  },
+  "latestNews": {
+    "title": "最新新闻"
+  },
+  "common": {
+    "readMore": "阅读更多",
+    "viewAll": "查看全部",
+    "share": "分享",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "save": "保存",
+    "edit": "编辑",
+    "delete": "删除",
+    "back": "返回",
+    "next": "下一个",
+    "previous": "上一个",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "date": "日期",
+    "author": "作者",
+    "category": "类别",
+    "tags": "标签",
+    "comments": "评论",
+    "views": "浏览",
+    "likes": "喜欢",
+    "shares": "分享"
+  },
+  "footer": {
+    "rights": "版权所有。",
+    "about": "关于",
+    "contact": "联系",
+    "privacy": "隐私",
+    "terms": "条款",
+    "cookies": "Cookie"
+  },
+  "seo": {
+    "home": {
+      "title": "阿根廷政治 - 政治新闻门户",
+      "description": "阿根廷政治新闻专业门户。关于米莱、国会、经济、美元、通货膨胀的最新新闻。24/7报道。",
+      "keywords": "阿根廷政治, 阿根廷新闻, 米莱, 阿根廷政府, 阿根廷选举, 国会"
+    },
+    "politics": {
+      "title": "政治 - 阿根廷政治新闻",
+      "description": "阿根廷政治、政府、国会、选举和政党的最新新闻。专家分析和实时报道。",
+      "keywords": "阿根廷政治, 政府, 国会, 选举, 米莱, 玫瑰宫, 参议院, 众议院"
+    },
+    "economy": {
+      "title": "经济 - 阿根廷经济分析",
+      "description": "阿根廷经济新闻：美元、通货膨胀、市场、公司和金融。专业经济分析和实时数据。",
+      "keywords": "阿根廷经济, 美元, 通货膨胀, 市场, 股市, 金融, 投资"
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "site": {
+    "name": "아르헨티나 정치",
+    "tagline": "진실하고 업데이트된 정보",
+    "description": "아르헨티나 정치 뉴스 전문 포털. 실시간 최신 뉴스, 분석 및 정치 동향."
+  },
+  "nav": {
+    "home": "홈",
+    "politics": "정치",
+    "economy": "경제",
+    "international": "국제",
+    "society": "사회",
+    "sports": "스포츠",
+    "culture": "문화",
+    "technology": "기술",
+    "business": "비즈니스",
+    "entertainment": "엔터테인먼트",
+    "health": "건강",
+    "lifestyle": "라이프스타일",
+    "science": "과학",
+    "judicial": "사법",
+    "more": "더보기",
+    "search": "검색",
+    "admin": "관리자"
+  },
+  "categories": {
+    "politics": "정치",
+    "economy": "경제",
+    "international": "국제",
+    "society": "사회",
+    "sports": "스포츠",
+    "culture": "문화",
+    "technology": "기술",
+    "business": "비즈니스",
+    "entertainment": "엔터테인먼트",
+    "health": "건강",
+    "lifestyle": "라이프스타일",
+    "science": "과학",
+    "judicial": "사법"
+  },
+  "breakingNews": {
+    "title": "속보"
+  },
+  "latestNews": {
+    "title": "최신 뉴스"
+  },
+  "common": {
+    "readMore": "더 읽기",
+    "viewAll": "모두 보기",
+    "share": "공유",
+    "loading": "로딩 중...",
+    "error": "오류",
+    "success": "성공",
+    "cancel": "취소",
+    "save": "저장",
+    "edit": "편집",
+    "delete": "삭제",
+    "back": "뒤로",
+    "next": "다음",
+    "previous": "이전",
+    "search": "검색",
+    "filter": "필터",
+    "sort": "정렬",
+    "date": "날짜",
+    "author": "작성자",
+    "category": "카테고리",
+    "tags": "태그",
+    "comments": "댓글",
+    "views": "조회수",
+    "likes": "좋아요",
+    "shares": "공유"
+  },
+  "footer": {
+    "rights": "모든 권리 보유.",
+    "about": "소개",
+    "contact": "연락처",
+    "privacy": "개인정보",
+    "terms": "약관",
+    "cookies": "쿠키"
+  },
+  "seo": {
+    "home": {
+      "title": "아르헨티나 정치 - 정치 뉴스 포털",
+      "description": "아르헨티나 정치 뉴스 전문 포털. 밀레이, 의회, 경제, 달러, 인플레이션에 관한 최신 뉴스. 24시간 보도.",
+      "keywords": "아르헨티나 정치, 아르헨티나 뉴스, 밀레이, 아르헨티나 정부, 아르헨티나 선거, 국회"
+    },
+    "politics": {
+      "title": "정치 - 아르헨티나 정치 뉴스",
+      "description": "아르헨티나 정치, 정부, 의회, 선거 및 정당에 관한 최신 뉴스. 전문가 분석 및 실시간 보도.",
+      "keywords": "아르헨티나 정치, 정부, 의회, 선거, 밀레이, 카사 로사다, 상원, 하원"
+    },
+    "economy": {
+      "title": "경제 - 아르헨티나 경제 분석",
+      "description": "아르헨티나 경제 뉴스: 달러, 인플레이션, 시장, 기업 및 금융. 전문 경제 분석 및 실시간 데이터.",
+      "keywords": "아르헨티나 경제, 달러, 인플레이션, 시장, 주식 시장, 금융, 투자"
+    }
+  }
+}
