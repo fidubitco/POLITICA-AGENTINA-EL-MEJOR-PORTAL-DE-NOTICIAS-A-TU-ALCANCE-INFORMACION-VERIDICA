@@ -1,8 +1,9 @@
 {
-  "version": "2.1.0",
-  "deployment": "contextual-images-fix",
-  "timestamp": "2025-11-02T07:00:00Z",
-  "commit": "04bd292",
+  "version": "3.0.0-NOCACHE",
+  "deployment": "RADICAL-CACHE-BUSTING",
+  "timestamp": "2025-11-02T19:45:00Z",
+  "commit": "FORCE_UPDATE",
+  "cache_strategy": "AGGRESSIVE_NO_CACHE_WITH_DYNAMIC_TIMESTAMP",
   "images": {
     "milei": "photo-1541872703-74c5e44368f9",
     "cristina": "photo-1454165804606-c3d57bc86b40",
@@ -11,6 +12,7 @@
     "ue": "photo-1450101499163-c8848c66ca85",
     "educacion": "photo-1427504494785-3a9ca7044f45"
   },
-  "status": "deployed"
+  "image_version": "v3_dynamic_timestamp_" + Date.now(),
+  "status": "FORCING_DEPLOYMENT",
+  "notes": "Cada imagen ahora tiene ?v=Date.now() para FORZAR actualización en cada render. Cache completamente invalidado."
 }
-

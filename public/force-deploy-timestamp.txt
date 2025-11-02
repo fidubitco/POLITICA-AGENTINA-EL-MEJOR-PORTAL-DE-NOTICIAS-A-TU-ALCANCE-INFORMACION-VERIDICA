@@ -1,0 +1,20 @@
+DEPLOYMENT FORZADO - NO CACHE
+================================
+Timestamp: 2025-11-02T19:45:00Z
+Unix Timestamp: 1730578000
+Random ID: FORCE_DEPLOY_3847293847
+Cache Strategy: AGGRESSIVE_NO_CACHE
+
+Este archivo FUERZA a Vercel a detectar cambios y hacer redeploy completo.
+Las imágenes ahora tienen ?v=Date.now() para invalidar cache en cada render.
+
+IMÁGENES CONTEXTUALES IMPLEMENTADAS:
+- Milei: Congreso Nacional (photo-1541872703-74c5e44368f9)
+- Cristina: Documentos legales (photo-1454165804606-c3d57bc86b40)
+- Dólar: Billetes USD (photo-1579621970563-ebec7560ff3e)
+- Corte: Martillo juez (photo-1589829545856-d10d557cf95f)
+- UE: Acuerdo comercial (photo-1450101499163-c8848c66ca85)
+- Educación: Estudiantes (photo-1427504494785-3a9ca7044f45)
+
+NO USAR CACHE - TIMESTAMP DINÁMICO EN CADA REQUEST
+

@@ -18,6 +18,16 @@ function HomePageClient() {
 
   const { data: statsData, loading: statsLoading, error: statsError } = useStats();
 
+  // IMÁGENES CONTEXTUALES ACTUALIZADAS - NO USAR CACHE
+  const CONTEXTUAL_IMAGES = {
+    milei: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&h=450&fit=crop&q=80&v=' + Date.now(),
+    cristina: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop&q=80&v=' + Date.now(),
+    dolar: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&h=450&fit=crop&q=80&v=' + Date.now(),
+    corte: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80&v=' + Date.now(),
+    ue: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80&v=' + Date.now(),
+    educacion: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&h=450&fit=crop&q=80&v=' + Date.now()
+  };
+
   // Fallback a datos mock si hay error o no hay datos
   const articles = articlesData && articlesData.length > 0 ? articlesData : [
     {
@@ -27,7 +37,7 @@ function HomePageClient() {
       excerpt: 'El Presidente presentó un paquete de reformas económicas que incluye reducción del gasto público y apertura comercial.',
       views: 15420,
       likes: 892,
-      imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&h=450&fit=crop&q=80' // Congreso Nacional Argentina - edificio legislativo
+      imageUrl: CONTEXTUAL_IMAGES.milei // 🏛️ Congreso Nacional - CONTEXTUAL
     },
     {
       id: '2',
@@ -36,7 +46,7 @@ function HomePageClient() {
       excerpt: 'La Vicepresidenta propone nuevas modificaciones al sistema previsional argentino.',
       views: 12890,
       likes: 756,
-      imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop&q=80' // Documentos legales y pensiones
+      imageUrl: CONTEXTUAL_IMAGES.cristina // 📄 Documentos legales - CONTEXTUAL
     },
     {
       id: '3',
@@ -45,7 +55,7 @@ function HomePageClient() {
       excerpt: 'El mercado paralelo registra un nuevo récord histórico en la cotización del dólar estadounidense.',
       views: 18750,
       likes: 1243,
-      imageUrl: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&h=450&fit=crop&q=80' // Billetes de dólar - tipo de cambio
+      imageUrl: CONTEXTUAL_IMAGES.dolar // 💵 Billetes dólar - CONTEXTUAL
     },
     {
       id: '4',
@@ -54,7 +64,7 @@ function HomePageClient() {
       excerpt: 'El máximo tribunal evalúa denuncias sobre irregularidades en contratos del Estado.',
       views: 9320,
       likes: 567,
-      imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80' // Martillo de juez - justicia
+      imageUrl: CONTEXTUAL_IMAGES.corte // ⚖️ Martillo juez - CONTEXTUAL
     },
     {
       id: '5',
@@ -63,7 +73,7 @@ function HomePageClient() {
       excerpt: 'Argentina firma tratado de libre comercio que abre mercados europeos.',
       views: 11500,
       likes: 789,
-      imageUrl: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80' // Apretón de manos - acuerdo comercial
+      imageUrl: CONTEXTUAL_IMAGES.ue // 🤝 Acuerdo comercial - CONTEXTUAL
     },
     {
       id: '6',
@@ -72,7 +82,7 @@ function HomePageClient() {
       excerpt: 'Expertos discuten cambios en el sistema educativo argentino.',
       views: 8760,
       likes: 432,
-      imageUrl: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&h=450&fit=crop&q=80' // Estudiantes y educación
+      imageUrl: CONTEXTUAL_IMAGES.educacion // 🎓 Estudiantes - CONTEXTUAL
     }
   ];
 
@@ -96,15 +106,16 @@ function HomePageClient() {
             <FadeIn>
               <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
                 Política Argentina 🇦🇷
-                <div className="text-sm text-blue-200 mt-2 font-normal">
-                  🖼️ IMÁGENES CONTEXTUALES ACTUALIZADAS - {new Date().toLocaleString('es-AR', { 
-                    day: '2-digit', 
-                    month: '2-digit', 
-                    year: 'numeric', 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                  })}
-                </div>
+            <div className="text-sm text-blue-200 mt-2 font-normal">
+              🔥 IMÁGENES CONTEXTUALES SIN CACHE - {new Date().toLocaleString('es-AR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+              })} - v{Date.now()}
+            </div>
               </h1>
             </FadeIn>
 
