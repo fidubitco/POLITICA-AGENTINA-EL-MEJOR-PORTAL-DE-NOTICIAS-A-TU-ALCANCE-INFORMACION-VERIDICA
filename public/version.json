@@ -1,14 +1,14 @@
 {
-  "version": "1.0.1-FORCE-DEPLOY",
-  "deployment": "FORCE-VERCEL-DEPLOYMENT",
-  "timestamp": "2025-11-02T22:00:00Z",
-  "unix_timestamp": 1730586000,
-  "commit": "2e0c12e",
-  "cache_strategy": "NO_CACHE_FORCE_DEPLOY",
+  "version": "1.1.0-IMAGES-FIXED",
+  "deployment": "IMAGES-OPTIMIZED-ARGENTINA",
+  "timestamp": "2025-11-02T22:30:00Z",
+  "unix_timestamp": 1730587800,
+  "commit": "pending",
+  "cache_strategy": "NO_CACHE_IMAGES_FIXED",
   "force_level": "MAXIMUM",
-  "deployment_id": "FORCE_DEPLOY_v1.0.1",
-  "random_hash": "force_deploy_1730586000_vercel",
-  "trigger": "MANUAL_FORCE_DEPLOYMENT",
+  "deployment_id": "IMAGES_FIXED_v1.1.0",
+  "random_hash": "images_fixed_1730587800_argentina",
+  "trigger": "IMAGES_OPTIMIZATION",
   "features": {
     "design": "World-class professional",
     "typography": "Inter + Playfair Display",
@@ -17,17 +17,26 @@
     "performance": "A+",
     "responsive": "Mobile-first",
     "pwa": "Ready",
-    "security": "Headers implemented"
+    "security": "Headers implemented",
+    "images": "LOCAL ARGENTINA IMAGES - NO OBAMA"
   },
-  "images": {
-    "milei": "Congreso Nacional Argentina",
-    "cristina": "Documentos legales",
-    "dolar": "Billetes USD",
-    "corte": "Martillo juez",
-    "ue": "Acuerdo comercial",
-    "educacion": "Estudiantes"
+  "images_fixed": {
+    "milei_featured": "/images/milei-1.jpg (LOCAL - Presidente Milei)",
+    "casa_rosada": "/images/casa-rosada-1.jpg (LOCAL - Casa Rosada)",
+    "dolar_blue": "/images/dolar-blue-1.jpg (LOCAL - Dólar Blue)",
+    "economia": "/images/economia-argentina-1.jpg (LOCAL - Economía)",
+    "celebracion": "/images/argentina-celebracion-1.jpg (LOCAL - Argentina)",
+    "politica": "/images/milei-2.jpg, /images/milei-3.jpg (LOCAL - Política)"
   },
-  "status": "FORCE_DEPLOYING_NOW",
+  "fixes": [
+    "✅ Eliminada imagen de Obama",
+    "✅ Todas las imágenes ahora son locales de Argentina",
+    "✅ Imágenes contextuales a cada noticia",
+    "✅ Sin errores 403/404 de Unsplash",
+    "✅ Performance mejorado (imágenes locales)",
+    "✅ Cache optimizado"
+  ],
+  "status": "IMAGES_FIXED_READY_TO_DEPLOY",
   "vercel_trigger": true,
-  "notes": "FORCE DEPLOYMENT TRIGGER - Vercel should detect this change and deploy immediately"
+  "notes": "IMAGES FIXED - All images are now local Argentina-specific images. NO MORE OBAMA. NO MORE 403/404 errors. Contextual images for each news article."
 }

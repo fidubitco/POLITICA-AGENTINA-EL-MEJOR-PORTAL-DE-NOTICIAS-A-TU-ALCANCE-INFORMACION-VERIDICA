@@ -13,7 +13,7 @@ const featuredNews = {
   category: 'Política',
   categorySlug: 'politica',
   excerpt: 'En una sesión extraordinaria del Congreso, el presidente Javier Milei detalló su plan económico para los próximos dos años. La propuesta incluye la eliminación de 12 ministerios, la privatización de empresas estatales y la apertura total del comercio exterior. Los bloques opositores anticiparon resistencia.',
-  imageUrl: `https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=1200&h=675&fit=crop&q=90&v=${Date.now()}`,
+  imageUrl: '/images/milei-1.jpg', // Imagen local de Milei
   author: 'Redacción Política Argentina',
   publishedAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
   views: 45230,
@@ -27,7 +27,7 @@ const topNews = [
     category: 'Política',
     categorySlug: 'politica',
     excerpt: 'La expresidenta propone aumentar las jubilaciones mínimas y modificar la fórmula de movilidad. El oficialismo adelantó que no apoyará la iniciativa.',
-    imageUrl: `https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop&q=85&v=${Date.now()}`,
+    imageUrl: '/images/casa-rosada-1.jpg', // Casa Rosada
     author: 'Juan Martínez',
     publishedAt: new Date(Date.now() - 4 * 60 * 60 * 1000),
     views: 32100,
@@ -38,7 +38,7 @@ const topNews = [
     category: 'Economía',
     categorySlug: 'economia',
     excerpt: 'El mercado paralelo registra una suba del 8% en la última semana. Economistas advierten sobre presiones inflacionarias y piden medidas urgentes del Banco Central.',
-    imageUrl: `https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&h=450&fit=crop&q=85&v=${Date.now()}`,
+    imageUrl: '/images/dolar-blue-1.jpg', // Dólar blue
     author: 'María González',
     publishedAt: new Date(Date.now() - 5 * 60 * 60 * 1000),
     views: 56780,
@@ -49,7 +49,7 @@ const topNews = [
     category: 'Judicial',
     categorySlug: 'judicial',
     excerpt: 'El máximo tribunal evalúa denuncias sobre irregularidades en la obra pública durante el gobierno anterior. La decisión podría sentar jurisprudencia.',
-    imageUrl: `https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=85&v=${Date.now()}`,
+    imageUrl: '/images/casa-rosada-2.jpg', // Casa Rosada/Gobierno
     author: 'Carlos Rodríguez',
     publishedAt: new Date(Date.now() - 6 * 60 * 60 * 1000),
     views: 28450,
@@ -63,7 +63,7 @@ const latestNews = [
     category: 'Internacional',
     categorySlug: 'internacional',
     excerpt: 'El tratado abre mercados europeos para productos argentinos y elimina aranceles en sectores clave como agricultura y tecnología.',
-    imageUrl: `https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&h=400&fit=crop&q=85&v=${Date.now()}`,
+    imageUrl: '/images/argentina-celebracion-1.jpg', // Celebración Argentina
     publishedAt: new Date(Date.now() - 8 * 60 * 60 * 1000),
     views: 19230,
   },
@@ -73,7 +73,7 @@ const latestNews = [
     category: 'Sociedad',
     categorySlug: 'sociedad',
     excerpt: 'Docentes, padres y expertos discuten los cambios propuestos en el sistema educativo. Habrá audiencias públicas en todas las provincias.',
-    imageUrl: `https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&h=400&fit=crop&q=85&v=${Date.now()}`,
+    imageUrl: '/images/milei-2.jpg', // Política/Debate
     publishedAt: new Date(Date.now() - 10 * 60 * 60 * 1000),
     views: 15670,
   },
@@ -83,7 +83,7 @@ const latestNews = [
     category: 'Economía',
     categorySlug: 'economia',
     excerpt: 'El INDEC informó que los precios subieron 8.3% en el mes, por encima del 6.5% estimado. Alimentos y servicios lideraron los aumentos.',
-    imageUrl: `https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&h=400&fit=crop&q=85&v=${Date.now()}`,
+    imageUrl: '/images/economia-argentina-1.jpg', // Economía Argentina
     publishedAt: new Date(Date.now() - 12 * 60 * 60 * 1000),
     views: 42100,
   },
@@ -93,7 +93,7 @@ const latestNews = [
     category: 'Política',
     categorySlug: 'politica',
     excerpt: 'Mandatarios provinciales se reunieron en Córdoba para coordinar estrategia ante el gobierno nacional. Amenazan con acciones legales.',
-    imageUrl: `https://images.unsplash.com/photo-1555421689-491a97ff2040?w=600&h=400&fit=crop&q=85&v=${Date.now()}`,
+    imageUrl: '/images/milei-3.jpg', // Política Argentina
     publishedAt: new Date(Date.now() - 14 * 60 * 60 * 1000),
     views: 22450,
   },
