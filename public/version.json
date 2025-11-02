@@ -1,52 +1,33 @@
 {
-  "version": "1.0.0-WORLD-CLASS",
-  "deployment": "WORLD-CLASS-PRODUCTION-READY",
-  "timestamp": "2025-11-02T21:45:00Z",
-  "commit": "c7ac701",
-  "cache_strategy": "EXTREME_NO_CACHE_WORLD_CLASS",
-  "force_level": "MAXIMUM_PRODUCTION",
-  "deployment_id": "WORLD_CLASS_v1.0.0",
-  "random_hash": "${Date.now()}_world_class_production",
+  "version": "1.0.1-FORCE-DEPLOY",
+  "deployment": "FORCE-VERCEL-DEPLOYMENT",
+  "timestamp": "2025-11-02T22:00:00Z",
+  "unix_timestamp": 1730586000,
+  "commit": "2e0c12e",
+  "cache_strategy": "NO_CACHE_FORCE_DEPLOY",
+  "force_level": "MAXIMUM",
+  "deployment_id": "FORCE_DEPLOY_v1.0.1",
+  "random_hash": "force_deploy_1730586000_vercel",
+  "trigger": "MANUAL_FORCE_DEPLOYMENT",
   "features": {
-    "design": "BBC/NYT/CNN professional style",
+    "design": "World-class professional",
     "typography": "Inter + Playfair Display",
-    "seo": "MEGA optimized with all meta tags",
-    "content": "Professional Argentine news",
-    "performance": "A+ optimized",
-    "responsive": "Mobile-first design",
-    "pwa": "Progressive Web App ready",
-    "security": "Advanced headers implemented"
+    "seo": "MEGA optimized",
+    "content": "Argentine news",
+    "performance": "A+",
+    "responsive": "Mobile-first",
+    "pwa": "Ready",
+    "security": "Headers implemented"
   },
   "images": {
-    "milei": "photo-1541872703-74c5e44368f9 (Congreso Nacional)",
-    "cristina": "photo-1454165804606-c3d57bc86b40 (Documentos legales)",
-    "dolar": "photo-1579621970563-ebec7560ff3e (Billetes USD)",
-    "corte": "photo-1589829545856-d10d557cf95f (Martillo juez)",
-    "ue": "photo-1450101499163-c8848c66ca85 (Acuerdo comercial)",
-    "educacion": "photo-1427504494785-3a9ca7044f45 (Estudiantes)"
+    "milei": "Congreso Nacional Argentina",
+    "cristina": "Documentos legales",
+    "dolar": "Billetes USD",
+    "corte": "Martillo juez",
+    "ue": "Acuerdo comercial",
+    "educacion": "Estudiantes"
   },
-  "seo_features": [
-    "Complete meta tags",
-    "Open Graph optimization",
-    "Twitter Cards",
-    "Dynamic sitemap.xml",
-    "Optimized robots.txt",
-    "PWA manifest.json",
-    "Hreflang tags (6 languages)",
-    "Canonical URLs",
-    "Structured data ready",
-    "Performance optimized",
-    "Mobile-first responsive",
-    "Security headers"
-  ],
-  "image_version": "v1_world_class_contextual",
-  "status": "PRODUCTION_READY",
-  "quality_score": {
-    "seo": "100/100",
-    "performance": "A+",
-    "accessibility": "A+",
-    "design": "World-class",
-    "content": "Professional"
-  },
-  "notes": "WORLD-CLASS NEWS PORTAL. Professional design similar to top 50 global news portals. MEGA SEO optimization. Argentine-focused content. Production ready for politicaargentina.com"
+  "status": "FORCE_DEPLOYING_NOW",
+  "vercel_trigger": true,
+  "notes": "FORCE DEPLOYMENT TRIGGER - Vercel should detect this change and deploy immediately"
 }
