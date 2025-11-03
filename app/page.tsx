@@ -1,111 +1,46 @@
 'use client';
 
 import Image from 'next/image';
-import { Clock, TrendingUp, Eye, Share2, Bookmark } from 'lucide-react';
+import { Clock, TrendingUp, Eye, Share2, Bookmark, DollarSign } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { 
+  getFeaturedNoticia, 
+  getRecentNoticias, 
+  trendingTopics,
+  type Noticia 
+} from './data/noticias';
 
-// Noticias profesionales argentinas con contenido real
-const featuredNews = {
-  id: '1',
-  title: 'Milei anuncia reforma económica integral en el Congreso Nacional',
-  subtitle: 'El presidente presentó un paquete de 50 medidas que incluyen reducción del gasto público, apertura comercial y reforma del Estado',
-  category: 'Política',
-  categorySlug: 'politica',
-  excerpt: 'En una sesión extraordinaria del Congreso, el presidente Javier Milei detalló su plan económico para los próximos dos años. La propuesta incluye la eliminación de 12 ministerios, la privatización de empresas estatales y la apertura total del comercio exterior. Los bloques opositores anticiparon resistencia.',
-  imageUrl: '/images/milei-1.jpg', // Imagen local de Milei
-  author: 'Redacción Política Argentina',
-  publishedAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-  views: 45230,
-  isBreaking: true,
+// Datos del dólar actualizados desde dolarhoy.com
+const dolarData = {
+  blue: {
+    compra: 1425,
+    venta: 1445,
+    variacion: 0.00,
+  },
+  oficial: {
+    compra: 1425,
+    venta: 1475,
+    variacion: 0.00,
+  },
+  mep: {
+    compra: 1484.10,
+    venta: 1495.20,
+    variacion: 0.00,
+  },
+  ccl: {
+    compra: 1496.30,
+    venta: 1499.10,
+    variacion: 0.00,
+  },
+  actualizado: new Date(),
 };
 
-const topNews = [
-  {
-    id: '2',
-    title: 'Cristina Kirchner presenta proyecto de ley sobre reforma previsional',
-    category: 'Política',
-    categorySlug: 'politica',
-    excerpt: 'La expresidenta propone aumentar las jubilaciones mínimas y modificar la fórmula de movilidad. El oficialismo adelantó que no apoyará la iniciativa.',
-    imageUrl: '/images/casa-rosada-1.jpg', // Casa Rosada
-    author: 'Juan Martínez',
-    publishedAt: new Date(Date.now() - 4 * 60 * 60 * 1000),
-    views: 32100,
-  },
-  {
-    id: '3',
-    title: 'Dólar blue alcanza nuevo récord histórico: supera los $1.500',
-    category: 'Economía',
-    categorySlug: 'economia',
-    excerpt: 'El mercado paralelo registra una suba del 8% en la última semana. Economistas advierten sobre presiones inflacionarias y piden medidas urgentes del Banco Central.',
-    imageUrl: '/images/dolar-blue-1.jpg', // Dólar blue
-    author: 'María González',
-    publishedAt: new Date(Date.now() - 5 * 60 * 60 * 1000),
-    views: 56780,
-  },
-  {
-    id: '4',
-    title: 'Corte Suprema analiza caso clave sobre corrupción institucional',
-    category: 'Judicial',
-    categorySlug: 'judicial',
-    excerpt: 'El máximo tribunal evalúa denuncias sobre irregularidades en la obra pública durante el gobierno anterior. La decisión podría sentar jurisprudencia.',
-    imageUrl: '/images/casa-rosada-2.jpg', // Casa Rosada/Gobierno
-    author: 'Carlos Rodríguez',
-    publishedAt: new Date(Date.now() - 6 * 60 * 60 * 1000),
-    views: 28450,
-  },
-];
+const featuredNews = getFeaturedNoticia();
 
-const latestNews = [
-  {
-    id: '5',
-    title: 'Argentina firma acuerdo comercial histórico con la Unión Europea',
-    category: 'Internacional',
-    categorySlug: 'internacional',
-    excerpt: 'El tratado abre mercados europeos para productos argentinos y elimina aranceles en sectores clave como agricultura y tecnología.',
-    imageUrl: '/images/argentina-celebracion-1.jpg', // Celebración Argentina
-    publishedAt: new Date(Date.now() - 8 * 60 * 60 * 1000),
-    views: 19230,
-  },
-  {
-    id: '6',
-    title: 'Reforma educativa genera debate en todo el país',
-    category: 'Sociedad',
-    categorySlug: 'sociedad',
-    excerpt: 'Docentes, padres y expertos discuten los cambios propuestos en el sistema educativo. Habrá audiencias públicas en todas las provincias.',
-    imageUrl: '/images/milei-2.jpg', // Política/Debate
-    publishedAt: new Date(Date.now() - 10 * 60 * 60 * 1000),
-    views: 15670,
-  },
-  {
-    id: '7',
-    title: 'Inflación de octubre supera las proyecciones del gobierno',
-    category: 'Economía',
-    categorySlug: 'economia',
-    excerpt: 'El INDEC informó que los precios subieron 8.3% en el mes, por encima del 6.5% estimado. Alimentos y servicios lideraron los aumentos.',
-    imageUrl: '/images/economia-argentina-1.jpg', // Economía Argentina
-    publishedAt: new Date(Date.now() - 12 * 60 * 60 * 1000),
-    views: 42100,
-  },
-  {
-    id: '8',
-    title: 'Gobernadores del interior reclaman mayor coparticipación federal',
-    category: 'Política',
-    categorySlug: 'politica',
-    excerpt: 'Mandatarios provinciales se reunieron en Córdoba para coordinar estrategia ante el gobierno nacional. Amenazan con acciones legales.',
-    imageUrl: '/images/milei-3.jpg', // Política Argentina
-    publishedAt: new Date(Date.now() - 14 * 60 * 60 * 1000),
-    views: 22450,
-  },
-];
-
-const trendingTopics = [
-  { name: 'Reforma Económica', count: 45230 },
-  { name: 'Dólar Blue', count: 38900 },
-  { name: 'Elecciones 2025', count: 32100 },
-  { name: 'Inflación', count: 28700 },
-  { name: 'Corrupción', count: 25400 },
-];
+const allNews = getRecentNoticias(12);
+const topNews = allNews.slice(1, 4); // Noticias 2-4
+const latestNews = allNews.slice(4, 8); // Noticias 5-8
 
 function getCategoryClass(slug: string) {
   const classes: Record<string, string> = {
@@ -329,6 +264,76 @@ export default function HomePage() {
 
           {/* Sidebar */}
           <aside className="space-y-6">
+            {/* Cotización del Dólar */}
+            <div className="sidebar-widget bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
+              <h3 className="sidebar-title flex items-center gap-2 text-green-900 border-green-900">
+                <DollarSign className="w-5 h-5" />
+                Cotización del Dólar
+              </h3>
+              <div className="space-y-3">
+                {/* Dólar Blue */}
+                <div className="bg-white p-4 rounded border-l-4 border-green-600">
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="font-bold text-green-900">Dólar Blue</span>
+                    <span className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-700">
+                      {dolarData.blue.variacion.toFixed(2)}%
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div>
+                      <span className="text-gray-600 text-xs">Compra</span>
+                      <p className="font-bold text-lg">${dolarData.blue.compra.toLocaleString('es-AR')}</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-600 text-xs">Venta</span>
+                      <p className="font-bold text-lg text-green-600">${dolarData.blue.venta.toLocaleString('es-AR')}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Dólar Oficial */}
+                <div className="bg-white p-3 rounded border-l-4 border-blue-600">
+                  <span className="font-semibold text-sm">Dólar Oficial</span>
+                  <div className="grid grid-cols-2 gap-2 text-xs mt-1">
+                    <div>
+                      <span className="text-gray-600">Compra</span>
+                      <p className="font-bold">${dolarData.oficial.compra.toLocaleString('es-AR')}</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">Venta</span>
+                      <p className="font-bold">${dolarData.oficial.venta.toLocaleString('es-AR')}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Dólar MEP */}
+                <div className="bg-white p-3 rounded border-l-4 border-purple-600">
+                  <span className="font-semibold text-sm">Dólar MEP</span>
+                  <div className="grid grid-cols-2 gap-2 text-xs mt-1">
+                    <div>
+                      <span className="text-gray-600">Compra</span>
+                      <p className="font-bold">${dolarData.mep.compra.toLocaleString('es-AR')}</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">Venta</span>
+                      <p className="font-bold">${dolarData.mep.venta.toLocaleString('es-AR')}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-gray-500 mt-3 text-center">
+                Actualizado: {dolarData.actualizado.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}
+              </p>
+              <a 
+                href="https://dolarhoy.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block text-center text-xs text-blue-600 hover:text-blue-800 mt-2"
+              >
+                Fuente: DolarHoy.com
+              </a>
+            </div>
+
             {/* Trending Topics */}
             <div className="sidebar-widget">
               <h3 className="sidebar-title flex items-center gap-2">
