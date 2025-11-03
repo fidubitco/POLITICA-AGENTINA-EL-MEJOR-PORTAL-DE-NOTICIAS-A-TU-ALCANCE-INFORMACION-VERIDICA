@@ -7,6 +7,15 @@
   "devCommand": "npm run dev",
   "cleanUrls": true,
   "trailingSlash": false,
+  "github": {
+    "silent": false,
+    "autoAlias": true
+  },
+  "env": {
+    "FORCE_DEPLOY": "extreme-brute-force-2.1.1-final",
+    "DEPLOYMENT_ID": "extreme-force-complete",
+    "CACHE_BUST": "2025-11-03-23-45-00"
+  },
   "headers": [
     {
       "source": "/(.*)",

@@ -7,7 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "force-deploy": "echo 'Forcing deployment...' && npm run build",
+    "verify": "node scripts/verificar-errores.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.78.0",
