@@ -423,22 +423,22 @@ export default function HomePage() {
             <div>
               <h5 className="font-semibold text-white mb-4">Información</h5>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="footer-link">Sobre Nosotros</a></li>
-                <li><a href="#" className="footer-link">Contacto</a></li>
-                <li><a href="#" className="footer-link">Términos y Condiciones</a></li>
-                <li><a href="#" className="footer-link">Política de Privacidad</a></li>
+                <li><Link href="/sobre-nosotros" className="footer-link">Sobre Nosotros</Link></li>
+                <li><Link href="/contacto" className="footer-link">Contacto</Link></li>
+                <li><Link href="/terminos" className="footer-link">Términos y Condiciones</Link></li>
+                <li><Link href="/privacidad" className="footer-link">Política de Privacidad</Link></li>
               </ul>
             </div>
             <div>
               <h5 className="font-semibold text-white mb-4">Síguenos</h5>
               <div className="flex gap-4">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a href="https://twitter.com/politicaarg" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   Twitter
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a href="https://facebook.com/politicaargentina" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   Facebook
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a href="https://instagram.com/politicaargentina" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   Instagram
                 </a>
               </div>
