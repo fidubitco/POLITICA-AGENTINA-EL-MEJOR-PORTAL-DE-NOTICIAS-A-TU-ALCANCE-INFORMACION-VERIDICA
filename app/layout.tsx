@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
-import './globals.css';
 import Script from 'next/script';
+import './globals.css';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -16,61 +16,28 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://politicaargentina.com'),
-  title: {
-    default: 'Política Argentina - Noticias Políticas de Argentina en Tiempo Real',
-    template: '%s | Política Argentina'
-  },
-  description: 'Portal líder de noticias políticas de Argentina. Cobertura en tiempo real de gobierno, economía, elecciones, congreso y actualidad política argentina. Análisis experto y periodismo independiente.',
-  keywords: ['política argentina', 'noticias argentina', 'gobierno argentino', 'elecciones argentina', 'congreso nacional', 'milei', 'cristina kirchner', 'economía argentina', 'dólar blue', 'inflación argentina', 'actualidad política', 'noticias en vivo', 'breaking news argentina'],
+  title: 'Política Argentina - Portal de Noticias',
+  description: 'Portal líder de noticias políticas de Argentina. Cobertura en tiempo real y análisis experto.',
+  keywords: 'política argentina, noticias, economía, judicial, internacional, sociedad, Milei, dólar',
   authors: [{ name: 'Política Argentina' }],
-  creator: 'Política Argentina',
-  publisher: 'Política Argentina',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
   openGraph: {
+    title: 'Política Argentina - Portal de Noticias',
+    description: 'Portal líder de noticias políticas de Argentina',
     type: 'website',
     locale: 'es_AR',
-    url: 'https://politicaargentina.com',
-    title: 'Política Argentina - Noticias Políticas en Tiempo Real',
-    description: 'Portal líder de noticias políticas de Argentina. Cobertura en tiempo real, análisis experto y periodismo independiente.',
     siteName: 'Política Argentina',
-    images: [{
-      url: '/og-image.jpg',
-      width: 1200,
-      height: 630,
-      alt: 'Política Argentina - Portal de Noticias',
-    }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Política Argentina - Noticias Políticas en Tiempo Real',
-    description: 'Portal líder de noticias políticas de Argentina. Cobertura en tiempo real y análisis experto.',
-    images: ['/og-image.jpg'],
-    creator: '@politicaarg',
+    title: 'Política Argentina - Portal de Noticias',
+    description: 'Portal líder de noticias políticas de Argentina',
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  alternates: {
-    canonical: 'https://politicaargentina.com',
-    languages: {
-      'es-AR': 'https://politicaargentina.com',
-    },
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: 'google-site-verification-code',
   },
 };
 
@@ -80,19 +47,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es-AR" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="es" className={`${inter.variable} ${playfair.variable}`}>
       <head>
         {/* Preconnect to external domains */}
-        <link rel="preconnect" href="https://images.unsplash.com" />
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
-        {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        {/* Force deployment trigger - v2.1.1-EXTREME-FORCE */}
+        <meta name="deployment-version" content="2.1.1-extreme-force-final" />
+        <meta name="deployment-timestamp" content={new Date().toISOString()} />
+        <meta name="cache-bust" content={`extreme-force-${Date.now()}`} />
         
-        {/* Structured Data - Organization */}
+        {/* Schema.org Organization */}
         <Script
-          id="organization-schema"
+          id="schema-organization"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -100,30 +68,20 @@ export default function RootLayout({
               '@type': 'NewsMediaOrganization',
               name: 'Política Argentina',
               url: 'https://politicaargentina.com',
-              logo: {
-                '@type': 'ImageObject',
-                url: 'https://politicaargentina.com/logo.png',
-                width: 250,
-                height: 60
-              },
+              logo: 'https://politicaargentina.com/logo.png',
               description: 'Portal líder de noticias políticas de Argentina',
               sameAs: [
                 'https://twitter.com/politicaarg',
                 'https://facebook.com/politicaargentina',
-                'https://instagram.com/politicaargentina'
+                'https://instagram.com/politicaargentina',
               ],
-              address: {
-                '@type': 'PostalAddress',
-                addressCountry: 'AR',
-                addressRegion: 'Buenos Aires'
-              }
-            })
+            }),
           }}
         />
         
-        {/* Structured Data - WebSite */}
+        {/* Schema.org WebSite */}
         <Script
-          id="website-schema"
+          id="schema-website"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -133,13 +91,10 @@ export default function RootLayout({
               url: 'https://politicaargentina.com',
               potentialAction: {
                 '@type': 'SearchAction',
-                target: {
-                  '@type': 'EntryPoint',
-                  urlTemplate: 'https://politicaargentina.com/search?q={search_term_string}'
-                },
-                'query-input': 'required name=search_term_string'
-              }
-            })
+                target: 'https://politicaargentina.com/buscar?q={search_term_string}',
+                'query-input': 'required name=search_term_string',
+              },
+            }),
           }}
         />
       </head>
