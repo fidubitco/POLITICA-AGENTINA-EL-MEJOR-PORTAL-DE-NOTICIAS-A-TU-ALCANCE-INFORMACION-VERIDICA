@@ -1,163 +1,157 @@
 'use client';
 
 import { 
-  TrendingUp, 
   FileText, 
   Eye, 
-  Users,
-  DollarSign,
+  Users, 
+  TrendingUp,
   ArrowUp,
-  ArrowDown
+  ArrowDown,
+  Calendar,
+  Clock
 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { todasLasNoticias } from '../data/noticias-completas';
 
 export default function AdminDashboard() {
-  // Datos de ejemplo - en producción vendrían de la base de datos
-  const stats = {
-    totalNoticias: 30,
-    vistasHoy: 156789,
-    usuariosActivos: 8234,
-    ingresosMes: 45230,
-  };
+  const [stats, setStats] = useState({
+    totalNoticias: 0,
+    noticiasHoy: 0,
+    totalVistas: 0,
+    vistasHoy: 0,
+    usuarios: 0,
+    categorias: 5,
+  });
 
-  const recentNews = [
-    { id: 1, title: 'Dólar blue alcanza los $1.445', views: 45230, status: 'published' },
-    { id: 2, title: 'BCRA modifica encajes bancarios', views: 32100, status: 'published' },
-    { id: 3, title: 'Inflación supera el 8,3%', views: 42100, status: 'published' },
-    { id: 4, title: 'Milei anuncia reforma económica', views: 56780, status: 'published' },
-    { id: 5, title: 'Exportaciones crecen 15%', views: 18900, status: 'draft' },
+  const [recentNews, setRecentNews] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Calcular estadísticas
+    const total = todasLasNoticias.length;
+    const totalViews = todasLasNoticias.reduce((sum, n) => sum + n.views, 0);
+    
+    // Noticias de hoy (últimas 24 horas)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const newsToday = todasLasNoticias.filter(n => n.publishedAt >= today).length;
+    
+    setStats({
+      totalNoticias: total,
+      noticiasHoy: newsToday,
+      totalVistas: totalViews,
+      vistasHoy: Math.floor(totalViews * 0.15), // Simulado: 15% del total
+      usuarios: 3,
+      categorias: 5,
+    });
+
+    // Últimas noticias
+    const recent = todasLasNoticias
+      .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
+      .slice(0, 10);
+    setRecentNews(recent);
+  }, []);
+
+  const statCards = [
+    {
+      name: 'Total Noticias',
+      value: stats.totalNoticias,
+      change: '+12%',
+      trend: 'up',
+      icon: FileText,
+      color: 'blue',
+    },
+    {
+      name: 'Vistas Totales',
+      value: stats.totalVistas.toLocaleString(),
+      change: '+23%',
+      trend: 'up',
+      icon: Eye,
+      color: 'green',
+    },
+    {
+      name: 'Noticias Hoy',
+      value: stats.noticiasHoy,
+      change: '+5',
+      trend: 'up',
+      icon: Calendar,
+      color: 'purple',
+    },
+    {
+      name: 'Usuarios Activos',
+      value: stats.usuarios,
+      change: '0%',
+      trend: 'neutral',
+      icon: Users,
+      color: 'orange',
+    },
   ];
 
   const topCategories = [
-    { name: 'Economía', count: 30, percentage: 33 },
-    { name: 'Política', count: 25, percentage: 28 },
-    { name: 'Judicial', count: 18, percentage: 20 },
-    { name: 'Internacional', count: 12, percentage: 13 },
-    { name: 'Sociedad', count: 5, percentage: 6 },
+    { name: 'Economía', count: 30, percentage: 20 },
+    { name: 'Política', count: 30, percentage: 20 },
+    { name: 'Judicial', count: 30, percentage: 20 },
+    { name: 'Internacional', count: 30, percentage: 20 },
+    { name: 'Sociedad', count: 30, percentage: 20 },
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600 mt-2">Bienvenido al panel de administración de Política Argentina</p>
+        <p className="text-gray-600 mt-1">Bienvenido al panel de administración de Política Argentina</p>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Total Noticias</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{stats.totalNoticias}</p>
-              <div className="flex items-center mt-2 text-green-600 text-sm">
-                <ArrowUp className="w-4 h-4 mr-1" />
-                <span>12% vs mes anterior</span>
-              </div>
-            </div>
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-              <FileText className="w-6 h-6 text-blue-600" />
-            </div>
-          </div>
-        </div>
+        {statCards.map((stat) => {
+          const Icon = stat.icon;
+          const colorClasses = {
+            blue: 'bg-blue-50 text-blue-600',
+            green: 'bg-green-50 text-green-600',
+            purple: 'bg-purple-50 text-purple-600',
+            orange: 'bg-orange-50 text-orange-600',
+          }[stat.color];
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Vistas Hoy</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{stats.vistasHoy.toLocaleString()}</p>
-              <div className="flex items-center mt-2 text-green-600 text-sm">
-                <ArrowUp className="w-4 h-4 mr-1" />
-                <span>8% vs ayer</span>
-              </div>
-            </div>
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-              <Eye className="w-6 h-6 text-green-600" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Usuarios Activos</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{stats.usuariosActivos.toLocaleString()}</p>
-              <div className="flex items-center mt-2 text-green-600 text-sm">
-                <ArrowUp className="w-4 h-4 mr-1" />
-                <span>15% vs semana anterior</span>
-              </div>
-            </div>
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-              <Users className="w-6 h-6 text-purple-600" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Ingresos Mes</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">${stats.ingresosMes.toLocaleString()}</p>
-              <div className="flex items-center mt-2 text-red-600 text-sm">
-                <ArrowDown className="w-4 h-4 mr-1" />
-                <span>3% vs mes anterior</span>
-              </div>
-            </div>
-            <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-              <DollarSign className="w-6 h-6 text-yellow-600" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent News */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Noticias Recientes</h2>
-            <a href="/admin/noticias" className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-              Ver todas
-            </a>
-          </div>
-          <div className="space-y-4">
-            {recentNews.map((news) => (
-              <div key={news.id} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
-                <div className="flex-1">
-                  <h3 className="font-medium text-gray-900 text-sm">{news.title}</h3>
-                  <div className="flex items-center mt-1 space-x-4">
-                    <span className="text-xs text-gray-500 flex items-center">
-                      <Eye className="w-3 h-3 mr-1" />
-                      {news.views.toLocaleString()}
-                    </span>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      news.status === 'published' 
-                        ? 'bg-green-100 text-green-700' 
-                        : 'bg-yellow-100 text-yellow-700'
-                    }`}>
-                      {news.status === 'published' ? 'Publicado' : 'Borrador'}
-                    </span>
-                  </div>
+          return (
+            <div key={stat.name} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between">
+                <div className={`p-3 rounded-lg ${colorClasses}`}>
+                  <Icon className="w-6 h-6" />
+                </div>
+                <div className={`flex items-center gap-1 text-sm font-medium ${
+                  stat.trend === 'up' ? 'text-green-600' : 
+                  stat.trend === 'down' ? 'text-red-600' : 
+                  'text-gray-600'
+                }`}>
+                  {stat.trend === 'up' && <ArrowUp className="w-4 h-4" />}
+                  {stat.trend === 'down' && <ArrowDown className="w-4 h-4" />}
+                  <span>{stat.change}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+              <div className="mt-4">
+                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                <p className="text-sm text-gray-600 mt-1">{stat.name}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
+      {/* Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top Categories */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Categorías Principales</h2>
-            <TrendingUp className="w-5 h-5 text-gray-400" />
-          </div>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">Noticias por Categoría</h2>
           <div className="space-y-4">
-            {topCategories.map((category, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-900">{category.name}</span>
+            {topCategories.map((category) => (
+              <div key={category.name}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-700">{category.name}</span>
                   <span className="text-sm text-gray-600">{category.count} noticias</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
+                  <div 
                     className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${category.percentage}%` }}
                   />
@@ -166,36 +160,119 @@ export default function AdminDashboard() {
             ))}
           </div>
         </div>
+
+        {/* Quick Actions */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">Acciones Rápidas</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <a
+              href="/admin/noticias/nueva"
+              className="flex flex-col items-center justify-center p-6 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
+            >
+              <FileText className="w-8 h-8 text-blue-600 mb-2" />
+              <span className="text-sm font-medium text-blue-900">Nueva Noticia</span>
+            </a>
+            <a
+              href="/admin/noticias"
+              className="flex flex-col items-center justify-center p-6 bg-green-50 hover:bg-green-100 rounded-lg transition-colors cursor-pointer"
+            >
+              <Eye className="w-8 h-8 text-green-600 mb-2" />
+              <span className="text-sm font-medium text-green-900">Ver Noticias</span>
+            </a>
+            <a
+              href="/admin/categorias"
+              className="flex flex-col items-center justify-center p-6 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors cursor-pointer"
+            >
+              <TrendingUp className="w-8 h-8 text-purple-600 mb-2" />
+              <span className="text-sm font-medium text-purple-900">Categorías</span>
+            </a>
+            <a
+              href="/admin/usuarios"
+              className="flex flex-col items-center justify-center p-6 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors cursor-pointer"
+            >
+              <Users className="w-8 h-8 text-orange-600 mb-2" />
+              <span className="text-sm font-medium text-orange-900">Usuarios</span>
+            </a>
+          </div>
+        </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Acciones Rápidas</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <a
-            href="/admin/noticias/nueva"
-            className="flex items-center justify-center space-x-2 px-6 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <FileText className="w-5 h-5" />
-            <span className="font-medium">Nueva Noticia</span>
-          </a>
-          <a
-            href="/admin/imagenes/subir"
-            className="flex items-center justify-center space-x-2 px-6 py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-          >
-            <FileText className="w-5 h-5" />
-            <span className="font-medium">Subir Imagen</span>
-          </a>
-          <a
-            href="/admin/analytics"
-            className="flex items-center justify-center space-x-2 px-6 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-          >
-            <TrendingUp className="w-5 h-5" />
-            <span className="font-medium">Ver Analytics</span>
-          </a>
+      {/* Recent News Table */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div className="p-6 border-b border-gray-200">
+          <h2 className="text-lg font-bold text-gray-900">Noticias Recientes</h2>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Título
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Categoría
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Autor
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Vistas
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Fecha
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {recentNews.map((news) => (
+                <tr key={news.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center">
+                      <div className="text-sm font-medium text-gray-900 line-clamp-2 max-w-md">
+                        {news.title}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                      news.categorySlug === 'economia' ? 'bg-green-100 text-green-800' :
+                      news.categorySlug === 'politica' ? 'bg-blue-100 text-blue-800' :
+                      news.categorySlug === 'judicial' ? 'bg-red-100 text-red-800' :
+                      news.categorySlug === 'internacional' ? 'bg-purple-100 text-purple-800' :
+                      'bg-orange-100 text-orange-800'
+                    }`}>
+                      {news.category}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    {news.author}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <Eye className="w-4 h-4" />
+                      {news.views.toLocaleString()}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" />
+                      {new Date(news.publishedAt).toLocaleDateString('es-AR')}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <button className="text-blue-600 hover:text-blue-900 font-medium">
+                      Editar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   );
 }
-

@@ -2,9 +2,17 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Save, X, Eye, Upload } from 'lucide-react';
+import Link from 'next/link';
+import { 
+  ArrowLeft, 
+  Save, 
+  Eye,
+  Image as ImageIcon,
+  Upload,
+  X
+} from 'lucide-react';
 
-export default function NuevaNoticia() {
+export default function NuevaNoticiaPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
@@ -12,11 +20,14 @@ export default function NuevaNoticia() {
     category: 'economia',
     excerpt: '',
     content: '',
-    imageUrl: '/images/economia-argentina-1.jpg',
-    author: 'Redacción Política Argentina',
+    imageUrl: '',
+    author: 'Admin',
     tags: '',
     isBreaking: false,
+    isFeatured: false,
   });
+
+  const [isSaving, setIsSaving] = useState(false);
 
   const categories = [
     { value: 'economia', label: 'Economía' },
@@ -26,161 +37,184 @@ export default function NuevaNoticia() {
     { value: 'sociedad', label: 'Sociedad' },
   ];
 
-  const handleSubmit = (e: React.FormEvent, status: 'draft' | 'published') => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí iría la lógica para guardar en la base de datos
-    console.log('Guardando noticia:', { ...formData, status });
-    alert(`Noticia ${status === 'draft' ? 'guardada como borrador' : 'publicada'} exitosamente`);
-    router.push('/admin/noticias');
+    setIsSaving(true);
+
+    try {
+      // Aquí iría la llamada a la API para guardar la noticia
+      // await fetch('/api/noticias', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData),
+      // });
+
+      // Simulación de guardado
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      alert('Noticia creada exitosamente');
+      router.push('/admin/noticias');
+    } catch (error) {
+      alert('Error al crear la noticia');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+    }));
   };
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Nueva Noticia</h1>
-          <p className="text-gray-600 mt-1">Crea una nueva noticia para el portal</p>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/admin/noticias"
+            className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Nueva Noticia</h1>
+            <p className="text-gray-600 mt-1">Crea una nueva noticia para el portal</p>
+          </div>
         </div>
-        <button
-          onClick={() => router.back()}
-          className="flex items-center space-x-2 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-        >
-          <X className="w-5 h-5" />
-          <span>Cancelar</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            className="flex items-center gap-2 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            <Eye className="w-5 h-5" />
+            <span className="font-medium">Vista Previa</span>
+          </button>
+          <button
+            onClick={handleSubmit}
+            disabled={isSaving}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Save className="w-5 h-5" />
+            <span className="font-medium">{isSaving ? 'Guardando...' : 'Publicar'}</span>
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Form */}
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-6">
-            {/* Title */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Título *
-              </label>
-              <input
-                type="text"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                placeholder="Ej: Dólar blue alcanza los $1.445: análisis del mercado cambiario"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                {formData.title.length} caracteres (recomendado: 60-70 para SEO)
-              </p>
-            </div>
+          {/* Title */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Título *
+            </label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+              placeholder="Escribe un título llamativo..."
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-semibold"
+            />
+          </div>
 
-            {/* Subtitle */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Subtítulo
-              </label>
-              <input
-                type="text"
-                value={formData.subtitle}
-                onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
-                placeholder="Ej: El dólar paralelo se mantiene estable mientras el gobierno evalúa medidas"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+          {/* Subtitle */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Subtítulo
+            </label>
+            <input
+              type="text"
+              name="subtitle"
+              value={formData.subtitle}
+              onChange={handleChange}
+              placeholder="Subtítulo opcional..."
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
 
-            {/* Excerpt */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Resumen (Excerpt) *
-              </label>
+          {/* Excerpt */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Extracto *
+            </label>
+            <textarea
+              name="excerpt"
+              value={formData.excerpt}
+              onChange={handleChange}
+              required
+              rows={3}
+              placeholder="Resumen breve de la noticia (aparecerá en las tarjetas)..."
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            />
+            <p className="text-xs text-gray-500 mt-2">
+              {formData.excerpt.length} / 200 caracteres recomendados
+            </p>
+          </div>
+
+          {/* Content Editor */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Contenido *
+            </label>
+            <div className="border border-gray-300 rounded-lg overflow-hidden">
+              {/* Toolbar */}
+              <div className="bg-gray-50 border-b border-gray-300 p-2 flex items-center gap-2 flex-wrap">
+                <button type="button" className="p-2 hover:bg-gray-200 rounded" title="Negrita">
+                  <strong>B</strong>
+                </button>
+                <button type="button" className="p-2 hover:bg-gray-200 rounded" title="Cursiva">
+                  <em>I</em>
+                </button>
+                <button type="button" className="p-2 hover:bg-gray-200 rounded" title="Subrayado">
+                  <u>U</u>
+                </button>
+                <div className="w-px h-6 bg-gray-300"></div>
+                <button type="button" className="p-2 hover:bg-gray-200 rounded" title="Lista">
+                  ≡
+                </button>
+                <button type="button" className="p-2 hover:bg-gray-200 rounded" title="Enlace">
+                  🔗
+                </button>
+                <button type="button" className="p-2 hover:bg-gray-200 rounded" title="Imagen">
+                  <ImageIcon className="w-4 h-4" />
+                </button>
+              </div>
+              {/* Editor */}
               <textarea
-                value={formData.excerpt}
-                onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                placeholder="Breve resumen de la noticia (150-200 caracteres)"
-                rows={3}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                {formData.excerpt.length} caracteres (recomendado: 150-200)
-              </p>
-            </div>
-
-            {/* Content */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Contenido *
-              </label>
-              <textarea
+                name="content"
                 value={formData.content}
-                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                placeholder="Contenido completo de la noticia..."
-                rows={15}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
+                onChange={handleChange}
                 required
+                rows={15}
+                placeholder="Escribe el contenido completo de la noticia aquí..."
+                className="w-full px-4 py-3 focus:outline-none resize-none"
               />
-              <p className="text-xs text-gray-500 mt-1">
-                {formData.content.length} caracteres
-              </p>
             </div>
-
-            {/* Tags */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Tags (separados por comas)
-              </label>
-              <input
-                type="text"
-                value={formData.tags}
-                onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                placeholder="Ej: dólar blue, economía, mercado cambiario, BCRA"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Recomendado: 5-7 tags relevantes para SEO
-              </p>
-            </div>
+            <p className="text-xs text-gray-500 mt-2">
+              {formData.content.length} caracteres
+            </p>
           </div>
         </div>
 
         {/* Sidebar */}
         <div className="space-y-6">
-          {/* Publish */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-4">
-            <h3 className="font-semibold text-gray-900">Publicación</h3>
-            
-            <div className="space-y-3">
-              <button
-                onClick={(e) => handleSubmit(e, 'published')}
-                className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                <Save className="w-4 h-4" />
-                <span>Publicar</span>
-              </button>
-              
-              <button
-                onClick={(e) => handleSubmit(e, 'draft')}
-                className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                <Save className="w-4 h-4" />
-                <span>Guardar Borrador</span>
-              </button>
-              
-              <button
-                className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <Eye className="w-4 h-4" />
-                <span>Vista Previa</span>
-              </button>
-            </div>
-          </div>
-
           {/* Category */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-4">
-            <h3 className="font-semibold text-gray-900">Categoría</h3>
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Categoría *
+            </label>
             <select
+              name="category"
               value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               {categories.map((cat) => (
                 <option key={cat.value} value={cat.value}>
@@ -190,60 +224,111 @@ export default function NuevaNoticia() {
             </select>
           </div>
 
-          {/* Author */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-4">
-            <h3 className="font-semibold text-gray-900">Autor</h3>
-            <input
-              type="text"
-              value={formData.author}
-              onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {/* Featured Image */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-4">
-            <h3 className="font-semibold text-gray-900">Imagen Destacada</h3>
+          {/* Image */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Imagen Destacada
+            </label>
             <div className="space-y-3">
-              <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                {formData.imageUrl && (
+              <input
+                type="text"
+                name="imageUrl"
+                value={formData.imageUrl}
+                onChange={handleChange}
+                placeholder="/images/noticia.jpg"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
+              >
+                <Upload className="w-5 h-5 text-gray-400" />
+                <span className="text-sm text-gray-600">Subir Imagen</span>
+              </button>
+              {formData.imageUrl && (
+                <div className="relative aspect-video bg-gray-100 rounded-lg overflow-hidden">
                   <img
                     src={formData.imageUrl}
                     alt="Preview"
                     className="w-full h-full object-cover"
                   />
-                )}
-              </div>
-              <input
-                type="text"
-                value={formData.imageUrl}
-                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                placeholder="URL de la imagen"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-              />
-              <button className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                <Upload className="w-4 h-4" />
-                <span>Subir Imagen</span>
-              </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, imageUrl: '' }))}
+                    className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
+          {/* Author */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Autor
+            </label>
+            <input
+              type="text"
+              name="author"
+              value={formData.author}
+              onChange={handleChange}
+              placeholder="Nombre del autor"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+
+          {/* Tags */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Tags
+            </label>
+            <input
+              type="text"
+              name="tags"
+              value={formData.tags}
+              onChange={handleChange}
+              placeholder="economía, dólar, inflación"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            <p className="text-xs text-gray-500 mt-2">
+              Separa los tags con comas
+            </p>
+          </div>
+
           {/* Options */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-4">
-            <h3 className="font-semibold text-gray-900">Opciones</h3>
-            <label className="flex items-center space-x-2">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-4">
+            <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
+                name="isBreaking"
                 checked={formData.isBreaking}
-                onChange={(e) => setFormData({ ...formData, isBreaking: e.target.checked })}
+                onChange={handleChange}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
-              <span className="text-sm text-gray-700">Marcar como Breaking News</span>
+              <div>
+                <span className="text-sm font-medium text-gray-900">Breaking News</span>
+                <p className="text-xs text-gray-500">Marcar como noticia de última hora</p>
+              </div>
+            </label>
+
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                name="isFeatured"
+                checked={formData.isFeatured}
+                onChange={handleChange}
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <div>
+                <span className="text-sm font-medium text-gray-900">Noticia Destacada</span>
+                <p className="text-xs text-gray-500">Aparecerá en la portada</p>
+              </div>
             </label>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
-
