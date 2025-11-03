@@ -1,14 +1,14 @@
 {
-  "version": "1.1.0-IMAGES-FIXED",
-  "deployment": "IMAGES-OPTIMIZED-ARGENTINA",
-  "timestamp": "2025-11-02T22:30:00Z",
-  "unix_timestamp": 1730587800,
-  "commit": "pending",
-  "cache_strategy": "NO_CACHE_IMAGES_FIXED",
-  "force_level": "MAXIMUM",
-  "deployment_id": "IMAGES_FIXED_v1.1.0",
-  "random_hash": "images_fixed_1730587800_argentina",
-  "trigger": "IMAGES_OPTIMIZATION",
+  "version": "1.5.0-SUPABASE-READY",
+  "deployment": "SUPABASE-INTEGRATION-COMPLETE",
+  "timestamp": "2025-11-03T12:00:00Z",
+  "unix_timestamp": 1730635200,
+  "commit": "supabase-integration",
+  "cache_strategy": "OPTIMIZED",
+  "force_level": "PRODUCTION",
+  "deployment_id": "SUPABASE_v1.5.0",
+  "random_hash": "supabase_ready_1730635200",
+  "trigger": "SUPABASE_DEPLOYMENT",
   "features": {
     "design": "World-class professional",
     "typography": "Inter + Playfair Display",
@@ -18,7 +18,10 @@
     "responsive": "Mobile-first",
     "pwa": "Ready",
     "security": "Headers implemented",
-    "images": "LOCAL ARGENTINA IMAGES - NO OBAMA"
+    "images": "LOCAL ARGENTINA IMAGES",
+    "database": "Supabase PostgreSQL",
+    "api": "REST API with CRUD operations",
+    "backend": "Complete backend integration"
   },
   "images_fixed": {
     "milei_featured": "/images/milei-1.jpg (LOCAL - Presidente Milei)",
@@ -28,15 +31,20 @@
     "celebracion": "/images/argentina-celebracion-1.jpg (LOCAL - Argentina)",
     "politica": "/images/milei-2.jpg, /images/milei-3.jpg (LOCAL - Política)"
   },
-  "fixes": [
-    "✅ Eliminada imagen de Obama",
-    "✅ Todas las imágenes ahora son locales de Argentina",
-    "✅ Imágenes contextuales a cada noticia",
-    "✅ Sin errores 403/404 de Unsplash",
-    "✅ Performance mejorado (imágenes locales)",
-    "✅ Cache optimizado"
+  "database": {
+    "provider": "Supabase",
+    "type": "PostgreSQL",
+    "tables": ["usuarios", "categorias", "tags", "noticias", "noticias_tags"],
+    "features": ["RLS", "Full-text search", "Triggers", "Functions", "Views"]
+  },
+  "api_routes": [
+    "GET /api/noticias",
+    "POST /api/noticias",
+    "GET /api/noticias/[id]",
+    "PUT /api/noticias/[id]",
+    "DELETE /api/noticias/[id]"
   ],
-  "status": "IMAGES_FIXED_READY_TO_DEPLOY",
+  "status": "SUPABASE_READY_TO_DEPLOY",
   "vercel_trigger": true,
-  "notes": "IMAGES FIXED - All images are now local Argentina-specific images. NO MORE OBAMA. NO MORE 403/404 errors. Contextual images for each news article."
+  "notes": "SUPABASE INTEGRATION COMPLETE - Database configured, API routes implemented, ready for production deployment. Next: Configure environment variables in Vercel."
 }
