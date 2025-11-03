@@ -427,15 +427,32 @@ export const noticiasPolitica: Noticia[] = noticiasEconomia.map((n, i) => ({
 }));
 
 // ============================================
-// CATEGORÍA: JUDICIAL (30 noticias)
+// CATEGORÍA: JUDICIAL (31 noticias)
 // ============================================
-export const noticiasJudicial: Noticia[] = noticiasEconomia.map((n, i) => ({
-  ...n,
-  id: `jud-${i + 1}`,
-  category: 'Judicial',
-  categorySlug: 'judicial',
-  imageUrl: i % 2 === 0 ? '/images/casa-rosada-2.jpg' : '/images/casa-rosada-1.jpg',
-}));
+export const noticiasJudicial: Noticia[] = [
+  // ÚLTIMA HORA - BREAKING NEWS
+  {
+    id: 'jud-breaking-1',
+    title: 'La corrupción judicial en Córdoba: una trama de poder, impunidad y narcotráfico',
+    subtitle: 'Fiscal Companys bajo la lupa: denuncias de extorsión, vínculos con el narcotráfico y protección política en Villa María',
+    category: 'Judicial',
+    categorySlug: 'judicial',
+    excerpt: 'El sistema judicial de Córdoba enfrenta un severo escrutinio tras resoluciones de la fiscal Companys que recurre a prisiones preventivas irregulares. Investigaciones revelan vínculos con narcotráfico, extorsión y protección política del intendente Eduardo Accastello.',
+    imageUrl: '/images/casa-rosada-2.jpg',
+    author: 'Redacción Política Argentina',
+    publishedAt: new Date(Date.now() - 30 * 60 * 1000), // Hace 30 minutos
+    views: 89500,
+    isBreaking: true,
+    tags: ['Córdoba', 'Fiscal Companys', 'Eduardo Accastello', 'Narcotráfico', 'Corrupción Judicial', 'Villa María', 'Última Hora'],
+  },
+  ...noticiasEconomia.map((n, i) => ({
+    ...n,
+    id: `jud-${i + 1}`,
+    category: 'Judicial',
+    categorySlug: 'judicial',
+    imageUrl: i % 2 === 0 ? '/images/casa-rosada-2.jpg' : '/images/casa-rosada-1.jpg',
+  }))
+];
 
 // ============================================
 // CATEGORÍA: INTERNACIONAL (30 noticias)
@@ -460,7 +477,7 @@ export const noticiasSociedad: Noticia[] = noticiasEconomia.map((n, i) => ({
 }));
 
 // ============================================
-// TODAS LAS NOTICIAS (150 total)
+// TODAS LAS NOTICIAS (151 total)
 // ============================================
 export const todasLasNoticias: Noticia[] = [
   ...noticiasEconomia,
