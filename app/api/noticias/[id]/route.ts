@@ -4,10 +4,11 @@ import { supabaseHelpers } from '@/lib/supabase';
 // GET /api/noticias/[id] - Obtener una noticia por ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { data, error } = await supabaseHelpers.getNoticiaById(params.id);
+    const { id } = await params;
+    const { data, error } = await supabaseHelpers.getNoticiaById(id);
 
     if (error) {
       return NextResponse.json(
@@ -24,7 +25,7 @@ export async function GET(
     }
 
     // Incrementar vistas
-    await supabaseHelpers.incrementViews(params.id);
+    await supabaseHelpers.incrementViews(id);
 
     return NextResponse.json({
       success: true,
@@ -41,9 +42,10 @@ export async function GET(
 // PUT /api/noticias/[id] - Actualizar una noticia
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
 
     // Si se está publicando, agregar fecha de publicación
@@ -51,7 +53,7 @@ export async function PUT(
       body.published_at = new Date().toISOString();
     }
 
-    const { data, error } = await supabaseHelpers.updateNoticia(params.id, body);
+    const { data, error } = await supabaseHelpers.updateNoticia(id, body);
 
     if (error) {
       return NextResponse.json(
@@ -76,10 +78,11 @@ export async function PUT(
 // DELETE /api/noticias/[id] - Eliminar una noticia
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { error } = await supabaseHelpers.deleteNoticia(params.id);
+    const { id } = await params;
+    const { error } = await supabaseHelpers.deleteNoticia(id);
 
     if (error) {
       return NextResponse.json(

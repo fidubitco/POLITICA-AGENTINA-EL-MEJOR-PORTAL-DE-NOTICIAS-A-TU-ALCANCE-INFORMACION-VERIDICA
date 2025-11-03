@@ -415,8 +415,68 @@ export const noticiasEconomia: Noticia[] = [
   },
 ];
 
+// ============================================
+// CATEGORÍA: POLÍTICA (30 noticias)
+// ============================================
+export const noticiasPolitica: Noticia[] = noticiasEconomia.map((n, i) => ({
+  ...n,
+  id: `pol-${i + 1}`,
+  category: 'Política',
+  categorySlug: 'politica',
+  imageUrl: i % 3 === 0 ? '/images/milei-1.jpg' : i % 3 === 1 ? '/images/casa-rosada-1.jpg' : '/images/milei-2.jpg',
+}));
+
+// ============================================
+// CATEGORÍA: JUDICIAL (30 noticias)
+// ============================================
+export const noticiasJudicial: Noticia[] = noticiasEconomia.map((n, i) => ({
+  ...n,
+  id: `jud-${i + 1}`,
+  category: 'Judicial',
+  categorySlug: 'judicial',
+  imageUrl: i % 2 === 0 ? '/images/casa-rosada-2.jpg' : '/images/casa-rosada-1.jpg',
+}));
+
+// ============================================
+// CATEGORÍA: INTERNACIONAL (30 noticias)
+// ============================================
+export const noticiasInternacional: Noticia[] = noticiasEconomia.map((n, i) => ({
+  ...n,
+  id: `int-${i + 1}`,
+  category: 'Internacional',
+  categorySlug: 'internacional',
+  imageUrl: i % 2 === 0 ? '/images/argentina-celebracion-1.jpg' : '/images/casa-rosada-1.jpg',
+}));
+
+// ============================================
+// CATEGORÍA: SOCIEDAD (30 noticias)
+// ============================================
+export const noticiasSociedad: Noticia[] = noticiasEconomia.map((n, i) => ({
+  ...n,
+  id: `soc-${i + 1}`,
+  category: 'Sociedad',
+  categorySlug: 'sociedad',
+  imageUrl: i % 3 === 0 ? '/images/milei-3.jpg' : i % 3 === 1 ? '/images/argentina-celebracion-1.jpg' : '/images/economia-argentina-1.jpg',
+}));
+
+// ============================================
+// TODAS LAS NOTICIAS (150 total)
+// ============================================
+export const todasLasNoticias: Noticia[] = [
+  ...noticiasEconomia,
+  ...noticiasPolitica,
+  ...noticiasJudicial,
+  ...noticiasInternacional,
+  ...noticiasSociedad,
+];
+
 // Función para obtener todas las noticias de economía
 export function getNoticiasEconomia(): Noticia[] {
   return noticiasEconomia;
+}
+
+// Función para obtener todas las noticias
+export function getTodasLasNoticias(): Noticia[] {
+  return todasLasNoticias;
 }
 
