@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   
+  // Force complete rebuild - no cache
+  generateBuildId: async () => {
+    return `build-${Date.now()}-complete-rebuild`;
+  },
+  
   // Image Optimization
   images: {
     remotePatterns: [

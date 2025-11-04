@@ -1,10 +1,10 @@
 {
-  "version": "2.3.0-NAVIGATION-OPTIMIZED",
-  "build_id": "extreme-force-navigation-menu",
-  "timestamp": "2025-11-04T01:00:00.000Z",
-  "deployment_status": "EXTREME_BRUTE_FORCE_NAVIGATION",
-  "force_level": "ULTRA_MAXIMUM",
-  "commit": "1f786b9",
+  "version": "2.3.2-COMPLETE-REBUILD-JUDICIAL-NEWS",
+  "build_id": "complete-rebuild-from-scratch",
+  "timestamp": "2025-11-04T02:00:00.000Z",
+  "deployment_status": "FORCE_COMPLETE_REBUILD_NO_CACHE",
+  "force_level": "ABSOLUTE_MAXIMUM",
+  "commit": "force-rebuild",
   
   "features": {
     "admin_panel": {
