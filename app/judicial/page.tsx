@@ -16,26 +16,35 @@ export default function JudicialPage() {
     { name: 'Narcotráfico', count: '234K' }
   ];
 
+  // TIMESTAMP ÚNICO PARA FORZAR REBUILD
+  const buildTimestamp = Date.now();
+  
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* BANNER ROJO GIGANTE - 100% VISIBLE */}
-      <div className="bg-red-600 text-white py-5 animate-pulse">
+      {/* BANNER ROJO EXTREMO - IMPOSIBLE NO VERLO */}
+      <div className="bg-red-600 text-white py-6 animate-pulse border-b-4 border-yellow-400" style={{ position: 'sticky', top: 0, zIndex: 9999 }}>
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-4">
-            <span className="px-4 py-2 bg-white text-red-600 rounded font-bold text-sm animate-bounce">
-              🔥 ÚLTIMA HORA
+          <div className="flex items-center gap-4 text-center">
+            <span className="px-5 py-3 bg-yellow-400 text-red-600 rounded-lg font-black text-base animate-bounce shadow-lg">
+              🔥🔥🔥 ÚLTIMA HORA 🔥🔥🔥
             </span>
             <Link 
               href="/judicial/jud-breaking-1" 
-              className="hover:underline font-bold text-xl flex-1"
+              className="hover:underline font-black text-2xl flex-1 text-center"
+              style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
             >
-              {breakingNews.title}
+              🚨 ALERTA JUDICIAL: {breakingNews.title.toUpperCase()} 🚨
             </Link>
-            <span className="text-lg font-semibold">
-              👁️ {breakingNews.views.toLocaleString()} vistas
+            <span className="text-xl font-black bg-yellow-400 text-red-600 px-4 py-2 rounded-lg">
+              👁️ {breakingNews.views.toLocaleString()} VISTAS
             </span>
           </div>
         </div>
+      </div>
+      
+      {/* MENSAJE DE ACTUALIZACIÓN VISIBLE */}
+      <div className="bg-green-500 text-white text-center py-2 font-bold">
+        ✅ SITIO ACTUALIZADO EL {new Date().toLocaleDateString('es-AR')} - BUILD: {buildTimestamp}
       </div>
 
       {/* NAVIGATION SIMPLE */}
