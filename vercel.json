@@ -12,9 +12,11 @@
     "autoAlias": true
   },
   "env": {
-    "FORCE_DEPLOY": "extreme-brute-force-2.1.1-final",
-    "DEPLOYMENT_ID": "extreme-force-complete",
-    "CACHE_BUST": "2025-11-03-23-45-00"
+    "FORCE_DEPLOY": "navigation-optimized-2.3.0-ultra",
+    "DEPLOYMENT_ID": "navigation-menu-extreme-force",
+    "CACHE_BUST": "2025-11-04-01-00-00",
+    "NAVIGATION_OPTIMIZED": "true",
+    "PROFESSIONAL_MENU": "enabled"
   },
   "headers": [
     {

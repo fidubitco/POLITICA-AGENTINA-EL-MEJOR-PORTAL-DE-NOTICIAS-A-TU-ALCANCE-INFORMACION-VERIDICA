@@ -1,10 +1,10 @@
 {
-  "version": "2.1.2",
-  "build_id": "breaking-news-judicial-cordoba",
-  "timestamp": "2025-11-04T00:30:00.000Z",
-  "deployment_status": "BREAKING_NEWS_DEPLOYMENT",
-  "force_level": "MAXIMUM",
-  "commit": "4a6d98c",
+  "version": "2.3.0-NAVIGATION-OPTIMIZED",
+  "build_id": "extreme-force-navigation-menu",
+  "timestamp": "2025-11-04T01:00:00.000Z",
+  "deployment_status": "EXTREME_BRUTE_FORCE_NAVIGATION",
+  "force_level": "ULTRA_MAXIMUM",
+  "commit": "1f786b9",
   
   "features": {
     "admin_panel": {
@@ -60,7 +60,9 @@
     "tags": 8,
     "users": 3,
     "breaking_news": 2,
-    "ultima_hora": 1
+    "ultima_hora": 1,
+    "navigation_optimized": true,
+    "professional_menu": true
   },
   
   "images": {
