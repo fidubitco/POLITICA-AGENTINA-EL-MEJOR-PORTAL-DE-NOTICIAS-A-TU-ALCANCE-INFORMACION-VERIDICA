@@ -1,5 +1,6 @@
 'use client';
 
+import Navigation from '@/components/Navigation';
 import CategoryPage from '../components/CategoryPage';
 import { noticiasJudicial } from '../data/noticias-completas';
 import Link from 'next/link';
@@ -24,7 +25,7 @@ export default function JudicialPage() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-white">
       {/* Breaking News Alert */}
       <div className="bg-red-600 text-white py-3 animate-pulse">
         <div className="container mx-auto px-4">
@@ -38,6 +39,9 @@ export default function JudicialPage() {
           </div>
         </div>
       </div>
+
+      {/* Navigation Component */}
+      <Navigation />
 
       {/* Breaking News Card */}
       <div className="bg-red-50 border-l-4 border-red-600 p-6 mb-8">

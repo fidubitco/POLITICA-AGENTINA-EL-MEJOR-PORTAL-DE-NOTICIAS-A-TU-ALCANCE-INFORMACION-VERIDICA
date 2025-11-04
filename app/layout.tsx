@@ -53,10 +53,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
-        {/* Force deployment trigger - v2.1.1-EXTREME-FORCE */}
-        <meta name="deployment-version" content="2.1.1-extreme-force-final" />
-        <meta name="deployment-timestamp" content={new Date().toISOString()} />
-        <meta name="cache-bust" content={`extreme-force-${Date.now()}`} />
+        {/* Force deployment trigger - v2.3.0-NAVIGATION-OPTIMIZED */}
+        <meta name="deployment-version" content="2.3.0-navigation-optimized-ultra" />
+        <meta name="deployment-timestamp" content="2025-11-04T01:10:00.000Z" />
+        <meta name="cache-bust" content={`navigation-force-${Date.now()}`} />
+        <meta name="navigation-menu" content="optimized" />
         
         {/* Schema.org Organization */}
         <Script
