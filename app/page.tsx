@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import Navigation from '@/components/Navigation';
 import { Clock, TrendingUp, Eye, Share2, Bookmark, DollarSign } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -67,53 +68,8 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Top Bar */}
-      <div className="top-bar no-print">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <time className="flex items-center gap-1">
-              <Clock className="w-3 h-3" />
-              {new Date().toLocaleDateString('es-AR', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
-            </time>
-          </div>
-          <div className="flex items-center gap-4">
-            <span>Buenos Aires, Argentina</span>
-            <span>|</span>
-            <span className="text-green-400">● En Vivo</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Header */}
-      <header className="main-header">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <h1 className="logo-text">Política Argentina</h1>
-            <p className="text-xs text-gray-500 hidden md:block">
-              El portal líder de noticias políticas
-            </p>
-          </div>
-        </div>
-        
-            {/* Navigation */}
-            <nav className="border-t border-gray-200 no-print">
-              <div className="container mx-auto px-4">
-                <ul className="flex items-center gap-6 py-3 overflow-x-auto">
-                  <li><Link href="/" className="nav-link nav-link-active">Inicio</Link></li>
-                  <li><Link href="/politica" className="nav-link">Política</Link></li>
-                  <li><Link href="/economia" className="nav-link">Economía</Link></li>
-                  <li><Link href="/judicial" className="nav-link">Judicial</Link></li>
-                  <li><Link href="/internacional" className="nav-link">Internacional</Link></li>
-                  <li><Link href="/sociedad" className="nav-link">Sociedad</Link></li>
-                </ul>
-              </div>
-            </nav>
-      </header>
+      {/* Navigation Component */}
+      <Navigation />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
