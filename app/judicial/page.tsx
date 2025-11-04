@@ -1,81 +1,84 @@
 'use client';
 
-import { noticiasJudicial } from '@/app/data/noticias-completas';
-import CategoryPage from '@/app/components/CategoryPage';
 import Link from 'next/link';
-
-// Datos de trending topics con formato correcto
-const trendingTopics = [
-  { name: 'Fiscal Companys', count: '2.3k' },
-  { name: 'Eduardo Accastello', count: '1.8k' },
-  { name: 'Corrupción Judicial', count: '5.1k' },
-  { name: 'Córdoba', count: '3.2k' },
-  { name: 'Villa María', count: '890' },
-  { name: 'Narcotráfico', count: '4.5k' },
-  { name: 'Última Hora', count: '12.3k' }
-];
-
-// Breaking news desde los datos
-const breakingNews = noticiasJudicial[0];
-const regularNews = noticiasJudicial.slice(1);
+import { noticiasJudicial } from '@/app/data/noticias-completas';
+import { Navigation } from '@/app/components/Navigation';
+import { CategoryPage } from '@/app/components/CategoryPage';
+import { TrendingUp, Clock, Eye } from 'lucide-react';
 
 export default function JudicialPage() {
+  // Noticia breaking real
+  const breakingNews = noticiasJudicial[0];
+  const regularNews = noticiasJudicial.slice(1);
+
+  const trendingTopics = [
+    { name: 'Fiscal Companys', count: '89.5K' },
+    { name: 'Eduardo Accastello', count: '67.2K' },
+    { name: 'Corrupción Judicial', count: '125K' },
+    { name: 'Villa María', count: '45.8K' },
+    { name: 'Narcotráfico', count: '234K' }
+  ];
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Breaking News Alert - SIEMPRE VISIBLE */}
-      <div className="bg-red-600 text-white py-3 animate-pulse">
+      {/* EMERGENCY BREAKING NEWS BANNER - REAL CONTENT */}
+      <div className="bg-red-600 text-white py-4 animate-pulse">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-3">
-            <span className="px-3 py-1 bg-white text-red-600 rounded font-bold text-sm">
+          <div className="flex items-center gap-4">
+            <span className="px-3 py-1 bg-white text-red-600 rounded font-bold text-sm animate-bounce">
               ÚLTIMA HORA
             </span>
-            <Link href={`/judicial/${breakingNews.id}`} className="hover:underline font-semibold">
+            <Link 
+              href="/judicial/jud-breaking-1" 
+              className="hover:underline font-semibold text-lg"
+            >
               {breakingNews.title}
             </Link>
+            <span className="ml-auto text-sm opacity-90">
+              <Eye className="inline w-4 h-4 mr-1" />
+              {breakingNews.views.toLocaleString()} vistas
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Navigation - Componente integrado */}
-      <nav className="bg-white shadow-lg">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center py-4">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
-              Política Argentina
-            </Link>
-            <div className="flex space-x-6">
-              <Link href="/politica" className="text-gray-700 hover:text-blue-600">Política</Link>
-              <Link href="/economia" className="text-gray-700 hover:text-blue-600">Economía</Link>
-              <Link href="/judicial" className="text-red-600 font-bold">Judicial</Link>
-              <Link href="/internacional" className="text-gray-700 hover:text-blue-600">Internacional</Link>
-              <Link href="/sociedad" className="text-gray-700 hover:text-blue-600">Sociedad</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* Professional Navigation */}
+      <Navigation />
 
-      {/* Breaking News Card */}
-      <div className="bg-red-50 border-l-4 border-red-600 p-6 mb-8">
-        <div className="container mx-auto px-4">
+      {/* Real Breaking News Card */}
+      <div className="bg-red-50 border-l-4 border-red-600 p-8 mb-8">
+        <div className="max-w-4xl mx-auto">
           <div className="flex items-start gap-4">
-            <div className="bg-red-600 text-white px-3 py-1 rounded text-sm font-bold">
-              🔥 ÚLTIMA HORA
-            </div>
+            <TrendingUp className="w-8 h-8 text-red-600 flex-shrink-0 mt-1" />
             <div className="flex-1">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-bold">
+                  BREAKING NEWS
+                </span>
+                <span className="text-red-600 text-sm flex items-center">
+                  <Clock className="w-3 h-3 mr-1" />
+                  Hace 30 minutos
+                </span>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">
                 {breakingNews.title}
               </h2>
-              <p className="text-gray-600 mb-3">
+              <p className="text-gray-700 mb-4 leading-relaxed">
                 {breakingNews.excerpt}
               </p>
-              <div className="flex items-center gap-4 text-sm text-gray-500">
-                <span>👁️ {breakingNews.views.toLocaleString()} vistas</span>
-                <span>⏰ Hace 30 minutos</span>
+              <div className="flex items-center justify-between">
+                <div className="flex gap-2">
+                  {breakingNews.tags.slice(0, 3).map((tag) => (
+                    <span key={tag} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-sm">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
                 <Link 
-                  href={`/judicial/${breakingNews.id}`} 
-                  className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+                  href="/judicial/jud-breaking-1"
+                  className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors font-semibold"
                 >
-                  Leer más →
+                  Leer Noticia Completa →
                 </Link>
               </div>
             </div>
@@ -83,7 +86,7 @@ export default function JudicialPage() {
         </div>
       </div>
 
-      {/* Category Page con noticias actualizadas */}
+      {/* Real Content Category */}
       <CategoryPage
         categoryName="Judicial"
         categorySlug="judicial"
